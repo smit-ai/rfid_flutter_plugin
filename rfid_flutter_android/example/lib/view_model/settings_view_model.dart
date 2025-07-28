@@ -1,0 +1,197 @@
+import 'package:signals/signals.dart';
+import 'package:bot_toast/bot_toast.dart';
+import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+import 'package:rfid_flutter_core/rfid_flutter_core.dart';
+import '../entity/rfid_manager.dart';
+
+class SettingsViewModel {
+  final selectedFrequency = signal(RfidFrequency.china1);
+  final selectedPower = signal(1);
+  final selectedRfLink = signal(RfidRfLink.prAskMiller8_160KHz);
+
+  final selectedInventoryBank = signal(RfidInventoryBank.epc);
+  final selectedOffset = signal(0);
+  final selectedLength = signal(6);
+
+  final selectedQuerySession = signal(RfidGen2.querySessionS0);
+  final selectedQueryTarget = signal(RfidGen2.queryTargetA);
+
+  final antenna1State = signal(RfidAntennaState(antenna: 1, enable: false, power: 1));
+  final antenna2State = signal(RfidAntennaState(antenna: 2, enable: false, power: 1));
+  final antenna3State = signal(RfidAntennaState(antenna: 3, enable: false, power: 1));
+  final antenna4State = signal(RfidAntennaState(antenna: 4, enable: false, power: 1));
+
+  SettingsViewModel() {
+    //
+  }
+
+  void dispose() {
+    // signals will be automatically disposed when no longer watched
+  }
+
+  void showResult(RfidResult<dynamic> res, String function, bool showData) {
+    if (res.result) {
+      BotToast.showText(text: '✅ $function ${showData ? ': ${res.data}' : 'Success'}');
+    } else {
+      BotToast.showText(text: '❌ $function Failed: ${res.error}');
+    }
+  }
+
+  Future<void> getUhfFirmwareVersion() async {
+    final result = await RfidManager.instance.getUhfFirmwareVersion();
+    showResult(result, 'UHF Firmware Version', true);
+  }
+
+  Future<void> getUhfHardwareVersion() async {
+    final result = await RfidManager.instance.getUhfHardwareVersion();
+    showResult(result, 'UHF Hardware Version', true);
+  }
+
+  Future<void> getTemperature() async {
+    final res = await RfidManager.instance.getUhfTemperature();
+    // showResult(result, 'Temperature', true);
+    if (res.result) {
+      BotToast.showText(text: '✅ Temperature: ${res.data} ℃');
+    } else {
+      BotToast.showText(text: '❌ Failed: ${res.error}');
+    }
+  }
+
+  Future<void> resetModule() async {
+    final result = await RfidManager.instance.resetUhf();
+    showResult(result, 'Reset Module', false);
+  }
+
+  Future<void> getFrequency() async {
+    final res = await RfidManager.instance.getFrequency();
+    if (res.result) {
+      selectedFrequency.value = res.data ?? RfidFrequency.china1;
+    }
+    showResult(res, 'Frequency', true);
+  }
+
+  Future<void> setFrequency() async {
+    final result = await RfidManager.instance.setFrequency(selectedFrequency.value);
+    showResult(result, 'Set Frequency', false);
+  }
+
+  Future<void> getPower() async {
+    final res = await RfidWithUart.instance.getPower();
+    if (res.result) {
+      selectedPower.value = res.data ?? 1;
+    }
+    showResult(res, 'Power', true);
+  }
+
+  Future<void> setPower() async {
+    final result = await RfidWithUart.instance.setPower(selectedPower.value.round());
+    showResult(result, 'Set Power', false);
+  }
+
+  Future<void> getRfLink() async {
+    final res = await RfidManager.instance.getRfLink();
+    if (res.result) {
+      selectedRfLink.value = res.data!;
+    }
+    showResult(res, 'RfLink', true);
+  }
+
+  Future<void> setRfLink() async {
+    final result = await RfidManager.instance.setRfLink(selectedRfLink.value);
+    showResult(result, 'Set RfLink', false);
+  }
+
+  Future<void> setInventoryMode() async {
+    final inventoryMode = RfidInventoryMode(
+      inventoryBank: selectedInventoryBank.value,
+      offset: selectedOffset.value,
+      length: selectedLength.value,
+    );
+    final result = await RfidManager.instance.setInventoryMode(inventoryMode);
+    showResult(result, 'Set Inventory Mode', false);
+  }
+
+  Future<void> getInventoryMode() async {
+    final res = await RfidManager.instance.getInventoryMode();
+    if (res.result) {
+      selectedInventoryBank.value = res.data!.inventoryBank;
+      selectedOffset.value = res.data!.offset;
+      selectedLength.value = res.data!.length;
+    }
+    showResult(res, 'Inventory Mode', false);
+  }
+
+  Future<void> setGen2() async {
+    final gen2 = RfidGen2(
+      querySession: selectedQuerySession.value,
+      queryTarget: selectedQueryTarget.value,
+    );
+    final result = await RfidManager.instance.setGen2(gen2);
+    showResult(result, 'Set Gen2', false);
+  }
+
+  Future<void> getGen2() async {
+    final res = await RfidManager.instance.getGen2();
+    if (res.result) {
+      selectedQuerySession.value = res.data!.querySession ?? RfidGen2.querySessionS0;
+      selectedQueryTarget.value = res.data!.queryTarget ?? RfidGen2.queryTargetA;
+    }
+    showResult(res, 'Gen2', false);
+  }
+
+  Future<void> resetUhf() async {
+    final result = await RfidManager.instance.resetUhf();
+    showResult(result, 'Reset Uhf', false);
+  }
+
+  Future<void> setFastId(bool enabled) async {
+    final result = await RfidManager.instance.setFastId(enabled);
+    showResult(result, 'Set FastId', false);
+  }
+
+  Future<void> setTagFocus(bool enabled) async {
+    final result = await RfidManager.instance.setTagFocus(enabled);
+    showResult(result, 'Set Tag Focus', false);
+  }
+
+  Future<void> setFastInventory(bool enabled) async {
+    final result = await RfidManager.instance.setFastInventory(enabled);
+    showResult(result, 'Set Fast Inventory', false);
+  }
+
+  // 天线状态相关方法
+  Future<void> getAntennaState() async {
+    final res = await RfidWithUra4.instance.getAntennaState(0); // 0表示获取所有天线状态
+    if (res.result && res.data != null) {
+      final antennaStates = res.data!;
+      for (var state in antennaStates) {
+        switch (state.antenna) {
+          case 1:
+            antenna1State.value = RfidAntennaState(antenna: 1, enable: state.enable ?? true, power: state.power ?? 20);
+            break;
+          case 2:
+            antenna2State.value = RfidAntennaState(antenna: 2, enable: state.enable ?? true, power: state.power ?? 20);
+            break;
+          case 3:
+            antenna3State.value = RfidAntennaState(antenna: 3, enable: state.enable ?? true, power: state.power ?? 20);
+            break;
+          case 4:
+            antenna4State.value = RfidAntennaState(antenna: 4, enable: state.enable ?? true, power: state.power ?? 20);
+            break;
+        }
+      }
+    }
+    showResult(res, 'Get Antenna State', false);
+  }
+
+  Future<void> setAntennaState() async {
+    final antennaStates = [
+      antenna1State.value,
+      antenna2State.value,
+      antenna3State.value,
+      antenna4State.value,
+    ];
+    final result = await RfidWithUra4.instance.setAntennaState(antennaStates);
+    showResult(result, 'Set Antenna State', false);
+  }
+}
