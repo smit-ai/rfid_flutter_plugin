@@ -1,6 +1,6 @@
 # RFID Flutter Plugin
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: BSD](https://img.shields.io/badge/License-BSD-yellow.svg)](https://opensource.org/license/bsd-3-clause)
 
 > English | [中文文档](README-zh.md)
 
@@ -14,8 +14,7 @@ This project consists of multiple packages working together to provide a complet
 rfid_flutter_plugin/
 ├── rfid_flutter_core/             # Core interfaces and shared code
 ├── rfid_flutter_android/          # Android handheld/A4 plugin
-├── rfid_flutter_bluetooth/        # RFID device Bluetooth plugin (planned)
-└── rfid_flutter_usb/              # RFID device USB plugin (planned)
+└── rfid_flutter_driver/           # RFID device Bluetooth/USB plugin (planned)
 ```
 
 ## 📚 Packages
@@ -40,8 +39,7 @@ Android platform implementation supporting:
 
 ### 🔮 Planned Packages
 
-- **rfid_flutter_bluetooth**: Bluetooth RFID device support
-- **rfid_flutter_usb**: USB RFID device connectivity
+- **rfid_flutter_driver**: Bluetoothg/USB RFID device connectivity
 
 ## 🚀 Getting Started
 
@@ -51,7 +49,7 @@ For Android RFID operations, add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  rfid_flutter_android: ^0.0.1
+  rfid_flutter_android: ^0.1.0
 ```
 
 The core package is automatically included as a dependency.

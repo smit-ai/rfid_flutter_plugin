@@ -1,6 +1,6 @@
 # RFID Flutter Plugin
 
-[![License: MIT](https://img.shields.io/badge/License-BSD-yellow.svg)](https://opensource.org/license/BSD-3-Clause)
+[![License: MIT](https://img.shields.io/badge/License-BSD-yellow.svg)](https://opensource.org/license/bsd-3-clause)
 
 > 中文 | [English](README.md)
 
@@ -14,8 +14,7 @@
 rfid_flutter_plugin/
 ├── rfid_flutter_core/             # 核心接口和共享代码
 ├── rfid_flutter_android/          # Android 手持机/A4 插件
-├── rfid_flutter_bluetooth/        # RFID 设备蓝牙插件（计划中）
-└── rfid_flutter_usb/              # RFID 设备USB插件（计划中）
+└── rfid_flutter_driver/           # 蓝牙、USB插件（计划中）
 ```
 
 ## 📚 软件包
@@ -40,8 +39,7 @@ Android 平台实现，支持：
 
 ### 🔮 计划中的包
 
-- **rfid_flutter_bluetooth**: 蓝牙 RFID 设备支持
-- **rfid_flutter_usb**: USB RFID 设备连接
+- **rfid_flutter_driver**: RFID 设备蓝牙、USB通讯插件
 
 ## 🚀 快速开始
 
