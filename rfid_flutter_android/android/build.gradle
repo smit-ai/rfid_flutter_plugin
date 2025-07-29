@@ -41,6 +41,11 @@ android {
     defaultConfig {
         minSdkVersion 24
     }
+
+    // 添加这部分来显示详细警告
+//    tasks.withType(JavaCompile) {
+//        options.compilerArgs += ["-Xlint:deprecation", "-Xlint:unchecked"]
+//    }
     
     //获取local.properties配置文件
     def localProperties = new Properties()

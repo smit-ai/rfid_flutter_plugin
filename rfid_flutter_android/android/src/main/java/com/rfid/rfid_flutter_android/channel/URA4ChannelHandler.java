@@ -354,32 +354,6 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
         result.error(TAG, "use getAntennaState instead", null);
     }
 
-    // AntennaState相关方法
-
-    /*
-     * {
-     * "value": [
-     * {
-     * "antenna": 1,
-     * "enable": true,
-     * "power": 23
-     * },
-     * {
-     * "antenna": 2,
-     * "enable": false,
-     * "power": 30
-     * },
-     * {
-     * "antenna": 3,
-     * "enable": true
-     * },
-     * {
-     * "antenna": 4,
-     * "power": 30
-     * },
-     * ]
-     * }
-     */
 
     /** @noinspection DataFlowIssue */
     private void setAntennaState(MethodCall methodCall, MethodChannel.Result result) {
@@ -395,6 +369,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
             return;
         }
 
+        @SuppressWarnings("unchecked")
         List<Map<String, Object>> antennaStateList = (List<Map<String, Object>>) valueObj;
         try {
             StringBuilder errorMsg = new StringBuilder();

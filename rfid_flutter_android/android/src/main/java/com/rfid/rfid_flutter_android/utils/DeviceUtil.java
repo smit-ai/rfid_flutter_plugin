@@ -1,18 +1,11 @@
 package com.rfid.rfid_flutter_android.utils;
 
-import static android.os.Build.VERSION.SDK_INT;
-
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -20,9 +13,6 @@ import android.text.TextUtils;
 import com.rscja.CWDeviceInfo;
 import com.rscja.team.qcom.DeviceConfiguration_qcom;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.lang.reflect.Method;
 import java.net.NetworkInterface;
 import java.util.Collections;
@@ -35,7 +25,7 @@ public class DeviceUtil {
     public static String getImei(Context context, String[] imei2) {
         LogUtil.i("DeviceUtil", "getImei " + CWDeviceInfo.getDeviceInfo().getModel() + " " + DeviceConfiguration_qcom.getModel());
         if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C60_QCM2150_100)) {
-            return getImeiC60(context, imei2);
+            return getImeiC60(imei2);
         } else if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C60_SMD450_100)
                 || DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C60_MTK_6765_110)
                 || DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C61P_SM6115_110)
@@ -51,8 +41,8 @@ public class DeviceUtil {
         } else {
             LogUtil.i("DeviceUtil", "into else");
             try {
-                TelephonyManager manager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-                Class clazz = manager.getClass();
+                TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                Class<?> clazz = manager.getClass();
                 Method getImei = clazz.getDeclaredMethod("getImei", int.class);//(int slotId)
                 //获得IMEI 1的信息：
                 Object imei_1 = getImei.invoke(manager, 0);
@@ -99,7 +89,7 @@ public class DeviceUtil {
         return imei1;
     }
 
-    private static String getImeiC60(Context context, String[] imei2) {
+    private static String getImeiC60(String[] imei2) {
         String imei1 = getSystemProperties("persist.quectel.imei1");
         String strIMEI2 = getSystemProperties("persist.quectel.imei2");
         if (strIMEI2 != null && imei2 != null && imei2.length > 0) {
@@ -108,16 +98,13 @@ public class DeviceUtil {
         return imei1;
     }
 
+    @SuppressLint("PrivateApi")
     public static String getSystemProperties(String properties) {
         String strState = "";
         try {
-            Class systemProperties = Class.forName("android.os.SystemProperties");
-            if (systemProperties != null) {
-                Method get = systemProperties.getDeclaredMethod("get", String.class);
-                if (get != null) {
-                    strState = (String) get.invoke(null, properties);
-                }
-            }
+            Class<?> systemProperties = Class.forName("android.os.SystemProperties");
+            Method get = systemProperties.getDeclaredMethod("get", String.class);
+            strState = (String) get.invoke(null, properties);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,6 +116,7 @@ public class DeviceUtil {
     /**
      * 获取设备序列号
      */
+    @SuppressLint("HardwareIds")
     public static String getSerialNum(Context context) {
         try {
             if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.P80_8953_90)) {
@@ -153,10 +141,14 @@ public class DeviceUtil {
                 return Settings.Global.getString(context.getContentResolver(), "Serial");
             } else {
                 if (Build.VERSION.SDK_INT >= 26) {
-                    return Build.getSerial();
-                } else {
-                    return Build.SERIAL;
+                    try {
+                        return Build.getSerial();
+                    } catch (SecurityException e) {
+                        LogUtil.e("DeviceUtil", "No READ_PHONE_STATE permission to get serial number");
+                        return Build.UNKNOWN;
+                    }
                 }
+                return "";
             }
         } catch (Exception e) {
             LogUtil.e("DeviceUtil", "getSerialNum error:" + e);
@@ -164,17 +156,15 @@ public class DeviceUtil {
         }
     }
 
+    @SuppressLint("PrivateApi")
     public static String getAndroid90Sn() {
-        Class systemProperties = null;
-        Method get = null;
+        Class<?> systemProperties;
+        Method get;
         String strState = "";
         try {
             systemProperties = Class.forName("android.os.SystemProperties");
-            if (systemProperties != null)
-                get = systemProperties.getDeclaredMethod("get", String.class);
-            if (get != null) {
-                strState = (String) get.invoke(null, "persist.radio.sn");
-            }
+            get = systemProperties.getDeclaredMethod("get", String.class);
+            strState = (String) get.invoke(null, "persist.radio.sn");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -188,56 +178,22 @@ public class DeviceUtil {
 
 
     public static String getBluetoothAddress(Context context) {
+        String btMac = "";
         if (CWDeviceInfo.getDeviceInfo().getTeam() == CWDeviceInfo.TEAM_MTK) {
-            // need android:sharedUserId="android.uid.system"
-            BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-            if (bluetooth != null) {
-                if (!bluetooth.isEnabled()) {
-                    return "";
-                }
-                String btMac = Settings.Global.getString(context.getContentResolver(), "BtMac");
-                if (btMac != null && !btMac.isEmpty()) {
-                    LogUtil.i(TAG, "btMac=" + btMac);
-                    return btMac;
-                }
-                String address = bluetooth.getAddress();
-                if (!TextUtils.isEmpty(address)) {
-                    LogUtil.i(TAG, "btMac address=" + address);
-                    return address.toLowerCase();
-                } else {
-                    return "";
-                }
+            btMac = Settings.Global.getString(context.getContentResolver(), "BtMac");
+            if (!TextUtils.isEmpty(btMac)) {
+                LogUtil.i(TAG, "MTK btMac=" + btMac);
+                return btMac;
             }
-            return "";
         } else {
-            boolean isSystemApp = isSystemSign(context, context.getPackageName());
-            LogUtil.i(TAG, "getBluetoothAddress isSystemApp=" + isSystemApp);
-            if (isSystemApp || SDK_INT <= 22) {
-                BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-                LogUtil.i(TAG, "getBluetoothAddress=" + bluetooth);
-                if (bluetooth != null) {
-                    String address = bluetooth.getAddress();
-                    LogUtil.i(TAG, "getBluetoothAddress address=" + address);
-                    return address;
-                }
-                return null;
-            }
-
             String data = Settings.System.getString(context.getContentResolver(), "cw_bt_address");
-            LogUtil.i(TAG, "getBluetoothAddress address=" + data);
-            if (TextUtils.isEmpty(data)) {
-                Intent intent = new Intent();
-                intent.setPackage("com.cw.getbtmac");
-                intent.setAction("com.cw.getbtmac.READ_BT_MAC");
-                context.startService(intent);
-                SystemClock.sleep(200);
-                data = Settings.System.getString(context.getContentResolver(), "cw_bt_address");
-                if (TextUtils.isEmpty(data)) {
-                    return "";
-                }
+            LogUtil.i(TAG, "getBluetoothAddress cw_bt_address=" + data);
+            if (!TextUtils.isEmpty(data)) {
+                return data;
             }
-            return data;
         }
+
+        return "";
     }
 
     public static boolean isSystemSign(Context context, String packageName) {
@@ -266,7 +222,7 @@ public class DeviceUtil {
 
 
     @SuppressLint("MissingPermission")
-    public static String getWifiMac(Context context, boolean isDisabWifi) {
+    public static String getWifiMac(Context context) {
 
         if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C66P_SM6115_110)
                 || DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C61P_SM6115_110)
@@ -323,38 +279,14 @@ public class DeviceUtil {
                     }
                     return res1.toString();
                 }
-            } catch (Exception ex) {
+            } catch (Exception ignored) {
             }
             return "02:00:00:00:00:00";
         } else {
-            if (Build.VERSION.SDK_INT >= 23) {
-                String macAdress = getLocalMacAddress6Above();
-                return macAdress;
-            }
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-                return getMac();
-            }
-            WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            WifiInfo info = wifi.getConnectionInfo();
-            return (info == null) ? "NULL" : info.getMacAddress();
+            return getLocalMacAddress6Above();
         }
     }
 
-    public static synchronized boolean isWifiEnabled(Context context) {
-        WifiManager mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        int state = mWifiManager.getWifiState();
-        LogUtil.i(TAG, "getWifiState state=" + state);
-        return state == WifiManager.WIFI_STATE_ENABLED || state == WifiManager.WIFI_STATE_ENABLING;
-    }
-
-    public static synchronized void enableWifi(Context context) {
-        if (isWifiEnabled(context)) {
-            return;
-        }
-        LogUtil.i(TAG, "enableWifi 打开wifi");
-        WifiManager mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        mWifiManager.setWifiEnabled(true);
-    }
 
     private static String getLocalMacAddress6Above() {
         try {
@@ -376,40 +308,9 @@ public class DeviceUtil {
                 }
                 return res1.toString();
             }
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
         return "02:00:00:00:00:00";
-    }
-
-    private static String getMac() {
-        String macSerial = null;
-        String str = "";
-        InputStreamReader ir = null;
-        LineNumberReader input = null;
-        try {
-            Process pp = Runtime.getRuntime().exec("cat /sys/class/net/wlan0/address");
-            ir = new InputStreamReader(pp.getInputStream());
-            input = new LineNumberReader(ir);
-            for (; null != str; ) {
-                str = input.readLine();
-                if (str != null) {
-                    macSerial = str.trim();
-                    break;
-                }
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                if (ir != null)
-                    ir.close();
-
-                if (input != null)
-                    input.close();
-            } catch (Exception e) {
-            }
-        }
-        return macSerial;
     }
 
     private static String getSharedPreferences(Context context, String key) {
@@ -423,6 +324,6 @@ public class DeviceUtil {
     private static void setSharedPreferences(Context context, String key, String value) {
         SharedPreferences.Editor editor = getSP(context).edit();
         editor.putString(key, value);
-        editor.commit();
+        editor.apply();
     }
 }
