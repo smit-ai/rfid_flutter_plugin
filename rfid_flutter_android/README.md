@@ -34,7 +34,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  rfid_flutter_android: ^0.0.1
+  rfid_flutter_android: ^0.1.0
 ```
 
 ### 📱 Android Setup
@@ -155,7 +155,7 @@ For more examples, please check the example application
 
 | Feature           | UART | URA4 | Description                        |
 | ----------------- | ---- | ---- | ---------------------------------- |
-| Basic Operations  | ✅    | ✅    | Init, free, reset                  |
+| Basic Operations  | ✅    | ✅    | Init, free                      |
 | Tag Inventory     | ✅    | ✅    | Single and continuous scanning     |
 | Tag Read/Write    | ✅    | ✅    | Memory bank access                 |
 | Tag Lock/Kill     | ✅    | ✅    | Security operations                |
@@ -163,7 +163,7 @@ For more examples, please check the example application
 | Power Control     | ✅    | ✅    | 1-30 power levels                  |
 | Antenna Control   | ❌    | ✅    | Multi-antenna support              |
 | Gen2 Configuration| ✅    | ✅    | Protocol parameters                |
-| Other Features    | ✅    | ✅    | FastInventory, TagFocus, FastId    |
+| Other Features    | ✅    | ✅    | FastInventory, TagFocus, FastId, reset  |
 
 ## 🔗 Related Packages
 

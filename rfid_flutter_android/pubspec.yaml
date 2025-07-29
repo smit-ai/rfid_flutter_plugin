@@ -1,7 +1,7 @@
 name: rfid_flutter_android
 description: "RFID Flutter Android Plugin. Support UART, URA4 devices."
-version: 0.0.1
-homepage:
+version: 0.1.0-dev.1
+homepage: https://github.com/RFID-Devs/rfid_flutter_plugin/tree/main/rfid_flutter_android
 
 environment:
   sdk: '>=2.19.0 <4.0.0'
@@ -10,8 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rfid_flutter_core:
-    path: ../rfid_flutter_core
+  rfid_flutter_core: ^0.1.0-dev.3
 
 dev_dependencies:
   flutter_test:
