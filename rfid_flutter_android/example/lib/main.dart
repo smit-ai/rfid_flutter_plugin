@@ -86,22 +86,10 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
           isScrollable: false,
           controller: _tabController,
           tabs: const [
-            Tab(
-              // icon: Icon(Icons.inventory),
-              text: 'Inventory',
-            ),
-            Tab(
-              // icon: Icon(Icons.settings),
-              text: 'Settings',
-            ),
-            Tab(
-              // icon: Icon(Icons.edit),
-              text: 'Read-Write',
-            ),
-            Tab(
-              // icon: Icon(Icons.lock),
-              text: 'Lock-Kill',
-            ),
+            Tab(text: 'Inventory'),
+            Tab(text: 'Settings'),
+            Tab(text: 'Read-Write'),
+            Tab(text: 'Lock-Kill'),
           ],
         ),
       ),
