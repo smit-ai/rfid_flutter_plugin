@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/rfid_flutter_android.svg)](https://pub.dev/packages/rfid_flutter_android)
 
-> English | [中文文档](README-zh.md)
+> English | [中文文档](https://github.com/RFID-Devs/rfid_flutter_plugin/blob/main/rfid_flutter_android/README-zh.md)
 
 RFID implementation package for the Android platform, supporting UART and URA4 related devices.
 
@@ -15,7 +15,7 @@ RFID implementation package for the Android platform, supporting UART and URA4 r
 
 ### 🏷️ RFID Operations
 - **Tag Inventory**: Single and continuous tag scanning with filtering support
-- **Tag Read/Write**: Read and write data to different tag memory banks (EPC, TID, USER, RESERVED)
+- **Tag Read/Write**: Read and write data to different tag memory banks
 - **Tag Lock/Kill**: Lock or permanently disable tags
 - **Real-time Streaming**: Live tag data stream with duplicate filtering options
 
