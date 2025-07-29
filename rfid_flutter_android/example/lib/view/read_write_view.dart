@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import '../view_model/read_write_view_model.dart';
 import '../widget/filter_widget.dart';
-import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 
 class ReadWriteView extends StatefulWidget {
   const ReadWriteView({super.key});
@@ -50,7 +50,7 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print("ReadWriteView build");
+    // print("ReadWriteView build");
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(4.0),

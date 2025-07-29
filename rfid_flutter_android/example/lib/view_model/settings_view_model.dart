@@ -1,7 +1,6 @@
 import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
-import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 import '../entity/rfid_manager.dart';
 
 class SettingsViewModel {

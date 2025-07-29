@@ -87,6 +87,7 @@ class AppBottomSheet extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     appState.isEnglish.value = true;
+                    // TODO: 切换语言
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -109,6 +110,7 @@ class AppBottomSheet extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     appState.isEnglish.value = false;
+                    // TODO: 切换语言
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(

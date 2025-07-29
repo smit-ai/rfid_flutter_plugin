@@ -1,6 +1,5 @@
 import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
-import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import '../entity/rfid_manager.dart';
 
@@ -20,7 +19,7 @@ class LockKillViewModel {
   final killPassword = signal('');
 
   Future<void> lockTag() async {
-    print('lockTag: ${filter.value} ${lockPassword.value} ${lockBanks.value} ${lockMode.value}');
+    // print('lockTag: ${filter.value} ${lockPassword.value} ${lockBanks.value} ${lockMode.value}');
 
     if (lockBanks.value.isEmpty) {
       BotToast.showText(text: '❌ Lock tag failed: Please select at least one bank to lock');

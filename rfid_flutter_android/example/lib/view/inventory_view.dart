@@ -35,7 +35,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print('inventory build');
+    // print('inventory build');
 
     return Padding(
       padding: const EdgeInsets.all(4.0),

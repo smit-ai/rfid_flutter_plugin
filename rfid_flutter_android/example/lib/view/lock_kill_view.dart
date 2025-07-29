@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import 'package:rfid_flutter_android_example/widget/filter_widget.dart';
 import 'package:rfid_flutter_android_example/view_model/lock_kill_view_model.dart';
-import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 
 class LockKillView extends StatefulWidget {
   const LockKillView({super.key});
@@ -43,7 +43,7 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    print('LockKillView build');
+    // print('LockKillView build');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(4.0),
