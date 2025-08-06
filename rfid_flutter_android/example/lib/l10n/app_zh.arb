@@ -1,0 +1,9 @@
+{
+    "helloWorld": "你好世界",
+    "inventory": "盘点",
+    "settings": "设置",
+    "readWrite": "读-写",
+    "lockKill": "锁定-销毁",
+    "deviceInfo": "设备信息",
+    "language" : "语言"
+}

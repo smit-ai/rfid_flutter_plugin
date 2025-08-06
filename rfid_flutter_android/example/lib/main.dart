@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'view/inventory_view.dart';
 import 'view/read_write_view.dart';
 import 'view/lock_kill_view.dart';
@@ -18,15 +20,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'RFID Flutter Android',
-      builder: BotToastInit(),
-      navigatorObservers: [BotToastNavigatorObserver()],
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: const RfidMainPage(),
+    return Watch.builder(
+      builder: (context) {
+        return MaterialApp(
+          title: 'RFID Flutter Android',
+          builder: BotToastInit(),
+          navigatorObservers: [BotToastNavigatorObserver()],
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+            useMaterial3: true,
+          ),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: appState.currentLocale.watch(context),
+          home: const RfidMainPage(),
+        );
+      },
     );
   }
 }
@@ -69,9 +83,6 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
   Widget build(BuildContext context) {
     print('app build');
 
-    // 监听全局页面索引状态
-    final currentPageIndex = appState.currentPageIndex.watch(context);
-
     return Scaffold(
       appBar: AppBar(
         title: _buildAppBarTitle(),
@@ -85,16 +96,16 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
         bottom: TabBar(
           isScrollable: false,
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Inventory'),
-            Tab(text: 'Settings'),
-            Tab(text: 'Read-Write'),
-            Tab(text: 'Lock-Kill'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.inventory),
+            Tab(text: AppLocalizations.of(context)!.settings),
+            Tab(text: AppLocalizations.of(context)!.readWrite),
+            Tab(text: AppLocalizations.of(context)!.lockKill),
           ],
         ),
       ),
       body: IndexedStack(
-        index: currentPageIndex,
+        index: appState.currentPageIndex.watch(context),
         children: _pages,
       ),
     );

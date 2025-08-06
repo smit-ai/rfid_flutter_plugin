@@ -1,0 +1,13 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "inventory": "Inventory",
+  "settings": "Settings",
+  "readWrite": "Read-Write",
+  "lockKill": "Lock-Kill",
+  "deviceInfo": "Device Info",
+  "language" : "Language"
+
+}

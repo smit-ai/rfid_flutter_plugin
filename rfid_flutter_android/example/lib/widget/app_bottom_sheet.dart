@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import '../entity/app_global_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({super.key});
@@ -16,8 +17,6 @@ class AppBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isEnglish = appState.isEnglish.watch(context);
-
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -37,12 +36,10 @@ class AppBottomSheet extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // 语言切换
-              _buildLanguageSection(isEnglish),
+              _buildLanguageSection(context),
 
               const SizedBox(height: 16),
 
-              // 设备信息按钮
               _buildDeviceInfoButton(context),
 
               const SizedBox(height: 10),
@@ -53,7 +50,7 @@ class AppBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildLanguageSection(bool isEnglish) {
+  Widget _buildLanguageSection(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
@@ -67,7 +64,7 @@ class AppBottomSheet extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Language',
+              AppLocalizations.of(context)!.language,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
@@ -86,8 +83,7 @@ class AppBottomSheet extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    appState.isEnglish.value = true;
-                    // TODO: 切换语言
+                    appState.setLocale(const Locale('en'));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -95,13 +91,13 @@ class AppBottomSheet extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: isEnglish ? Colors.blue : Colors.transparent,
+                      color: appState.currentLocale.value.languageCode == 'en' ? Colors.blue : Colors.transparent,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       'English',
                       style: TextStyle(
-                        color: isEnglish ? Colors.white : Colors.blue,
+                        color: appState.currentLocale.value.languageCode == 'en' ? Colors.white : Colors.blue,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -109,8 +105,7 @@ class AppBottomSheet extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    appState.isEnglish.value = false;
-                    // TODO: 切换语言
+                    appState.setLocale(const Locale('zh'));
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -118,13 +113,13 @@ class AppBottomSheet extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: !isEnglish ? Colors.blue : Colors.transparent,
+                      color: appState.currentLocale.value.languageCode == 'zh' ? Colors.blue : Colors.transparent,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       '中文',
                       style: TextStyle(
-                        color: !isEnglish ? Colors.white : Colors.blue,
+                        color: appState.currentLocale.value.languageCode == 'zh' ? Colors.white : Colors.blue,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -161,7 +156,7 @@ class AppBottomSheet extends StatelessWidget {
             const Icon(Icons.info_outline),
             const SizedBox(width: 8),
             Text(
-              appState.getText('Device Information', '设备信息'),
+              AppLocalizations.of(context)!.deviceInfo,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
