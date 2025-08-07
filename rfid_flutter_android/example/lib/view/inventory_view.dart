@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../entity/rfid_tag_info_display.dart';
 import '../view_model/inventory_view_model.dart';
 import '../widget/filter_widget.dart';
 import '../entity/app_global_state.dart';
@@ -252,15 +253,19 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
                           children: [
                             // 标签信息部分
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  if (tag.reserved.isNotEmpty) Text('RESERVED: ${tag.reserved}'),
-                                  Text('${tag.tid.isEmpty && tag.reserved.isEmpty ? tag.epc : 'EPC: ${tag.epc}'} '),
-                                  if (tag.tid.isNotEmpty) Text('TID: ${tag.tid}'),
-                                  if (tag.user.isNotEmpty) Text('USER: ${tag.user}'),
-                                ],
+                              child: SelectableText(
+                                tag.displayText,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
+                              // child: Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     if (tag.reserved.isNotEmpty) SelectableText('RESERVED: ${tag.reserved}'),
+                              //     SelectableText('${tag.tid.isEmpty && tag.reserved.isEmpty ? tag.epc : 'EPC: ${tag.epc}'} '),
+                              //     if (tag.tid.isNotEmpty) SelectableText('TID: ${tag.tid}'),
+                              //     if (tag.user.isNotEmpty) SelectableText('USER: ${tag.user}'),
+                              //   ],
+                              // ),
                             ),
                             // Count
                             Container(
