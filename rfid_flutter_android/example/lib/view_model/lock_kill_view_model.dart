@@ -2,6 +2,7 @@ import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import '../entity/rfid_manager.dart';
+import '../entity/app_global_state.dart';
 
 class LockKillViewModel {
   final filter = signal(RfidFilter(
@@ -22,11 +23,11 @@ class LockKillViewModel {
     // print('lockTag: ${filter.value} ${lockPassword.value} ${lockBanks.value} ${lockMode.value}');
 
     if (lockBanks.value.isEmpty) {
-      BotToast.showText(text: '❌ Lock tag failed: Please select at least one bank to lock');
+      BotToast.showText(text: appState.localizations.lockTagFailedSelectBank);
       return;
     }
     if (lockPassword.value.isEmpty) {
-      BotToast.showText(text: '❌ Lock tag failed: Please enter access password');
+      BotToast.showText(text: appState.localizations.lockTagFailedEnterPassword);
       return;
     }
 
@@ -38,15 +39,15 @@ class LockKillViewModel {
     );
 
     if (result.isEffective) {
-      BotToast.showText(text: '✅ Lock tag successfully');
+      BotToast.showText(text: appState.localizations.lockTagSuccess);
     } else {
-      BotToast.showText(text: '❌ Lock tag failed${result.error == null ? '' : ': ${result.error}'} ');
+      BotToast.showText(text: '${appState.localizations.lockTagFailed}${result.error == null ? '' : ': ${result.error}'}');
     }
   }
 
   Future<void> killTag() async {
     if (killPassword.value.isEmpty) {
-      BotToast.showText(text: '❌ Kill tag failed: Please enter kill password');
+      BotToast.showText(text: appState.localizations.killTagFailedEnterPassword);
       return;
     }
 
@@ -56,9 +57,9 @@ class LockKillViewModel {
     );
 
     if (result.isEffective) {
-      BotToast.showText(text: '✅ Kill tag successfully');
+      BotToast.showText(text: appState.localizations.killTagSuccess);
     } else {
-      BotToast.showText(text: '❌ Kill tag failed${result.error == null ? '' : ': ${result.error}'}');
+      BotToast.showText(text: '${appState.localizations.killTagFailed}${result.error == null ? '' : ': ${result.error}'}');
     }
   }
 }

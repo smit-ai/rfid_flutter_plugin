@@ -2,6 +2,7 @@ import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import '../entity/rfid_manager.dart';
+import '../entity/app_global_state.dart';
 
 class SettingsViewModel {
   final selectedFrequency = signal(RfidFrequency.china1);
@@ -28,37 +29,36 @@ class SettingsViewModel {
     // signals will be automatically disposed when no longer watched
   }
 
-  void showResult(RfidResult<dynamic> res, String function, bool showData) {
+  void showResult(RfidResult<dynamic> res, {showData = false}) {
     if (res.result) {
-      BotToast.showText(text: '✅ $function ${showData ? ': ${res.data}' : 'Success'}');
+      BotToast.showText(text: '✅ ${showData ? res.data : appState.localizations.success}');
     } else {
-      BotToast.showText(text: '❌ $function Failed: ${res.error}');
+      BotToast.showText(text: '❌ ${appState.localizations.failed}:\n${res.error}');
     }
   }
 
   Future<void> getUhfFirmwareVersion() async {
     final result = await RfidManager.instance.getUhfFirmwareVersion();
-    showResult(result, 'UHF Firmware Version', true);
+    showResult(result, showData: true);
   }
 
   Future<void> getUhfHardwareVersion() async {
     final result = await RfidManager.instance.getUhfHardwareVersion();
-    showResult(result, 'UHF Hardware Version', true);
+    showResult(result, showData: true);
   }
 
   Future<void> getTemperature() async {
     final res = await RfidManager.instance.getUhfTemperature();
-    // showResult(result, 'Temperature', true);
     if (res.result) {
-      BotToast.showText(text: '✅ Temperature: ${res.data} ℃');
+      BotToast.showText(text: '✅ ${res.data} ℃');
     } else {
-      BotToast.showText(text: '❌ Failed: ${res.error}');
+      BotToast.showText(text: '❌ ${appState.localizations.failed}:\n${res.error}');
     }
   }
 
   Future<void> resetModule() async {
     final result = await RfidManager.instance.resetUhf();
-    showResult(result, 'Reset Module', false);
+    showResult(result);
   }
 
   Future<void> getFrequency() async {
@@ -66,12 +66,12 @@ class SettingsViewModel {
     if (res.result) {
       selectedFrequency.value = res.data ?? RfidFrequency.china1;
     }
-    showResult(res, 'Frequency', true);
+    showResult(res);
   }
 
   Future<void> setFrequency() async {
     final result = await RfidManager.instance.setFrequency(selectedFrequency.value);
-    showResult(result, 'Set Frequency', false);
+    showResult(result);
   }
 
   Future<void> getPower() async {
@@ -79,12 +79,12 @@ class SettingsViewModel {
     if (res.result) {
       selectedPower.value = res.data ?? 1;
     }
-    showResult(res, 'Power', true);
+    showResult(res);
   }
 
   Future<void> setPower() async {
     final result = await RfidWithUart.instance.setPower(selectedPower.value.round());
-    showResult(result, 'Set Power', false);
+    showResult(result);
   }
 
   Future<void> getRfLink() async {
@@ -92,12 +92,12 @@ class SettingsViewModel {
     if (res.result) {
       selectedRfLink.value = res.data!;
     }
-    showResult(res, 'RfLink', true);
+    showResult(res);
   }
 
   Future<void> setRfLink() async {
     final result = await RfidManager.instance.setRfLink(selectedRfLink.value);
-    showResult(result, 'Set RfLink', false);
+    showResult(result);
   }
 
   Future<void> setInventoryMode() async {
@@ -107,7 +107,7 @@ class SettingsViewModel {
       length: selectedLength.value,
     );
     final result = await RfidManager.instance.setInventoryMode(inventoryMode);
-    showResult(result, 'Set Inventory Mode', false);
+    showResult(result);
   }
 
   Future<void> getInventoryMode() async {
@@ -117,7 +117,7 @@ class SettingsViewModel {
       selectedOffset.value = res.data!.offset;
       selectedLength.value = res.data!.length;
     }
-    showResult(res, 'Inventory Mode', false);
+    showResult(res);
   }
 
   Future<void> setGen2() async {
@@ -126,7 +126,7 @@ class SettingsViewModel {
       queryTarget: selectedQueryTarget.value,
     );
     final result = await RfidManager.instance.setGen2(gen2);
-    showResult(result, 'Set Gen2', false);
+    showResult(result);
   }
 
   Future<void> getGen2() async {
@@ -135,27 +135,27 @@ class SettingsViewModel {
       selectedQuerySession.value = res.data!.querySession ?? RfidGen2.querySessionS0;
       selectedQueryTarget.value = res.data!.queryTarget ?? RfidGen2.queryTargetA;
     }
-    showResult(res, 'Gen2', false);
+    showResult(res);
   }
 
   Future<void> resetUhf() async {
     final result = await RfidManager.instance.resetUhf();
-    showResult(result, 'Reset Uhf', false);
+    showResult(result);
   }
 
   Future<void> setFastId(bool enabled) async {
     final result = await RfidManager.instance.setFastId(enabled);
-    showResult(result, 'Set FastId', false);
+    showResult(result);
   }
 
   Future<void> setTagFocus(bool enabled) async {
     final result = await RfidManager.instance.setTagFocus(enabled);
-    showResult(result, 'Set Tag Focus', false);
+    showResult(result);
   }
 
   Future<void> setFastInventory(bool enabled) async {
     final result = await RfidManager.instance.setFastInventory(enabled);
-    showResult(result, 'Set Fast Inventory', false);
+    showResult(result);
   }
 
   // 天线状态相关方法
@@ -180,7 +180,7 @@ class SettingsViewModel {
         }
       }
     }
-    showResult(res, 'Get Antenna State', false);
+    showResult(res);
   }
 
   Future<void> setAntennaState() async {
@@ -191,6 +191,6 @@ class SettingsViewModel {
       antenna4State.value,
     ];
     final result = await RfidWithUra4.instance.setAntennaState(antennaStates);
-    showResult(result, 'Set Antenna State', false);
+    showResult(result);
   }
 }

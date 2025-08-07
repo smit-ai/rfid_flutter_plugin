@@ -2,6 +2,7 @@ import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import '../entity/rfid_manager.dart';
+import 'package:rfid_flutter_android_example/entity/app_global_state.dart';
 
 class ReadWriteViewModel {
   final filter = signal(RfidFilter(
@@ -29,15 +30,15 @@ class ReadWriteViewModel {
     if (res.result) {
       final readData = res.data ?? '';
       data.value = readData;
-      BotToast.showText(text: '✅ Read data successfully:\n$readData');
+      BotToast.showText(text: '${appState.localizations.readDataSuccess}:\n$readData');
     } else {
-      BotToast.showText(text: '❌ Read Data Failed: ${res.error}');
+      BotToast.showText(text: '${appState.localizations.readDataFailed}:\n${res.error}');
     }
   }
 
   Future<void> writeData() async {
     if (data.value.isEmpty) {
-      BotToast.showText(text: '❌ Please enter data to write first');
+      BotToast.showText(text: appState.localizations.pleaseEnterData);
       return;
     }
 
@@ -51,9 +52,9 @@ class ReadWriteViewModel {
     );
 
     if (result.isEffective) {
-      BotToast.showText(text: '✅ Write data successfully');
+      BotToast.showText(text: appState.localizations.writeDataSuccess);
     } else {
-      BotToast.showText(text: '❌ Write data failed${result.error == null ? '' : ': ${result.error}'}');
+      BotToast.showText(text: '${appState.localizations.writeDataFailed}${result.error == null ? '' : ': ${result.error}'}');
     }
   }
 

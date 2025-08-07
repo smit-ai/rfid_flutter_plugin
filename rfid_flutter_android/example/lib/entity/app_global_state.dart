@@ -16,7 +16,7 @@ class AppGlobalState {
   final Signal<bool> isHandset = Signal(true);
 
   AppGlobalState._() {
-    _initLocale(); // 初始化语言设置
+    _initLocale();
     RfidWithDeviceInfo.instance.isHandset().then((res) {
       isHandset.value = res.isEffective;
     });
@@ -48,6 +48,11 @@ class AppGlobalState {
     currentLocale.value = locale;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('languageCode', locale.languageCode);
+  }
+
+  // 获取多语言文本的方法 - 用于ViewModel等没有context的场景
+  AppLocalizations get localizations {
+    return lookupAppLocalizations(currentLocale.value);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../entity/app_global_state.dart';
 import '../view_model/settings_view_model.dart';
 
@@ -92,16 +93,16 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('UART Basic Functions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(AppLocalizations.of(context)!.basicFunctions, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getUhfFirmwareVersion, child: const Text('Firmware Ver')),
+              child: ElevatedButton(onPressed: viewModel.getUhfFirmwareVersion, child: Text(AppLocalizations.of(context)!.firmwareVer)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getUhfHardwareVersion, child: const Text('Hardware Ver')),
+              child: ElevatedButton(onPressed: viewModel.getUhfHardwareVersion, child: Text(AppLocalizations.of(context)!.hardwareVer)),
             ),
           ],
         ),
@@ -109,7 +110,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getTemperature, child: const Text('Temperature')),
+              child: ElevatedButton(onPressed: viewModel.getTemperature, child: Text(AppLocalizations.of(context)!.temperature)),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -119,23 +120,23 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Reset Module'),
-                      content: const Text('Are you sure you want to reset all settings?'),
+                      title: Text(AppLocalizations.of(context)!.resetModuleTitle),
+                      content: Text(AppLocalizations.of(context)!.resetModuleContent),
                       actions: [
-                        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                        TextButton(onPressed: () => Navigator.pop(context), child: Text(AppLocalizations.of(context)!.cancel)),
                         TextButton(
                           onPressed: () {
                             viewModel.resetModule();
                             // 关闭弹窗
                             Navigator.pop(context);
                           },
-                          child: const Text('Reset'),
+                          child: Text(AppLocalizations.of(context)!.reset),
                         ),
                       ],
                     ),
                   );
                 },
-                child: const Text('Reset Module'),
+                child: Text(AppLocalizations.of(context)!.resetModule),
               ),
             ),
           ],
@@ -148,15 +149,15 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Frequency', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(AppLocalizations.of(context)!.frequency, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         Watch.builder(builder: (context) {
           return DropdownButtonFormField<RfidFrequency>(
             value: viewModel.selectedFrequency.watch(context),
-            decoration: const InputDecoration(
-              labelText: 'Select Frequency',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.selectFrequency,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
             items: _frequencyItems,
             onChanged: (frequency) {
@@ -170,11 +171,11 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.setFrequency, child: const Text('Set Frequency')),
+              child: ElevatedButton(onPressed: viewModel.setFrequency, child: Text(AppLocalizations.of(context)!.setFrequency)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getFrequency, child: const Text('Get Frequency')),
+              child: ElevatedButton(onPressed: viewModel.getFrequency, child: Text(AppLocalizations.of(context)!.getFrequency)),
             ),
           ],
         ),
@@ -186,18 +187,18 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'RF Link',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Text(
+          AppLocalizations.of(context)!.rfLink,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Watch.builder(builder: (context) {
           return DropdownButtonFormField<RfidRfLink>(
             value: viewModel.selectedRfLink.value,
-            decoration: const InputDecoration(
-              labelText: 'Select RF Link',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.selectRfLink,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
             items: _rfLinkItems,
             onChanged: (rfLink) {
@@ -211,11 +212,11 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.setRfLink, child: const Text('Set RF Link')),
+              child: ElevatedButton(onPressed: viewModel.setRfLink, child: Text(AppLocalizations.of(context)!.setRfLink)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getRfLink, child: const Text('Get RF Link')),
+              child: ElevatedButton(onPressed: viewModel.getRfLink, child: Text(AppLocalizations.of(context)!.getRfLink)),
             ),
           ],
         ),
@@ -227,7 +228,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Power', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(AppLocalizations.of(context)!.power, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(16),
@@ -239,7 +240,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Power Level:', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(AppLocalizations.of(context)!.powerLevel, style: const TextStyle(fontWeight: FontWeight.bold)),
               const SizedBox(height: 12),
               Watch.builder(builder: (context) {
                 final power = viewModel.selectedPower.value.toDouble();
@@ -270,7 +271,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
                       children: [
                         Text('1 dBm', style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
                         Text(
-                          'Current: ${power.round()} dBm',
+                          '${AppLocalizations.of(context)!.current}: ${power.round()} dBm',
                           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
                         ),
                         Text('30 dBm', style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
@@ -286,11 +287,11 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.setPower, child: const Text('Set Power')),
+              child: ElevatedButton(onPressed: viewModel.setPower, child: Text(AppLocalizations.of(context)!.setPower)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getPower, child: const Text('Get Power')),
+              child: ElevatedButton(onPressed: viewModel.getPower, child: Text(AppLocalizations.of(context)!.getPower)),
             ),
           ],
         ),
@@ -302,17 +303,17 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Inventory Mode', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(AppLocalizations.of(context)!.inventoryMode, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         Watch.builder(builder: (context) {
           return Column(
             children: [
               DropdownButtonFormField<RfidInventoryBank>(
                 value: viewModel.selectedInventoryBank.value,
-                decoration: const InputDecoration(
-                  labelText: 'Inventory Bank',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.inventoryBank,
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 ),
                 items: _inventoryBankItems,
                 onChanged: (bank) {
@@ -330,10 +331,10 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
                         key: ValueKey(viewModel.selectedOffset.value),
                         initialValue: viewModel.selectedOffset.value.toString(),
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Offset (word)',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.offsetWord,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         ),
                         onChanged: (value) {
                           final parsedValue = int.tryParse(value);
@@ -349,10 +350,10 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
                         key: ValueKey(viewModel.selectedLength.value),
                         initialValue: viewModel.selectedLength.value.toString(),
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Length (word)',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.lengthWord,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         ),
                         onChanged: (value) {
                           final parsedValue = int.tryParse(value);
@@ -372,11 +373,11 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.setInventoryMode, child: const Text('Set')),
+              child: ElevatedButton(onPressed: viewModel.setInventoryMode, child: Text(AppLocalizations.of(context)!.set)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getInventoryMode, child: const Text('Get')),
+              child: ElevatedButton(onPressed: viewModel.getInventoryMode, child: Text(AppLocalizations.of(context)!.get)),
             ),
           ],
         ),
@@ -388,7 +389,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Gen2 Parameters', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(AppLocalizations.of(context)!.gen2Parameters, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         Watch.builder(builder: (context) {
           return Row(
@@ -396,10 +397,10 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               Expanded(
                 child: DropdownButtonFormField<int>(
                   value: viewModel.selectedQuerySession.value,
-                  decoration: const InputDecoration(
-                    labelText: 'Query Session',
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.querySession,
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                   items: _querySessionItems,
                   onChanged: (value) {
@@ -413,10 +414,10 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               Expanded(
                 child: DropdownButtonFormField<int>(
                   value: viewModel.selectedQueryTarget.value,
-                  decoration: const InputDecoration(
-                    labelText: 'Query Target',
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.queryTarget,
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                   items: _queryTargetItems,
                   onChanged: (value) {
@@ -433,11 +434,11 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.setGen2, child: const Text('Set')),
+              child: ElevatedButton(onPressed: viewModel.setGen2, child: Text(AppLocalizations.of(context)!.set)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getGen2, child: const Text('Get')),
+              child: ElevatedButton(onPressed: viewModel.getGen2, child: Text(AppLocalizations.of(context)!.get)),
             ),
           ],
         ),
@@ -449,7 +450,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Antenna State', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(AppLocalizations.of(context)!.antennaState, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(16),
@@ -474,11 +475,11 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
         Row(
           children: [
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.setAntennaState, child: const Text('Set Antenna State')),
+              child: ElevatedButton(onPressed: viewModel.setAntennaState, child: Text(AppLocalizations.of(context)!.setAntennaState)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(onPressed: viewModel.getAntennaState, child: const Text('Get Antenna State')),
+              child: ElevatedButton(onPressed: viewModel.getAntennaState, child: Text(AppLocalizations.of(context)!.getAntennaState)),
             ),
           ],
         ),
@@ -516,7 +517,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
                     visualDensity: VisualDensity.standard,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  Text('Antenna $antennaNumber'),
+                  Text('${AppLocalizations.of(context)!.antenna} $antennaNumber'),
                 ],
               ),
             );
@@ -534,7 +535,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               initialValue: power.toString(),
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Power (dBm)',
+                labelText: AppLocalizations.of(context)!.powerDbm,
                 border: const OutlineInputBorder(),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 suffixText: 'dBm',
@@ -561,7 +562,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('FastId', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        Text(AppLocalizations.of(context)!.fastId, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -569,7 +570,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               child: ElevatedButton(
                 onPressed: () => viewModel.setFastId(true),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
-                child: const Text('Enable'),
+                child: Text(AppLocalizations.of(context)!.enable),
               ),
             ),
             const SizedBox(width: 12),
@@ -577,13 +578,13 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               child: ElevatedButton(
                 onPressed: () => viewModel.setFastId(false),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                child: const Text('Disable'),
+                child: Text(AppLocalizations.of(context)!.disable),
               ),
             ),
           ],
         ),
         const SizedBox(height: 16),
-        const Text('TagFocus', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        Text(AppLocalizations.of(context)!.tagFocus, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -591,7 +592,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               child: ElevatedButton(
                 onPressed: () => viewModel.setTagFocus(true),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
-                child: const Text('Enable'),
+                child: Text(AppLocalizations.of(context)!.enable),
               ),
             ),
             const SizedBox(width: 12),
@@ -599,13 +600,13 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               child: ElevatedButton(
                 onPressed: () => viewModel.setTagFocus(false),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                child: const Text('Disable'),
+                child: Text(AppLocalizations.of(context)!.disable),
               ),
             ),
           ],
         ),
         const SizedBox(height: 16),
-        const Text('FastInventory', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        Text(AppLocalizations.of(context)!.fastInventory, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -613,7 +614,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               child: ElevatedButton(
                 onPressed: () => viewModel.setFastInventory(true),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
-                child: const Text('Enable'),
+                child: Text(AppLocalizations.of(context)!.enable),
               ),
             ),
             const SizedBox(width: 12),
@@ -621,7 +622,7 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               child: ElevatedButton(
                 onPressed: () => viewModel.setFastInventory(false),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                child: const Text('Disable'),
+                child: Text(AppLocalizations.of(context)!.disable),
               ),
             ),
           ],

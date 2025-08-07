@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../view_model/inventory_view_model.dart';
 import '../widget/filter_widget.dart';
 import '../entity/app_global_state.dart';
@@ -62,7 +63,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 4),
             ),
-            child: const Text('Clear', style: TextStyle(fontSize: 16)),
+            child: Text(AppLocalizations.of(context)!.clear, style: const TextStyle(fontSize: 16)),
           ),
         ),
         const SizedBox(width: 4),
@@ -74,7 +75,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 4),
             ),
-            child: const Text('Single', style: TextStyle(fontSize: 16)),
+            child: Text(AppLocalizations.of(context)!.single, style: const TextStyle(fontSize: 16)),
           ),
         ),
         const SizedBox(width: 4),
@@ -88,7 +89,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
             ),
             child: Watch.builder(builder: (context) {
               return Text(
-                _viewModel.isInventoryRunning.watch(context) ? 'Stop' : 'Inventory',
+                _viewModel.isInventoryRunning.watch(context) ? AppLocalizations.of(context)!.stop : AppLocalizations.of(context)!.inventory,
                 style: const TextStyle(fontSize: 16),
               );
             }),
@@ -117,14 +118,14 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
                     visualDensity: VisualDensity.standard,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  const Text('Unique'),
+                  Text(AppLocalizations.of(context)!.tagUnique),
                 ],
               ),
             ),
           );
         }),
         const SizedBox(width: 10),
-        const Text("Duration: "),
+        Text("${AppLocalizations.of(context)!.duration}: "),
         SizedBox(
           width: 80,
           height: 40,
@@ -142,7 +143,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
             },
           ),
         ),
-        const Text("(s)"),
+        Text(AppLocalizations.of(context)!.seconds),
         const SizedBox(width: 20),
         // const Text("Time: "),
         Watch.builder(builder: (context) {
@@ -151,7 +152,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           );
         }),
-        const Text(" s"),
+        Text(" ${AppLocalizations.of(context)!.seconds}"),
       ],
     );
   }
@@ -177,7 +178,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
               children: [
                 Row(
                   children: [
-                    const Text('Tag: '),
+                    Text('${AppLocalizations.of(context)!.tag}: '),
                     Watch.builder(
                       builder: (context) {
                         return SizedBox(
@@ -189,7 +190,7 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
                         );
                       },
                     ),
-                    const Text('All: '),
+                    Text('${AppLocalizations.of(context)!.all}: '),
                     Watch.builder(
                       builder: (context) {
                         return Text(
@@ -205,14 +206,14 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
                     Container(
                       constraints: const BoxConstraints(minWidth: 50),
                       alignment: Alignment.center,
-                      child: const Text("Count"),
+                      child: Text(AppLocalizations.of(context)!.count),
                     ),
                     if (!appState.isHandset.value)
                       Container(
                         margin: const EdgeInsets.only(left: 4),
                         constraints: const BoxConstraints(minWidth: 50),
                         alignment: Alignment.center,
-                        child: const Text("Antenna"),
+                        child: Text(AppLocalizations.of(context)!.antenna),
                       ),
                     Container(
                       constraints: const BoxConstraints(minWidth: 50),

@@ -92,11 +92,11 @@ class InventoryViewModel {
     if (res.result) {
       final tagInfo = res.data;
       if (tagInfo != null) {
-        BotToast.showText(text: 'Single Inventory:\n${tagInfo.epc}');
+        BotToast.showText(text: tagInfo.epc);
         addTag(tagInfo);
       }
     } else {
-      BotToast.showText(text: 'Single Inventory Failed:\n${res.error}');
+      BotToast.showText(text: res.error ?? appState.localizations.failed);
     }
   }
 
@@ -111,7 +111,7 @@ class InventoryViewModel {
   // 开启连续盘点
   Future<void> startInventory() async {
     if (isInventoryRunning.value) {
-      BotToast.showText(text: 'Inventory is running');
+      BotToast.showText(text: appState.localizations.inventoryIsRunning);
       return;
     }
 
@@ -123,16 +123,16 @@ class InventoryViewModel {
     if (res.isEffective) {
       isInventoryRunning.value = true;
       _startInventoryTimer();
-      BotToast.showText(text: 'Start Inventory Success');
+      BotToast.showText(text: appState.localizations.startInventorySuccess);
     } else {
-      BotToast.showText(text: 'Start Inventory Failed: ${res.error}');
+      BotToast.showText(text: res.error ?? appState.localizations.failed);
     }
   }
 
   // 停止连续盘点
   Future<void> stopInventory() async {
     if (!isInventoryRunning.value) {
-      BotToast.showText(text: 'Inventory is not running');
+      BotToast.showText(text: appState.localizations.inventoryNotRunning);
       return;
     }
 
@@ -141,9 +141,9 @@ class InventoryViewModel {
     if (res.isEffective) {
       isInventoryRunning.value = false;
       _stopInventoryTimer();
-      BotToast.showText(text: 'Stop Inventory Success');
+      BotToast.showText(text: appState.localizations.stopInventorySuccess);
     } else {
-      BotToast.showText(text: 'Stop Inventory Failed: ${res.error}');
+      BotToast.showText(text: res.error ?? appState.localizations.failed);
     }
   }
 
@@ -154,7 +154,7 @@ class InventoryViewModel {
     allCount.value = 0;
     inventoryTime.value = 0.0;
     lastUpdateTimestamp.value = DateTime.now().millisecondsSinceEpoch;
-    BotToast.showText(text: 'Clear Data Already');
+    BotToast.showText(text: appState.localizations.clearDataAlready);
   }
 
   void _startInventoryTimer() {

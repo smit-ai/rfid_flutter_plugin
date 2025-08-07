@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:rfid_flutter_android_example/widget/filter_widget.dart';
 import 'package:rfid_flutter_android_example/view_model/lock_kill_view_model.dart';
 
@@ -80,7 +81,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
             children: [
               Icon(Icons.lock, color: Colors.orange.shade600),
               const SizedBox(width: 8.0),
-              const Text('Lock & Unlock', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text(
+                AppLocalizations.of(context)!.lockAndUnlock,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ],
           ),
           const SizedBox(height: 16.0),
@@ -88,12 +92,12 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
           // Lock Password Input
           TextFormField(
             controller: _lockPasswordController,
-            decoration: const InputDecoration(
-              labelText: 'Access Password',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.accessPassword,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
               isDense: true,
-              hintText: 'Can\'t use default password',
+              hintText: AppLocalizations.of(context)!.cantUseDefaultPassword,
             ),
             maxLength: 8,
           ),
@@ -105,7 +109,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Lock Mode:', style: TextStyle(fontWeight: FontWeight.w600)),
+                Text(
+                  AppLocalizations.of(context)!.lockMode,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
                 const SizedBox(height: 4.0),
                 // First row: Lock and Permanent Lock
                 Row(
@@ -113,7 +120,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                     Flexible(
                       flex: 2,
                       child: RadioListTile<RfidLockMode>(
-                        title: const Text('Lock', style: TextStyle(fontSize: 14)),
+                        title: Text(
+                          AppLocalizations.of(context)!.lock,
+                          style: const TextStyle(fontSize: 14),
+                        ),
                         value: RfidLockMode.lock,
                         groupValue: _viewModel.lockMode.value,
                         onChanged: (value) {
@@ -130,7 +140,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                     Flexible(
                       flex: 3,
                       child: RadioListTile<RfidLockMode>(
-                        title: const Text('Permanent Lock', style: TextStyle(fontSize: 14)),
+                        title: Text(
+                          AppLocalizations.of(context)!.permanentLock,
+                          style: const TextStyle(fontSize: 14),
+                        ),
                         value: RfidLockMode.permanentLock,
                         groupValue: _viewModel.lockMode.value,
                         onChanged: (value) {
@@ -152,7 +165,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                     Flexible(
                       flex: 2,
                       child: RadioListTile<RfidLockMode>(
-                        title: const Text('Unlock', style: TextStyle(fontSize: 14)),
+                        title: Text(
+                          AppLocalizations.of(context)!.unlock,
+                          style: const TextStyle(fontSize: 14),
+                        ),
                         value: RfidLockMode.unlock,
                         groupValue: _viewModel.lockMode.value,
                         onChanged: (value) {
@@ -169,7 +185,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                     Flexible(
                       flex: 3,
                       child: RadioListTile<RfidLockMode>(
-                        title: const Text('Permanent Unlock', style: TextStyle(fontSize: 14)),
+                        title: Text(
+                          AppLocalizations.of(context)!.permanentUnlock,
+                          style: const TextStyle(fontSize: 14),
+                        ),
                         value: RfidLockMode.permanentUnlock,
                         groupValue: _viewModel.lockMode.value,
                         onChanged: (value) {
@@ -196,7 +215,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Banks to Lock:', style: TextStyle(fontWeight: FontWeight.w600)),
+                Text(
+                  AppLocalizations.of(context)!.banksToLock,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
                 const SizedBox(height: 8.0),
                 // Use Wrap for automatic line wrapping
                 Wrap(
@@ -222,7 +244,6 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                         },
                         controlAffinity: ListTileControlAffinity.leading,
                         dense: true,
-                        enabled: bank != RfidLockBank.tid,
                         contentPadding: EdgeInsets.zero,
                         activeColor: Colors.orange,
                         visualDensity: VisualDensity.compact,
@@ -246,7 +267,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
-              child: const Text('Lock Tag', style: TextStyle(fontSize: 16)),
+              child: Text(
+                AppLocalizations.of(context)!.lockTag,
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
           ),
         ],
@@ -270,7 +294,7 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
               Icon(Icons.delete, color: Colors.red.shade600),
               const SizedBox(width: 8.0),
               Text(
-                'Kill Tag',
+                AppLocalizations.of(context)!.killTag,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red.shade600),
               ),
             ],
@@ -289,7 +313,7 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                 const SizedBox(width: 8.0),
                 Expanded(
                   child: Text(
-                    'Warning: This operation permanently destroys the tag and cannot be undone!',
+                    AppLocalizations.of(context)!.warningKillTag,
                     style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.w500, fontSize: 13),
                   ),
                 ),
@@ -301,12 +325,12 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
           // Kill Password Input
           TextFormField(
             controller: _killPasswordController,
-            decoration: const InputDecoration(
-              labelText: 'Kill Password',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.killPassword,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
               isDense: true,
-              hintText: 'Can\'t use default password',
+              hintText: AppLocalizations.of(context)!.cantUseDefaultPassword,
             ),
             maxLength: 8,
           ),
@@ -323,7 +347,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 10),
               ),
-              child: const Text('Kill Tag', style: TextStyle(fontSize: 16)),
+              child: Text(
+                AppLocalizations.of(context)!.killTag,
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
           ),
         ],

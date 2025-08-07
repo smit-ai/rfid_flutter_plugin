@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../view_model/read_write_view_model.dart';
 import '../widget/filter_widget.dart';
 
@@ -73,10 +74,10 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                 // Bank
                 Watch.builder(builder: (context) {
                   return InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: 'Bank',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 0),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.bank,
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
                       isDense: true,
                     ),
                     child: Transform.translate(
@@ -106,10 +107,10 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                       child: TextFormField(
                         controller: _offsetController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Offset (word)',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                        decoration: InputDecoration(
+                          labelText: '${AppLocalizations.of(context)!.offset} (${AppLocalizations.of(context)!.word})',
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                           isDense: true,
                         ),
                       ),
@@ -119,10 +120,10 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                       child: TextFormField(
                         controller: _lengthController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Length (word)',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                        decoration: InputDecoration(
+                          labelText: '${AppLocalizations.of(context)!.length} (${AppLocalizations.of(context)!.word})',
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                           isDense: true,
                         ),
                       ),
@@ -137,12 +138,12 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                   return TextFormField(
                     initialValue: _viewModel.password.value,
                     onChanged: (value) => _viewModel.password.value = value,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.password,
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                       isDense: true,
-                      hintText: 'Enter password',
+                      hintText: AppLocalizations.of(context)!.enterPassword,
                     ),
                   );
                 }),
@@ -153,12 +154,12 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                 Watch.builder(builder: (context) {
                   return TextFormField(
                     controller: _dataController,
-                    decoration: const InputDecoration(
-                      labelText: 'Data (hex)',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    decoration: InputDecoration(
+                      labelText: '${AppLocalizations.of(context)!.data} (hex)',
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                       isDense: true,
-                      hintText: 'Enter hex data',
+                      hintText: AppLocalizations.of(context)!.enterHexData,
                     ),
                   );
                 }),
@@ -176,7 +177,7 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
-                        child: const Text('Write', style: TextStyle(fontSize: 16)),
+                        child: Text(AppLocalizations.of(context)!.write, style: const TextStyle(fontSize: 16)),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -188,7 +189,7 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
-                        child: const Text('Read', style: TextStyle(fontSize: 16)),
+                        child: Text(AppLocalizations.of(context)!.read, style: const TextStyle(fontSize: 16)),
                       ),
                     ),
                   ],

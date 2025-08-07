@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import 'package:signals/signals_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilterWidget extends StatefulWidget {
   final RfidFilter filter;
@@ -112,7 +113,10 @@ class _FilterWidgetState extends State<FilterWidget> {
                             visualDensity: VisualDensity.standard,
                             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          const Text('Filter', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                          Text(
+                            AppLocalizations.of(context)!.filter,
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
                         ],
                       ),
                     ),
@@ -153,10 +157,10 @@ class _FilterWidgetState extends State<FilterWidget> {
                   Watch.builder(builder: (context) {
                     final selectedBank = _selectedBank.watch(context);
                     return InputDecorator(
-                      decoration: const InputDecoration(
-                        labelText: 'Bank',
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 0),
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.bank,
+                        border: const OutlineInputBorder(),
+                        contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
                         isDense: true,
                       ),
                       child: Transform.translate(
@@ -180,10 +184,10 @@ class _FilterWidgetState extends State<FilterWidget> {
                         child: TextFormField(
                           controller: _offsetController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Offset (bit)',
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                          decoration: InputDecoration(
+                            labelText: '${AppLocalizations.of(context)!.offset} (bit)',
+                            border: const OutlineInputBorder(),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                             isDense: true,
                           ),
                           onChanged: (value) {
@@ -197,10 +201,10 @@ class _FilterWidgetState extends State<FilterWidget> {
                         child: TextFormField(
                           controller: _lengthController,
                           keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Length (bit)',
-                            border: OutlineInputBorder(),
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                          decoration: InputDecoration(
+                            labelText: '${AppLocalizations.of(context)!.length} (bit)',
+                            border: const OutlineInputBorder(),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                             isDense: true,
                           ),
                           onChanged: (value) {
@@ -214,12 +218,12 @@ class _FilterWidgetState extends State<FilterWidget> {
                   const SizedBox(height: 14.0),
                   TextFormField(
                     controller: _dataController,
-                    decoration: const InputDecoration(
-                      labelText: 'Data (hex)',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                    decoration: InputDecoration(
+                      labelText: '${AppLocalizations.of(context)!.data} (hex)',
+                      border: const OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                       isDense: true,
-                      hintText: 'Enter hex data',
+                      hintText: AppLocalizations.of(context)!.enterHexData,
                     ),
                     onChanged: _updateDataAndLength,
                   ),
