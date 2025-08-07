@@ -255,14 +255,14 @@ class RfidWithUart implements RfidInterface {
       // 启用过滤器
       final res = await setFilter(filter);
       if (res.isIneffective) {
-        return RfidResult.failure("failed${res.error == null ? '' : ': ${res.error}'}");
+        return RfidResult.failure(res.error);
       }
     } else {
       // 禁用过滤器 - 设置一个空的过滤器
       final emptyFilter = RfidFilter(enabled: true, bank: RfidBank.epc, offset: 0, length: 0, data: '');
       final res = await setFilter(emptyFilter);
       if (res.isIneffective) {
-        return RfidResult.failure("failed${res.error == null ? '' : ': ${res.error}'}");
+        return RfidResult.failure(res.error);
       }
     }
 
