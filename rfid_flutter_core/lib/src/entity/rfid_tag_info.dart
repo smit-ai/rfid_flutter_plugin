@@ -54,6 +54,15 @@ class RfidTagInfo {
   /// 由rssi转化而来，一般只在进行特殊操作时才需要此字段数据
   int value;
 
+  /// Tag extensions for custom data storage <br/>
+  /// 标签扩展字段，用于存储自定义数据
+  ///
+  /// This field allows users to attach custom data to tags without modifying the core API.
+  /// Default is an empty map. <br/>
+  /// 此字段允许用户在不修改核心API的情况下为标签附加自定义数据。
+  /// 默认为空Map。
+  Map<String, dynamic> extensions;
+
   /// Create a new RfidTagInfo instance <br/>
   /// 创建新的RfidTagInfo实例
   ///
@@ -71,11 +80,14 @@ class RfidTagInfo {
     this.direction = -1,
     this.value = -1,
     int? timestamp,
-  }) : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch;
+    Map<String, dynamic>? extensions,
+  })  : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch,
+        extensions = extensions ?? {};
 
   /// Create a copy of this RfidTagInfo with some fields replaced <br/>
   /// 创建此RfidTagInfo的副本，替换某些字段
   RfidTagInfo copyWith({
+    String? reserved,
     String? epc,
     String? tid,
     String? user,
@@ -86,8 +98,10 @@ class RfidTagInfo {
     int? direction,
     int? value,
     int? timestamp,
+    Map<String, dynamic>? extensions,
   }) {
     return RfidTagInfo(
+      reserved: reserved ?? this.reserved,
       epc: epc ?? this.epc,
       tid: tid ?? this.tid,
       user: user ?? this.user,
@@ -98,6 +112,7 @@ class RfidTagInfo {
       direction: direction ?? this.direction,
       value: value ?? this.value,
       timestamp: timestamp ?? this.timestamp,
+      extensions: extensions ?? Map<String, dynamic>.from(this.extensions),
     );
   }
 
@@ -105,6 +120,7 @@ class RfidTagInfo {
   /// 转换为 Map，便于序列化
   Map<String, dynamic> toMap() {
     return {
+      'reserved': reserved,
       'epc': epc,
       'tid': tid,
       'user': user,
@@ -115,6 +131,7 @@ class RfidTagInfo {
       'direction': direction,
       'value': value,
       'timestamp': timestamp,
+      'extensions': extensions,
     };
   }
 
@@ -130,6 +147,7 @@ class RfidTagInfo {
       final Map<String, dynamic> map = data is Map<String, dynamic> ? data : Map<String, dynamic>.from(data as Map);
 
       return RfidTagInfo(
+        reserved: map['reserved'] as String? ?? '',
         epc: map['epc'] as String? ?? '',
         tid: map['tid'] as String? ?? '',
         user: map['user'] as String? ?? '',
@@ -140,6 +158,7 @@ class RfidTagInfo {
         direction: map['direction'] as int? ?? -1,
         value: map['value'] as int? ?? -1,
         timestamp: map['timestamp'] as int? ?? 0,
+        extensions: map['extensions'] as Map<String, dynamic>?,
       );
     } catch (e) {
       print('RfidTagInfo.fromMap error: $e');
