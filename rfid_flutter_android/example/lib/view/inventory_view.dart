@@ -251,21 +251,12 @@ class _InventoryViewState extends State<InventoryView> with AutomaticKeepAliveCl
                         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                         child: Row(
                           children: [
-                            // 标签信息部分
+                            // Tag Info 标签信息部分
                             Expanded(
                               child: SelectableText(
                                 tag.displayText,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
-                              // child: Column(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     if (tag.reserved.isNotEmpty) SelectableText('RESERVED: ${tag.reserved}'),
-                              //     SelectableText('${tag.tid.isEmpty && tag.reserved.isEmpty ? tag.epc : 'EPC: ${tag.epc}'} '),
-                              //     if (tag.tid.isNotEmpty) SelectableText('TID: ${tag.tid}'),
-                              //     if (tag.user.isNotEmpty) SelectableText('USER: ${tag.user}'),
-                              //   ],
-                              // ),
                             ),
                             // Count
                             Container(

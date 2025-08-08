@@ -10,7 +10,7 @@ extension RfidTagInfoDisplay on RfidTagInfo {
     if (cached != null) return cached;
 
     // If not cached, build and cache to extensions
-    // 缓存中没有，则计算并缓存到 extensions
+    // 缓存中没有，则构建并缓存到 extensions
     final result = buildDisplayText();
     extensions['displayText'] = result;
     return result;
