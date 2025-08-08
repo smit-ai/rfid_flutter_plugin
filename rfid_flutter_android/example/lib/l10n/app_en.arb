@@ -123,5 +123,10 @@
   "tagFocus": "TagFocus",
   "fastInventory": "FastInventory",
   "resetUhf": "Reset UHF"
-  
+  ,
+  "serialNumber": "Serial Number",
+  "imei1": "IMEI 1",
+  "imei2": "IMEI 2",
+  "refresh": "Refresh",
+  "retry": "Retry"
 }

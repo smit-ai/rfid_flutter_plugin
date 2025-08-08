@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../entity/app_global_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:rfid_flutter_android_example/view/device_info_view.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({super.key});
@@ -55,7 +56,7 @@ class AppBottomSheet extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey[50],
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
+        border: Border.all(color: Colors.grey[300]!),
       ),
       child: Row(
         children: [
@@ -137,17 +138,22 @@ class AppBottomSheet extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          // TODO: 实现设备信息功能
           Navigator.pop(context);
+          showDialog(
+            context: context,
+            builder: (context) => const DeviceInfoView(),
+          );
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.grey[50],
+          foregroundColor: Colors.grey[800],
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          elevation: 2,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          side: BorderSide(color: Colors.grey[300]!),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

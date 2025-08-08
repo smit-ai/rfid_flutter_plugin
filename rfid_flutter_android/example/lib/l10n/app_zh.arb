@@ -123,5 +123,10 @@
   "tagFocus": "标签聚焦",
   "fastInventory": "快速盘点",
   "resetUhf": "重置UHF"
-  
+  ,
+  "serialNumber": "序列号",
+  "imei1": "IMEI 1",
+  "imei2": "IMEI 2",
+  "refresh": "刷新",
+  "retry": "重试"
 }
