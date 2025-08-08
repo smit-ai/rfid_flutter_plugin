@@ -66,6 +66,7 @@ android {
 
         compileOnly files("$flutterRoot/bin/cache/artifacts/engine/android-arm/flutter.jar")
         compileOnly 'androidx.annotation:annotation:1.1.0'
+//        compileOnly 'androidx.core:core:1.9.0'
 
         testImplementation 'junit:junit:4.13.2'
         testImplementation 'org.mockito:mockito-core:5.0.0'

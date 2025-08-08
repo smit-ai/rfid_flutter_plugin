@@ -1,6 +1,7 @@
 package com.rfid.rfid_flutter_android.utils;
 
 import com.rscja.deviceapi.entity.UHFTAGInfo;
+import com.rscja.team.qcom.utility.LogUtility_qcom;
 import com.rscja.utility.StringUtility;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class TagUtil {
         map.put("rssi", tagInfo.getRssi());
         map.put("count", tagInfo.getCount());
         map.put("antenna", StringUtility.string2Int(tagInfo.getAnt(), 1));
-        LogUtil.i("Tag Map: " + map);
+        //LogUtility_qcom.myLogV("TagUtil", "Tag Map: " + map);
         return map;
     }
 

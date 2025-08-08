@@ -1,22 +1,20 @@
 package com.rfid.rfid_flutter_android.channel;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.gson.Gson;
 import com.rfid.rfid_flutter_android.utils.TagUtil;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.Gen2Entity;
 import com.rscja.deviceapi.entity.InventoryModeEntity;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 import com.rscja.deviceapi.interfaces.IUHF;
+import com.rscja.team.qcom.utility.LogUtility_qcom;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -85,7 +83,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
                     result.error(TAG, "Not initialized", "");
                     return;
                 }
-                Log.i(TAG, "Method: " + methodCall.method + " with args: " + methodCall.arguments);
+                LogUtility_qcom.myLogInfo(TAG, "Method: " + methodCall.method + " with args: " + methodCall.arguments);
 
                 MethodHandler handler = methodHandlers.get(methodCall.method);
                 if (handler != null) {
@@ -137,7 +135,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
         boolean success = mReader.setFilter(bank, offset, length, data);
         result.success(success);
 
-        Log.i(TAG, "setFilter: " + bank + " " + offset + " " + length + " " + data + " success=" + success);
+        LogUtility_qcom.myLogV(TAG, "setFilter: " + bank + " " + offset + " " + length + " " + data + " success=" + success);
     }
 
     private void singleInventory(MethodCall methodCall, MethodChannel.Result result) {
@@ -168,7 +166,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
         int offset = (int) map.get("offset");
         int length = (int) map.get("length");
         String password = (String) map.get("password");
-        Log.i(TAG, "readData bank=" + bank + " offset=" + offset + " length=" + length);
+        LogUtility_qcom.myLogV(TAG, "readData bank=" + bank + " offset=" + offset + " length=" + length);
 
         Object filterObj = map.get("filter");
         boolean useFilter = false;
@@ -193,7 +191,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
             int filterOffset = (int) filter.get("offset");
             int filterLength = (int) filter.get("length");
             String filterData = (String) filter.get("data");
-            Log.d(TAG, "readData filter: " + filter);
+            LogUtility_qcom.myLogV(TAG, "readData filter: " + filter);
             String data = mReader.readData(
                     password,
                     filterBank,
@@ -224,7 +222,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
         int length = (int) map.get("length");
         String password = (String) map.get("password");
         String data = (String) map.get("data");
-        Log.i(TAG, "writeData bank=" + bank + " offset=" + offset + " length=" + length + " data=" + data);
+        LogUtility_qcom.myLogV(TAG, "writeData bank=" + bank + " offset=" + offset + " length=" + length + " data=" + data);
 
         Object filterObj = map.get("filter");
         boolean useFilter = false;
@@ -244,7 +242,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
             int filterOffset = (int) filter.get("offset");
             int filterLength = (int) filter.get("length");
             String filterData = (String) filter.get("data");
-            Log.d(TAG, "writeData filter: " + filter);
+            LogUtility_qcom.myLogV(TAG, "writeData filter: " + filter);
             result.success(mReader.writeData(
                     password,
                     filterBank,
@@ -268,7 +266,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
         }
         String password = (String) map.get("password");
         String lockCode = (String) map.get("lockCode");
-        Log.i(TAG, "lockTag: " + password + " " + lockCode);
+        LogUtility_qcom.myLogV(TAG, "lockTag: " + password + " " + lockCode);
 
         Object filterObj = map.get("filter");
         boolean useFilter = false;
@@ -288,7 +286,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
             int filterOffset = (int) filter.get("offset");
             int filterLength = (int) filter.get("length");
             String filterData = (String) filter.get("data");
-            Log.d(TAG, "lockTag filter: " + filter);
+            LogUtility_qcom.myLogV(TAG, "lockTag filter: " + filter);
             result.success(mReader.lockMem(
                     password,
                     filterBank,
@@ -335,7 +333,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
                     filterData
             );
             result.success(success);
-            Log.i(TAG, "killTag filter: " + filter + ", password=" + password + ", success=" + success);
+            LogUtility_qcom.myLogV(TAG, "killTag filter: " + filter + ", password=" + password + ", success=" + success);
         }
     }
 

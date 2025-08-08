@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import com.rscja.CWDeviceInfo;
 import com.rscja.team.qcom.DeviceConfiguration_qcom;
+import com.rscja.team.qcom.utility.LogUtility_qcom;
 
 import java.lang.reflect.Method;
 import java.net.NetworkInterface;
@@ -23,7 +24,7 @@ public class DeviceUtil {
     private static final String TAG = "DeviceUtil";
 
     public static String getImei(Context context, String[] imei2) {
-        LogUtil.i("DeviceUtil", "getImei " + CWDeviceInfo.getDeviceInfo().getModel() + " " + DeviceConfiguration_qcom.getModel());
+        LogUtility_qcom.myLogV("DeviceUtil", "getImei " + CWDeviceInfo.getDeviceInfo().getModel() + " " + DeviceConfiguration_qcom.getModel());
         if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C60_QCM2150_100)) {
             return getImeiC60(imei2);
         } else if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.C60_SMD450_100)
@@ -39,7 +40,7 @@ public class DeviceUtil {
         } else if (CWDeviceInfo.getDeviceInfo().getTeam() == CWDeviceInfo.TEAM_MTK) {
             return getImei_mtk(context, imei2);
         } else {
-            LogUtil.i("DeviceUtil", "into else");
+            LogUtility_qcom.myLogV("DeviceUtil", "into else");
             try {
                 TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
                 Class<?> clazz = manager.getClass();
@@ -85,7 +86,7 @@ public class DeviceUtil {
         if (strIMEI2 != null && imei2 != null && imei2.length > 0) {
             imei2[0] = strIMEI2;
         }
-        LogUtil.i(TAG, "getImeiC60_smd450 imei1=" + imei1 + " imei2=" + (imei2 == null ? "null" : imei2[0]));
+        LogUtility_qcom.myLogV(TAG, "getImeiC60_smd450 imei1=" + imei1 + " imei2=" + (imei2 == null ? "null" : imei2[0]));
         return imei1;
     }
 
@@ -108,7 +109,7 @@ public class DeviceUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtil.i("DeviceUtil", "getSystemProperties " + properties + " = " + strState);
+        LogUtility_qcom.myLogV("DeviceUtil", "getSystemProperties " + properties + " = " + strState);
         return strState;
     }
 
@@ -135,7 +136,7 @@ public class DeviceUtil {
             ) {
                 String sn = getSystemProperties("vendor.gsm.serial");
                 sn = sn.substring(0, sn.indexOf(" "));
-                LogUtil.i("SN", "sn=" + sn + " sn.length=" + sn.length());
+                LogUtility_qcom.myLogV("SN", "sn=" + sn + " sn.length=" + sn.length());
                 return sn;
             } else if (CWDeviceInfo.getDeviceInfo().getTeam() == CWDeviceInfo.TEAM_MTK) {
                 return Settings.Global.getString(context.getContentResolver(), "Serial");
@@ -144,14 +145,14 @@ public class DeviceUtil {
                     try {
                         return Build.getSerial();
                     } catch (SecurityException e) {
-                        LogUtil.e("DeviceUtil", "No READ_PHONE_STATE permission to get serial number");
+                        LogUtility_qcom.myLogErr("DeviceUtil", "No READ_PHONE_STATE permission to get serial number");
                         return Build.UNKNOWN;
                     }
                 }
                 return "";
             }
         } catch (Exception e) {
-            LogUtil.e("DeviceUtil", "getSerialNum error:" + e);
+            LogUtility_qcom.myLogV("DeviceUtil", "getSerialNum error:" + e);
             return "";
         }
     }
@@ -168,7 +169,7 @@ public class DeviceUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtil.i(TAG, "getAndroid90Sn sn=" + strState);
+        LogUtility_qcom.myLogV(TAG, "getAndroid90Sn sn=" + strState);
         return strState;
     }
 
@@ -182,12 +183,12 @@ public class DeviceUtil {
         if (CWDeviceInfo.getDeviceInfo().getTeam() == CWDeviceInfo.TEAM_MTK) {
             btMac = Settings.Global.getString(context.getContentResolver(), "BtMac");
             if (!TextUtils.isEmpty(btMac)) {
-                LogUtil.i(TAG, "MTK btMac=" + btMac);
+                LogUtility_qcom.myLogV(TAG, "MTK btMac=" + btMac);
                 return btMac;
             }
         } else {
             String data = Settings.System.getString(context.getContentResolver(), "cw_bt_address");
-            LogUtil.i(TAG, "getBluetoothAddress cw_bt_address=" + data);
+            LogUtility_qcom.myLogV(TAG, "getBluetoothAddress cw_bt_address=" + data);
             if (!TextUtils.isEmpty(data)) {
                 return data;
             }
@@ -201,10 +202,10 @@ public class DeviceUtil {
         int uid1 = getUid(context, packageName);
         int systemUID = 1000;
         if (packageManager.checkSignatures(uid1, systemUID) == PackageManager.SIGNATURE_MATCH) {
-            LogUtil.i(TAG, "isSystemApplication: true");
+            LogUtility_qcom.myLogV(TAG, "isSystemApplication: true");
             return true;
         }
-        LogUtil.i(TAG, "isSystemApplication: false");
+        LogUtility_qcom.myLogV(TAG, "isSystemApplication: false");
         return false;
     }
 
@@ -212,7 +213,7 @@ public class DeviceUtil {
         try {
             PackageManager pm = context.getPackageManager();
             ApplicationInfo ai = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
-            //LogUtil.i(TAG, "ai.uid: " + ai.uid);
+            //LogUtility_qcom.myLogV(TAG, "ai.uid: " + ai.uid);
             return ai.uid;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -233,14 +234,14 @@ public class DeviceUtil {
         ) {
             String mac = Settings.System.getString(context.getContentResolver(), "cw_wifi_mac");
             String mac2 = getSharedPreferences(context, "cw_wifi_mac");
-            LogUtil.i(TAG, "getWifiMac mac=" + mac + "  mac2=" + mac2);
+            LogUtility_qcom.myLogV(TAG, "getWifiMac mac=" + mac + "  mac2=" + mac2);
 
             if (TextUtils.isEmpty(mac)) {
                 if (DeviceConfiguration_qcom.getModel().equals(DeviceConfiguration_qcom.P80_8953_90)) {
                     mac = getLocalMacAddress6Above();
                 }
             }
-            LogUtil.i(TAG, "Wifi mac=" + mac);
+            LogUtility_qcom.myLogV(TAG, "Wifi mac=" + mac);
             //校验是否是我们自己写的地址
             if (!TextUtils.isEmpty(mac)) {
                 if (mac.toLowerCase().startsWith("cc") || mac.toLowerCase().startsWith("6c:15:24")) {

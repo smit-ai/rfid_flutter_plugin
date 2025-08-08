@@ -43,8 +43,6 @@ public class RfidFlutterAndroidPlugin implements FlutterPlugin {
 
         MethodChannel channelDeviceInfo = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "rfid_flutter_android/deviceInfo");
         channelDeviceInfo.setMethodCallHandler(new DeviceInfoChannelHandler(context, executor));
-
-        LogUtility_qcom.setDebug(true);
     }
 
 

@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.rfid.rfid_flutter_android.utils.LogUtil;
 import com.rfid.rfid_flutter_android.utils.TagUtil;
 import com.rscja.deviceapi.RFIDWithUHFA4;
 import com.rscja.deviceapi.entity.AntennaConnectState;
@@ -15,6 +14,7 @@ import com.rscja.deviceapi.entity.InventoryModeEntity;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
 import com.rscja.deviceapi.enums.AntennaEnum;
 import com.rscja.deviceapi.interfaces.IUHF;
+import com.rscja.team.qcom.utility.LogUtility_qcom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +94,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
                     result.error(TAG, "Not initialized", "");
                     return;
                 }
-                LogUtil.i(TAG, "Method: " + methodCall.method + " with args: " + methodCall.arguments);
+                LogUtility_qcom.myLogV(TAG, "Method: " + methodCall.method + " with args: " + methodCall.arguments);
 
                 MethodHandler handler = methodHandlers.get(methodCall.method);
                 if (handler != null) {
@@ -143,7 +143,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
         boolean success = mReader.setFilter(bank, offset, length, data);
         result.success(success);
 
-        LogUtil.i(TAG, "setFilter: " + bank + " " + offset + " " + length + " " + data + " success=" + success);
+        LogUtility_qcom.myLogV(TAG, "setFilter: " + bank + " " + offset + " " + length + " " + data + " success=" + success);
     }
 
     private void singleInventory(MethodCall methodCall, MethodChannel.Result result) {
@@ -174,7 +174,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
         int offset = (int) map.get("offset");
         int length = (int) map.get("length");
         String password = (String) map.get("password");
-        LogUtil.i(TAG, "readData bank=" + bank + " offset=" + offset + " length=" + length);
+        LogUtility_qcom.myLogV(TAG, "readData bank=" + bank + " offset=" + offset + " length=" + length);
 
         Object filterObj = map.get("filter");
         boolean useFilter = false;
@@ -228,7 +228,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
         int length = (int) map.get("length");
         String password = (String) map.get("password");
         String data = (String) map.get("data");
-        LogUtil.i(TAG, "writeData bank=" + bank + " offset=" + offset + " length=" + length + " data=" + data);
+        LogUtility_qcom.myLogV(TAG, "writeData bank=" + bank + " offset=" + offset + " length=" + length + " data=" + data);
 
         Object filterObj = map.get("filter");
         boolean useFilter = false;
@@ -270,7 +270,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
         }
         String password = (String) map.get("password");
         String lockCode = (String) map.get("lockCode");
-        LogUtil.i(TAG, "lockTag password=" + password + " lockCode=" + lockCode);
+        LogUtility_qcom.myLogV(TAG, "lockTag password=" + password + " lockCode=" + lockCode);
 
         Object filterObj = map.get("filter");
         boolean useFilter = false;
@@ -334,7 +334,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
                     filterLength,
                     filterData);
             result.success(success);
-            LogUtil.i(TAG, "killTag filter: " + filter + ", password=" + password + ", success=" + success);
+            LogUtility_qcom.myLogV(TAG, "killTag filter: " + filter + ", password=" + password + ", success=" + success);
         }
     }
 
@@ -425,7 +425,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
             }
 
         } catch (Exception e) {
-            LogUtil.e(TAG, "setAntennaState error: " + e.getMessage(), e);
+            LogUtility_qcom.myLogErr(TAG, "setAntennaState error: " + e);
             result.error(TAG, "setAntennaState error: " + e.getMessage(), null);
         }
     }
@@ -504,7 +504,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
             result.success(antennaStateList);
 
         } catch (Exception e) {
-            LogUtil.e(TAG, "getAntennaState error: " + e.getMessage(), e);
+            LogUtility_qcom.myLogErr(TAG, "getAntennaState error: " + e);
             result.error(TAG, "getAntennaState error: " + e.getMessage(), null);
         }
     }

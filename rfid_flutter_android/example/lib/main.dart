@@ -71,6 +71,8 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
         appState.setCurrentPageIndex(_tabController.index);
       }
     });
+
+    // RfidWithDeviceInfo.instance.setDebug(true); // Open debug log, default is false
   }
 
   @override

@@ -102,15 +102,16 @@ class RfidWithDeviceInfo {
   Future<RfidResult<Map<String, dynamic>>> getDeviceInfo() async {
     try {
       final serialResult = await getSerialNumber();
-      final imeiResult = await getImei();
-      final handsetResult = await isHandset();
-
       if (!serialResult.result) {
         return RfidResult.failure('Failed to get serial number: ${serialResult.error}');
       }
+
+      final imeiResult = await getImei();
       if (!imeiResult.result) {
         return RfidResult.failure('Failed to get IMEI: ${imeiResult.error}');
       }
+
+      final handsetResult = await isHandset();
       if (!handsetResult.result) {
         return RfidResult.failure('Failed to check device type: ${handsetResult.error}');
       }
@@ -127,5 +128,35 @@ class RfidWithDeviceInfo {
     } catch (e) {
       return RfidResult.failure('Failed to get device info: $e');
     }
+  }
+
+  /// #### English
+  /// Switch debug log <br/>
+  /// Returns a [RfidResult] where `data` is `true` if the debug mode is set successfully, `false` if it fails. <br/>
+  /// On failure, `error` contains the error description. <br/>
+  ///
+  /// #### 中文
+  /// 开关调试日志 <br/>
+  /// 返回 [RfidResult]，成功时 `data` 为 [bool], `true` 表示调试模式设置成功，`false` 表示设置失败。 <br/>
+  /// 失败时 `error` 包含错误描述信息。 <br/>
+  Future<RfidResult<bool>> setDebug(bool value) async {
+    return _methodChannelHelper.invokeBoolMethod('setDebug', {'value': value});
+  }
+
+  /// #### English
+  /// Set the write log to file. <br/>
+  /// Before using, you need to apply for storage permissions, otherwise it will return failure. <br/>
+  /// The log file is saved in the root directory/DeviceAPI_Log.txt <br/>
+  /// Returns a [RfidResult] where `data` is `true` if the write log to file is set successfully, `false` if it fails. <br/>
+  /// On failure, `error` contains the error description. <br/>
+  ///
+  /// #### 中文
+  /// 设置日志保存到文件 <br/>
+  /// 使用前需要申请存储权限，否则会返回失败 <br/>
+  /// 日志文件保存在根目录/DeviceAPI_Log.txt <br/>
+  /// 返回 [RfidResult]，成功时 `data` 为 [bool], `true` 表示日志保存到文件设置成功，`false` 表示设置失败。 <br/>
+  /// 失败时 `error` 包含错误描述信息。 <br/>
+  Future<RfidResult<bool>> setWriteLog(bool value) async {
+    return _methodChannelHelper.invokeBoolMethod('setWriteLog', {'value': value});
   }
 }
