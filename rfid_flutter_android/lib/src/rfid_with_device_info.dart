@@ -147,13 +147,29 @@ class RfidWithDeviceInfo {
   /// Set the write log to file. <br/>
   /// Before using, you need to apply for storage permissions, otherwise it will return failure. <br/>
   /// The log file is saved in the root directory/DeviceAPI_Log.txt <br/>
+  ///
+  /// Note: You need to declare the following permissions:
+  /// ```xml
+  /// <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+  /// <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  /// <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  /// ```
+  ///
   /// Returns a [RfidResult] where `data` is `true` if the write log to file is set successfully, `false` if it fails. <br/>
   /// On failure, `error` contains the error description. <br/>
   ///
   /// #### 中文
   /// 设置日志保存到文件 <br/>
   /// 使用前需要申请存储权限，否则会返回失败 <br/>
-  /// 日志文件保存在根目录/DeviceAPI_Log.txt <br/>
+  /// 日志文件保存在 根目录/DeviceAPI_Log.txt <br/>
+  ///
+  /// 注意，使用本接口需要声明文件读写权限:
+  /// ```xml
+  /// <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+  /// <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  /// <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  /// ```
+  ///
   /// 返回 [RfidResult]，成功时 `data` 为 [bool], `true` 表示日志保存到文件设置成功，`false` 表示设置失败。 <br/>
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setWriteLog(bool value) async {

@@ -6,6 +6,8 @@
 
 RFID implementation package for the Android platform, supporting UART and URA4 related devices.
 
+**This plugin is intended only for a specific, pre-integrated device environment and is not a general-purpose RFID plugin; unvalidated devices may not function. Integrate with caution.**
+
 ## 📦 Features
 
 ### 🔌 Device Support
@@ -37,14 +39,6 @@ dependencies:
   rfid_flutter_android: ^0.1.0
 ```
 
-### 📱 Android Setup
-
-If using `RfidWithDeviceInfo` related interfaces, add the following permission to your `android/app/src/main/AndroidManifest.xml`:
-
-```xml
-<uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" tools:ignore="ProtectedPermissions" />
-```
-
 ### 📖 Basic Usage
 
 #### Import the Package
@@ -58,7 +52,6 @@ import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 ```dart
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 
-
 // Initialize RFID module
 final initRes = await RfidWithUart.instance.init();
 print(initRes.isEffective ? 'Initialization successful' : 'Initialization failed: ${initRes.error}');
@@ -66,13 +59,13 @@ print(initRes.isEffective ? 'Initialization successful' : 'Initialization failed
 final freeRes = await RfidWithUart.instance.free();
 print(freeRes.isEffective ? 'Release successful' : 'Release failed: ${freeRes.error}');
 
-
 // Listen to inventory data
 RfidWithUart.instance.rfidTagStream.listen((tags) {
-    for (final tag in tags) {
+  for (final tag in tags) {
     print('Found tag: ${tag.epc}');
-    }
+  }
 });
+
 // Start inventory
 final startRes = await RfidWithUart.instance.startInventory();
 print(startRes.isEffective ? 'Start inventory successful' : 'Start inventory failed: ${startRes.error}');
@@ -100,7 +93,6 @@ print(getPowerRes.result ? 'Get successful' : 'Get failed: ${getPowerRes.data}')
 ```dart
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 
-
 // Initialize RFID module
 final initRes = await RfidWithUra4.instance.init();
 print(initRes.isEffective ? 'Initialization successful' : 'Initialization failed: ${initRes.error}');
@@ -108,13 +100,13 @@ print(initRes.isEffective ? 'Initialization successful' : 'Initialization failed
 final freeRes = await RfidWithUra4.instance.free();
 print(freeRes.isEffective ? 'Release successful' : 'Release failed: ${freeRes.error}');
 
-
 // Listen to inventory data
 RfidWithUra4.instance.rfidTagStream.listen((tags) {
-    for (final tag in tags) {
+  for (final tag in tags) {
     print('Found tag: ${tag.epc}');
-    }
+  }
 });
+
 // Start inventory
 final startRes = await RfidWithUra4.instance.startInventory();
 print(startRes.isEffective ? 'Start inventory successful' : 'Start inventory failed: ${startRes.error}');
@@ -145,25 +137,25 @@ For more examples, please check the example application
 
 ### Main Classes
 
-| Class                | Description        |
-| -------------------- | ------------------ |
+| Class                | Description                |
+| -------------------- | -------------------------- |
 | `RfidWithUart`       | UART device implementation |
 | `RfidWithUra4`       | URA4 device implementation |
 | `RfidWithDeviceInfo` | Device information access  |
 
 ### Key Features
 
-| Feature           | UART | URA4 | Description                        |
-| ----------------- | ---- | ---- | ---------------------------------- |
-| Basic Operations  | ✅    | ✅    | Init, free                      |
-| Tag Inventory     | ✅    | ✅    | Single and continuous scanning     |
-| Tag Read/Write    | ✅    | ✅    | Memory bank access                 |
-| Tag Lock/Kill     | ✅    | ✅    | Security operations                |
-| Frequency Control | ✅    | ✅    | Global frequency support           |
-| Power Control     | ✅    | ✅    | 1-30 power levels                  |
-| Antenna Control   | ❌    | ✅    | Multi-antenna support              |
-| Gen2 Configuration| ✅    | ✅    | Protocol parameters                |
-| Other Features    | ✅    | ✅    | FastInventory, TagFocus, FastId, reset  |
+| Feature            | UART | URA4 | Description                            |
+| ------------------ | ---- | ---- | -------------------------------------- |
+| Basic Operations   | ✅    | ✅    | Init, free                             |
+| Tag Inventory      | ✅    | ✅    | Single and continuous scanning         |
+| Tag Read/Write     | ✅    | ✅    | Memory bank access                     |
+| Tag Lock/Kill      | ✅    | ✅    | Security operations                    |
+| Frequency Control  | ✅    | ✅    | Global frequency support               |
+| Power Control      | ✅    | ✅    | 1-30 power levels                      |
+| Antenna Control    | ❌    | ✅    | Multi-antenna support                  |
+| Gen2 Configuration | ✅    | ✅    | Protocol parameters                    |
+| Other Features     | ✅    | ✅    | FastInventory, TagFocus, FastId, reset |
 
 ## 🔗 Related Packages
 

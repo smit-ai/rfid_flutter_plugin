@@ -6,6 +6,8 @@
 
 Android 平台的 RFID 实现包，支持 UART 和 URA4 相关设备。
 
+**本插件仅适用于已完成适配的特定设备环境，非通用 RFID 插件；未经验证的设备可能无法工作，请谨慎集成。**
+
 ## 📦 功能特性
 
 ### 🔌 设备支持
@@ -37,14 +39,6 @@ dependencies:
   rfid_flutter_android: ^0.1.0
 ```
 
-### 📱 Android 配置
-
-若使用 `RfidWithDeviceInfo` 相关接口，需要在 `android/app/src/main/AndroidManifest.xml` 中添加以下权限：
-
-```xml
-<uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" tools:ignore="ProtectedPermissions" />
-```
-
 ### 📖 基本用法
 
 #### 导入包
@@ -58,7 +52,6 @@ import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 ```dart
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 
-
 // 初始化 RFID 模块
 final initRes = await RfidWithUart.instance.init();
 print(initRes.isEffective ? '初始化成功' : '初始化失败: ${initRes.error}');
@@ -66,13 +59,13 @@ print(initRes.isEffective ? '初始化成功' : '初始化失败: ${initRes.erro
 final freeRes = await RfidWithUart.instance.free();
 print(freeRes.isEffective ? '释放成功' : '释放失败: ${freeRes.error}');
 
-
 // 监听盘点数据
 RfidWithUart.instance.listen((tags) {
-    for (final tag in tags) {
+  for (final tag in tags) {
     print('发现标签: ${tag.epc}');
-    }
+  }
 });
+
 // 开始盘点
 final startRes = await RfidWithUart.instance.startInventory();
 print(startRes.isEffective ? '开启盘点成功' : '开启盘点失败: ${startRes.error}');
@@ -100,7 +93,6 @@ print(getPowerRes.result ? '获取成功' : '获取失败: ${getPowerRes.data}')
 ```dart
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 
-
 // 初始化 RFID 模块
 final initRes = await RfidWithUra4.instance.init();
 print(initRes.isEffective ? '初始化成功' : '初始化失败: ${initRes.error}');
@@ -108,13 +100,13 @@ print(initRes.isEffective ? '初始化成功' : '初始化失败: ${initRes.erro
 final freeRes = await RfidWithUra4.instance.free();
 print(freeRes.isEffective ? '释放成功' : '释放失败: ${freeRes.error}');
 
-
 // 监听盘点数据
 RfidWithUra4.instance.listen((tags) {
-    for (final tag in tags) {
+  for (final tag in tags) {
     print('发现标签: ${tag.epc}');
-    }
+  }
 });
+
 // 开始盘点
 final startRes = await RfidWithUra4.instance.startInventory();
 print(startRes.isEffective ? '开启盘点成功' : '开启盘点失败: ${startRes.error}');
@@ -153,16 +145,16 @@ print(getPowerRes.result ? '获取成功' : '获取失败: ${getPowerRes.data}')
 
 ### 核心功能
 
-| 功能          | UART | URA4 | 描述                            |
-| ------------- | ---- | ---- | ------------------------------- |
-| 基础操作      | ✅    | ✅    | 初始化、释放                   |
-| 标签盘点      | ✅    | ✅    | 单次和连续扫描                  |
-| 标签读写      | ✅    | ✅    | 内存区域访问                    |
-| 标签锁定/销毁 | ✅    | ✅    | 安全操作                        |
-| 频段控制      | ✅    | ✅    | 全球频段支持                    |
-| 功率控制      | ✅    | ✅    | 1-30 功率级别                   |
-| 天线控制      | ❌    | ✅    | 多天线支持                      |
-| Gen2 配置     | ✅    | ✅    | 协议参数                        |
+| 功能          | UART | URA4 | 描述                                  |
+| ------------- | ---- | ---- | ------------------------------------- |
+| 基础操作      | ✅    | ✅    | 初始化、释放                          |
+| 标签盘点      | ✅    | ✅    | 单次和连续扫描                        |
+| 标签读写      | ✅    | ✅    | 内存区域访问                          |
+| 标签锁定/销毁 | ✅    | ✅    | 安全操作                              |
+| 频段控制      | ✅    | ✅    | 全球频段支持                          |
+| 功率控制      | ✅    | ✅    | 1-30 功率级别                         |
+| 天线控制      | ❌    | ✅    | 多天线支持                            |
+| Gen2 配置     | ✅    | ✅    | 协议参数                              |
 | 其他功能      | ✅    | ✅    | FastInventory、TagFocus、FastId、重置 |
 
 ## 🔗 相关包
