@@ -2,7 +2,7 @@ name: Publish RFID Flutter Android
 on:
   push:
     tags:
-      - 'rfid_flutter_android-*.*.*'
+      - 'rfid_flutter_android-[0-9]+.[0-9]+.[0-9]+'
 jobs:
   publish:
     permissions:
