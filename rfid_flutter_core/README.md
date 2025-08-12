@@ -7,6 +7,7 @@
 `rfid_flutter_core` is the foundational core package for the RFID Flutter plugin architecture, providing essential interfaces, data classes, enums, and utilities required for RFID operations.   
 This package does not implement specific business logic but provides unified interfaces and data structure definitions for other RFID implementation packages.
 
+**This plugin is intended only for a specific, pre-integrated device environment and is not a general-purpose RFID plugin; unvalidated devices may not function. Integrate with caution.**
 
 ## ✨ Features
 
