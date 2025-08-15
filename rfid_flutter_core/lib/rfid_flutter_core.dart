@@ -1,3 +1,4 @@
+/// RFID Flutter Core library.
 library rfid_flutter_core;
 
 export 'src/interface/index.dart';

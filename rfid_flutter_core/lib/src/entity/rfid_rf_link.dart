@@ -1,7 +1,9 @@
-/// RFLink combinations for RFID <br/>
-/// RF链路组合 <br/>
-/// Note: Gen2X links require UHF firmware version V7.1.8+ <br/>
-/// 注意：Gen2X链路需要UHF固件版本V7.1.8+ <br/>
+/// RFLink combinations for RFID. <br/>
+/// RF链路组合。<br/>
+///
+/// #### Note:
+/// Gen2X links require UHF firmware version V7.1.8+ <br/>
+/// Gen2X链路需要UHF固件版本V7.1.8+
 enum RfidRfLink {
   /// 0x00: PR_ASK/Miller8/160KHz
   prAskMiller8_160KHz(0x00),

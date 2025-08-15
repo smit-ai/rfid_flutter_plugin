@@ -1,7 +1,4 @@
-/// #### English
 /// A generic class that represents the result of a command execution. <br/>
-///
-/// #### 中文
 /// 一个通用的类，表示命令执行的结果。 <br/>
 class RfidResult<T> {
   /// #### English

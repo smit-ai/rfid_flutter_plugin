@@ -1,5 +1,7 @@
 import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 
+/// Utility class for checking RFID interface parameters. <br/>
+/// RFID接口参数校验工具类
 class RfidInterfaceParamCheck {
   static bool isHexString(String str) {
     return RegExp(r'^[0-9A-Fa-f]+$').hasMatch(str);
@@ -16,7 +18,7 @@ class RfidInterfaceParamCheck {
     if (filter.length < 0) {
       throw ArgumentError('Filter length param invalid, got: ${filter.length}');
     }
-    if (filter.data.length == 0) {
+    if (filter.data.isEmpty) {
       return;
     }
     // 检查data是否为16进制字符串

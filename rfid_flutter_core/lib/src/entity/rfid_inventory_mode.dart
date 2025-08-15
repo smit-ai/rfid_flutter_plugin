@@ -1,5 +1,5 @@
-/// RFID inventory bank for specifying inventory areas <br/>
-/// RFID盘点区域，用于指定盘点区域
+/// RFID inventory area, used to specify which tag memory regions are read during inventory. <br/>
+/// RFID盘点区域，用于指定盘点时读取的标签数据区域
 enum RfidInventoryBank {
   /// Inventory reads EPC area <br/>
   /// 盘点读取EPC区域

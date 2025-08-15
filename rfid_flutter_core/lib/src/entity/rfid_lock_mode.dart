@@ -1,3 +1,5 @@
+/// RFID lock mode. <br/>
+/// 锁定模式
 enum RfidLockMode {
   /// lock the tag <br/>
   /// 锁定标签

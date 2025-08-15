@@ -4,6 +4,33 @@ import 'package:flutter/services.dart';
 import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 import 'package:rfid_flutter_android/src/method_channel_helper.dart';
 
+/// URA4 RFID interface implementation <br/>
+/// URA4 RFID接口实现 <br/>
+///
+/// ### English
+///
+/// Basic usage flow: [init] -> ... -> [free]
+///
+/// #### Note:
+/// 1. RfidWithUart uses singleton pattern, please do not create instances, use RfidWithUart.instance to get the instance and call the various interfaces.
+/// 2. Before calling other commands, please call the [init] method to initialize the UHF module, and call the [free] method to release resources when not in use.
+/// 3. After initialization, you can set and get various parameters according to your needs, or start inventory by calling the [startInventory] method. The tag data will be returned through the [rfidTagStream] stream. <br/>
+/// 4. During the inventory process, the module no longer responds to other commands. You can call the [stopInventory] method to stop the inventory.
+/// 5. The module can only execute one command at a time, control the calling time, otherwise it may fail.
+/// 6. RfidWithUart has processed error cases, so that each method will not throw exceptions, and the error information can be viewed in [RfidResult].
+///
+/// ### 中文
+///
+/// 基本使用流程：[init] -> ... -> [free]
+///
+/// #### 注意事项：
+/// 1. RfidWithUart 使用了单例模式，请不要创建实例，使用 RfidWithUart.instance 获取实例调用各个接口即可
+/// 2. 调用其他命令前，请先调用 [init] 方法初始化超高频模块，不再使用时调用 [free] 方法释放资源
+/// 3. 完成初始化后，可根据需求设置和获取各个参数，也可通过 [startInventory] 方法开启盘点标签，标签数据将通过 [rfidTagStream] 流式返回。<br/>
+/// 4. 盘点过程中，模块不再响应其他命令。可以使用 [stopInventory] 方法停止盘点标签
+/// 5. 模块一次只能执行一条命令，控制调用时机，否则可能会应答失败
+/// 6. RfidWithUart 已对错误情况进行处理，可以保证各个方法不会抛出异常，失败时可在 [RfidResult] 中查看错误信息
+///
 class RfidWithUra4 implements RfidInterface {
   static RfidWithUra4? _instance;
 
@@ -129,26 +156,46 @@ class RfidWithUra4 implements RfidInterface {
     );
   }
 
+  /// **[DEPRECATED]** Get power parameter. Use [getAntennaState] instead  <br/>
+  /// **[已弃用]** 获取功率参数。使用 [getAntennaState] 代替 <br/>
+  ///
   @override
   Future<RfidResult<int>> getPower() async {
     return const RfidResult.failure('use getAntennaState instead');
   }
 
+  /// **[DEPRECATED]** Set power parameter. Use [setAntennaState] instead  <br/>
+  /// **[已弃用]** 设置功率参数。使用 [setAntennaState] 代替 <br/>
   @override
   Future<RfidResult<bool>> setPower(int power) async {
     return const RfidResult.failure('use setAntennaState instead');
   }
 
+  /// Get antenna state. <br/>
+  /// 获取天线状态。 <br/>
+  ///
   /// #### English
-  /// Get the antenna state. <br/>
-  /// [antenna] - The antenna number to get. [antenna] = 0 means get the state of all antennas. <br/>
+  /// [antenna] - The antenna number to get. [antenna] = 0 means get the state of all antennas.
+  ///
   /// Returns a [RfidResult] where `data` is [RfidAntennaState], `true` if get successfully, `false` if get fails. <br/>
   /// On failure, `error` contains the error description. <br/>
   ///
   /// #### 中文
-  /// 获取天线状态。 <br/>
-  /// [antenna] - 需要获取的天线编号。[antenna] = 0 表示获取所有天线状态。 <br/>
+  /// [antenna] - 需要获取的天线编号。[antenna] = 0 表示获取所有天线状态。
+  ///
   /// 返回 [RfidResult]，成功时 `data` 为 [RfidAntennaState]，失败时 `error` 包含错误描述信息。 <br/>
+  ///
+  ///
+  /// #### Example
+  /// ```dart
+  /// // Get the state of all antennas
+  /// final result = await RfidWithUra4.instance.getAntennaState(0);
+  /// print(result);
+  ///
+  /// // Get the state of the first antenna
+  /// final result = await RfidWithUra4.instance.getAntennaState(1);
+  /// print(result);
+  /// ```
   Future<RfidResult<List<RfidAntennaState>>> getAntennaState(int antenna) async {
     try {
       final result = await _channel.invokeMethod<List<dynamic>>('getAntennaState', {'value': antenna});
@@ -173,16 +220,33 @@ class RfidWithUra4 implements RfidInterface {
     }
   }
 
+  /// Set Antenna State. <br/>
+  /// 设置天线状态。 <br/>
+  ///
   /// #### English
-  /// Set the antenna state. <br/>
-  /// [antennaStateList] The antenna state list. <br/>
+  /// [antennaStateList] - The antenna state list.
+  ///
   /// Returns a [RfidResult] where `data` is [bool], `true` if set successfully, `false` if set fails. <br/>
   /// On failure, `error` contains the error description. <br/>
   ///
   /// #### 中文
-  /// 设置天线状态。 <br/>
-  /// [antennaStateList] 天线状态列表。 <br/>
+  /// [antennaStateList] - 天线状态列表。
+  ///
   /// 返回 [RfidResult]，成功时 `data` 为 [bool]，失败时 `error` 包含错误描述信息。 <br/>
+  ///
+  ///
+  /// #### Example
+  /// ```dart
+  /// final antennaStates = [
+  ///   RfidAntennaState(antenna: 1, enabled: true, power: 30), // Antenna 1 enabled, power 30
+  ///   RfidAntennaState(antenna: 2, enabled: true, power: 25), // Antenna 2 enabled, power 25
+  ///   RfidAntennaState(antenna: 3, enabled: false, power: 25), // Antenna 3 disabled, power 25
+  ///   RfidAntennaState(antenna: 4, enabled: false, power: 25), // Antenna 4 disabled, power 25
+  /// ];
+  /// final result = await RfidWithUra4.instance.setAntennaState(antennaStates);
+  /// print(result);
+  /// ```
+  ///
   Future<RfidResult<bool>> setAntennaState(List<RfidAntennaState> antennaStateList) async {
     return _methodChannelHelper.invokeBoolMethod(
       'setAntennaState',

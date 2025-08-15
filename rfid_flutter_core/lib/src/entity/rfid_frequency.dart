@@ -1,4 +1,4 @@
-/// UHF frequency bands
+/// UHF frequency bands. <br/>
 /// 超高频频段
 enum RfidFrequency {
   /// China frequency range (840~845MHz)

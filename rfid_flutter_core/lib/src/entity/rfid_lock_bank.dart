@@ -1,3 +1,5 @@
+/// RFID lock bank. <br/>
+/// RFID锁定区域
 enum RfidLockBank {
   /// Kill password area of the Reserved memory bank <br/>
   /// Reserved 的 kill 密码区域

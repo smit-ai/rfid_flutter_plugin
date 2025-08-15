@@ -1,6 +1,9 @@
 /// Gen2 parameters. <br/>
+/// Gen2参数 <br/>
+///
+/// #### Note:
 /// For specific meanings of each parameter, please refer to the document《超高频 RFID 应用层通信协议》 <br/>
-/// Gen2参数，各参数具体含义请参考文档《超高频 RFID 应用层通信协议》
+/// 各参数具体含义请参考文档《超高频 RFID 应用层通信协议》
 class RfidGen2 {
   // RFID Select Target values / RFID Select Target 值
   static const int selectTargetS0 = 0x00;

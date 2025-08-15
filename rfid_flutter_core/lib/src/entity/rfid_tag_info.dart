@@ -17,15 +17,12 @@ class RfidTagInfo {
   /// 标签USER区数据
   String user;
 
-  /// Tag PC value <br/>
-  /// 标签PC值
-  ///
-  /// EPC length is determined by PC <br/>
-  /// EPC的长度由PC决定
+  /// Tag PC value, EPC length is determined by PC <br/>
+  /// 标签PC值. EPC的长度由PC决定
   String pc;
 
-  /// Tag signal strength (RSSI), range: [-80, -30] dBm <br/>
-  /// 标签信号值，范围：[-80, -30] dBm
+  /// Tag signal strength (RSSI), range: `[-80, -30]` dBm <br/>
+  /// 标签信号值，范围：`[-80, -30]` dBm
   String rssi;
 
   /// Tag antenna number <br/>
@@ -40,17 +37,21 @@ class RfidTagInfo {
   /// 读取到标签时的时间戳
   int timestamp;
 
-  /// Tag direction, range: 0-360, default: -1 (not set) <br/>
-  /// 标签方位，范围：0-360，默认：-1（未设置）
-  ///
+  /// #### English
   /// Generally only needed during special operations <br/>
-  /// 一般只在进行特殊操作时才需要此字段数据
+  /// Tag direction, range: 0-360, default: -1 (not set)
+  ///
+  /// #### 中文
+  /// 一般只在进行特殊操作时才需要此字段数据 <br/>
+  /// 标签方位，范围：0-360，默认：-1（未设置）
   int direction;
 
-  /// Tag signal value, range: 0-100, default: -1 (not set) <br/>
-  /// 标签信号值，范围：0-100，默认：-1（未设置）
-  ///
+  /// #### English
   /// Converted from RSSI, generally only needed during special operations <br/>
+  /// Tag signal value, range: 0-100, default: -1 (not set)
+  ///
+  /// #### 中文
+  /// 标签信号值，范围：0-100，默认：-1（未设置）<br/>
   /// 由rssi转化而来，一般只在进行特殊操作时才需要此字段数据
   int value;
 
@@ -63,11 +64,13 @@ class RfidTagInfo {
   /// 默认为空Map。
   Map<String, dynamic> extensions;
 
+  /// #### English
   /// Create a new RfidTagInfo instance <br/>
-  /// 创建新的RfidTagInfo实例
-  ///
   /// If timestamp is not provided, current timestamp will be used <br/>
-  /// 如果未提供时间戳，将使用当前时间戳
+  ///
+  /// #### 中文
+  /// 如果未提供时间戳，将使用当前时间戳 <br/>
+  /// 创建新的RfidTagInfo实例
   RfidTagInfo({
     this.reserved = '',
     required this.epc,
@@ -135,10 +138,12 @@ class RfidTagInfo {
     };
   }
 
+  /// #### English
   /// Create RfidTagInfo instance from Map, RfidTagInfo rfidTagInfo <br/>
-  /// 从 Map 创建 RfidTagInfo 实例
+  /// Returns null if [data] is null or invalid
   ///
-  /// Returns null if [data] is null or invalid <br/>
+  /// #### 中文
+  /// 从 Map 创建 RfidTagInfo 实例 <br/>
   /// 如果 [data] 为 null 或无效则返回 null
   static RfidTagInfo? fromMap(dynamic data) {
     if (data == null) return null;

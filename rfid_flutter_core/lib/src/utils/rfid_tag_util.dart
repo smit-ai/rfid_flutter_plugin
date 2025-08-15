@@ -2,6 +2,8 @@ import '../entity/rfid_tag_info.dart';
 import '../entity/rfid_lock_bank.dart';
 import '../entity/rfid_lock_mode.dart';
 
+/// Utility class for RFID tag operations. <br/>
+/// RFID标签操作工具类
 class RfidTagUtil {
   /// ### English
   /// Convert RSSI value to signal strength value (0-100) <br/>
