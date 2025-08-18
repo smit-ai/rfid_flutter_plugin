@@ -1,5 +1,5 @@
-/// UHF frequency bands. <br/>
-/// 超高频频段
+/// RFID module working frequency bands. <br/>
+/// RFID模块工作频段
 enum RfidFrequency {
   /// China frequency range (840~845MHz)
   china1(0x01),
@@ -7,8 +7,8 @@ enum RfidFrequency {
   /// China Plus frequency range (920~925MHz)
   china2(0x02),
 
-  /// ETSI frequency range (865~868MHz)
-  etsi(0x04),
+  /// ETSI Lower frequency range (865~868MHz)
+  etsi_lower(0x04),
 
   /// United States frequency range (902~928MHz)
   usa(0x08),
@@ -40,8 +40,8 @@ enum RfidFrequency {
   /// Brazil frequency range
   brazil(0x3C),
 
-  /// New ETSI frequency range (915~921MHz)
-  newETSI(0x3D),
+  /// ETSI Upper frequency range (915~921MHz)
+  etsi_upper(0x3D),
 
   /// Australia frequency range (920~926MHz)
   australia(0x3E),
@@ -72,8 +72,8 @@ enum RfidFrequency {
         return 'China1';
       case china2:
         return 'China2';
-      case etsi:
-        return 'ETSI';
+      case etsi_lower:
+        return 'ETSI LOWER';
       case usa:
         return 'United States';
       case korea:
@@ -94,8 +94,8 @@ enum RfidFrequency {
         return 'Malaysia';
       case brazil:
         return 'Brazil';
-      case newETSI:
-        return 'New ETSI';
+      case etsi_upper:
+        return 'ETSI UPPER';
       case australia:
         return 'Australia';
       case indonesia:
