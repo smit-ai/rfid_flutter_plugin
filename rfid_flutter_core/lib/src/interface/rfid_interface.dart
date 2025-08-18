@@ -497,8 +497,8 @@ abstract class RfidInterface {
   ///
   /// [filter]  - Filter parameters, if empty, it means not to specify the tag <br/>
   /// [bank]    - Read data area <br/>
-  /// [offset]  - Read start position <br/>
-  /// [length]  - Read data length <br/>
+  /// [offset]  - Read start position, unit: word <br/>
+  /// [length]  - Read data length, unit: word <br/>
   /// [password] - Read tag password <br/>
   ///
   /// Returns a [RfidResult] where `data` is [String], the tag data. <br/>
@@ -508,8 +508,8 @@ abstract class RfidInterface {
   ///
   /// [filter]   - 过滤参数，为空时表示不指定标签 <br/>
   /// [bank]     - 读取的数据区域 <br/>
-  /// [offset]   - 读取的起始位置 <br/>
-  /// [length]   - 读取的数据长度 <br/>
+  /// [offset]   - 读取的起始位置，单位：字 <br/>
+  /// [length]   - 读取的数据长度，单位：字 <br/>
   /// [password] - 读取的标签密码 <br/>
   ///
   /// 返回 [RfidResult]，成功时 `data` 为 [String] 标签数据，失败时 `error` 包含错误描述信息。 <br/>
@@ -528,8 +528,8 @@ abstract class RfidInterface {
   ///
   /// [filter]    - Filter parameters, if empty, it means not to specify the tag (note that it is not to cancel the filter) <br/>
   /// [bank]      - Write data area <br/>
-  /// [offset]    - Write start position <br/>
-  /// [length]    - Write data length <br/>
+  /// [offset]    - Write start position, unit: word <br/>
+  /// [length]    - Write data length, unit: word <br/>
   /// [password]  - Write tag password <br/>
   /// [data]      - Write data <br/>
   ///
@@ -540,8 +540,8 @@ abstract class RfidInterface {
   ///
   /// [filter]    - 过滤参数，为空时表示不指定标签（注意不是取消过滤） <br/>
   /// [bank]      - 写入的数据区域 <br/>
-  /// [offset]    - 写入的起始位置 <br/>
-  /// [length]    - 写入的数据长度 <br/>
+  /// [offset]    - 写入的起始位置，单位：字 <br/>
+  /// [length]    - 写入的数据长度，单位：字 <br/>
   /// [password]  - 写入的标签密码（如果标签有密码） <br/>
   /// [data]      - 写入的数据 <br/>
   ///

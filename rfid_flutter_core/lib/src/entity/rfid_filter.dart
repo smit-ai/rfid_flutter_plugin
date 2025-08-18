@@ -7,12 +7,12 @@ class RfidFilter {
   /// 是否启用过滤
   bool enabled;
 
-  /// Offset of the filter. <br/>
-  /// 过滤器偏移量
+  /// Offset of the filter, unit bit <br/>
+  /// 过滤器偏移量，单位 bit
   int offset;
 
-  /// Length of the filter. <br/>
-  /// 过滤长度
+  /// Length of the filter, unit bit <br/>
+  /// 过滤长度，单位 bit
   int length;
 
   /// Bank of the filter. <br/>

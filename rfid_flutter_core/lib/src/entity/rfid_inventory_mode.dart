@@ -52,11 +52,11 @@ class RfidInventoryMode {
   RfidInventoryBank inventoryBank;
 
   /// Offset parameter , unit: word <br/>
-  /// offset参数，单位(字)
+  /// offset参数，单位：字
   int offset;
 
   /// Length parameter , unit: word <br/>
-  /// length参数，单位(字)
+  /// length参数，单位：字
   int length;
 
   /// Initialize RfidInventoryMode class <br/>
