@@ -1,3 +1,9 @@
+## 0.1.0-dev.5
+
+* refactor!: rename ETSI frequency enums for clarity  
+* feat: RfidTagInfo removes direction and value parameters  
+* fix: Fixed the issue of filter parameter verification error  
+
 ## 0.1.0-dev.4
 
 * add extensions field to RfidTagInfo for custom data storage
