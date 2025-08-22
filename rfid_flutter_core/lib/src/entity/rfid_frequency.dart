@@ -16,7 +16,7 @@ enum RfidFrequency {
   /// Korea frequency range (917~923MHz)
   korea(0x16),
 
-  /// Japan frequency range (952~953MHz)
+  /// Japan frequency range (916.8~920.8MHz)
   japan(0x32),
 
   /// South Africa frequency range (915~919MHz)
@@ -37,7 +37,7 @@ enum RfidFrequency {
   /// Malaysia frequency range (919~923MHz)
   malaysia(0x3B),
 
-  /// Brazil frequency range
+  /// Brazil frequency range (902~907.5, 915~928 MHz)
   brazil(0x3C),
 
   /// ETSI Upper frequency range (915~921MHz)
@@ -49,13 +49,13 @@ enum RfidFrequency {
   /// Indonesia frequency range (920~923MHz)
   indonesia(0x3F),
 
-  /// Israel frequency
+  /// Israel frequency (915~917MHz)
   israel(0x40),
 
-  /// China Hong Kong frequency
+  /// China Hong Kong frequency (920~925MHz)
   hongKong(0x41),
 
-  /// New Zealand frequency
+  /// New Zealand frequency (920~928MHz)
   newZealand(0x42);
 
   const RfidFrequency(this.value);
@@ -73,7 +73,7 @@ enum RfidFrequency {
       case china2:
         return 'China2';
       case etsi_lower:
-        return 'ETSI LOWER';
+        return 'ETSI Lower';
       case usa:
         return 'United States';
       case korea:
@@ -95,7 +95,7 @@ enum RfidFrequency {
       case brazil:
         return 'Brazil';
       case etsi_upper:
-        return 'ETSI UPPER';
+        return 'ETSI Upper';
       case australia:
         return 'Australia';
       case indonesia:
