@@ -82,7 +82,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
             put("getUhfHardwareVersion", URA4ChannelHandler.this::getUhfHardwareVersion);
             put("getUhfTemperature", URA4ChannelHandler.this::getUhfTemperature);
             put("resetUhf", URA4ChannelHandler.this::resetUhf);
-            put("beep", URA4ChannelHandler.this::beep);
+            put("triggerBeep", URA4ChannelHandler.this::triggerBeep);
         }
     };
 
@@ -691,7 +691,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
         result.success(mReader.factoryReset());
     }
 
-    private void beep(MethodCall methodCall, MethodChannel.Result result) {
+    private void triggerBeep(MethodCall methodCall, MethodChannel.Result result) {
         mReader.buzzer();
         result.success(true);
     }

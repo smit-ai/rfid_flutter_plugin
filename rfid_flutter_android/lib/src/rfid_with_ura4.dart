@@ -107,9 +107,9 @@ class RfidWithUra4 implements RfidInterface {
     return _methodChannelHelper.invokeBoolMethod('resetUhf');
   }
 
-  Future<RfidResult<bool>> beep() async {
+  Future<RfidResult<bool>> triggerBeep() async {
     try {
-      await _channel.invokeMethod<bool>('beep');
+      await _channel.invokeMethod<bool>('triggerBeep');
       return const RfidResult.success(true);
     } on PlatformException catch (e) {
       return RfidResult.failure(e.message ?? 'Unknown error');
