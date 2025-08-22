@@ -3,6 +3,7 @@ import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 import 'package:rfid_flutter_android_example/entity/app_global_state.dart';
+import 'package:rfid_flutter_android_example/utils/audio_player_util.dart';
 import '../entity/rfid_manager.dart';
 
 class InventoryViewModel {
@@ -53,7 +54,6 @@ class InventoryViewModel {
     });
   }
 
-  // 清理资源
   void dispose() {
     _tagSubscription?.cancel();
     _delayedUpdateTimer?.cancel();
@@ -75,9 +75,10 @@ class InventoryViewModel {
     }
     allCount.value += tagInfo.count;
 
-    // URA4 beep
-    if (!appState.isHandset.value) {
-      RfidWithUra4.instance.beep();
+    if (appState.isHandset.value) {
+      AudioPlayerUtil.playSuccess();
+    } else {
+      RfidWithUra4.instance.triggerBeep();
     }
 
     updateTagListUI();
