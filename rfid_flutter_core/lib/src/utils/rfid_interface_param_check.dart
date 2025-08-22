@@ -41,8 +41,8 @@ class RfidInterfaceParamCheck {
   }
 
   static Future<void> checkPower(int power) async {
-    if (power < 1 || power > 30) {
-      throw ArgumentError('Power param must be between 1 and 30, got: $power');
+    if (power < 1) {
+      throw ArgumentError('Power param must be greater than 0, got: $power');
     }
   }
 
@@ -54,8 +54,8 @@ class RfidInterfaceParamCheck {
       if (antennaState.antenna < 0) {
         throw ArgumentError('Antenna number invalid, got: ${antennaState.antenna}');
       }
-      if (antennaState.power != null && (antennaState.power! < 1 || antennaState.power! > 30)) {
-        throw ArgumentError('Power param must be between 1 and 30, got: ${antennaState.power}');
+      if (antennaState.power != null && (antennaState.power! < 1)) {
+        throw ArgumentError('Power param must be greater than 0, got: ${antennaState.power}');
       }
     }
   }
