@@ -17,16 +17,17 @@ class RfidInterfaceParamCheck {
     }
     if (filter.length < 0) {
       throw ArgumentError('Filter length param invalid, got: ${filter.length}');
-    }
-    if (filter.data.isEmpty) {
-      return;
-    }
-    // 检查data是否为16进制字符串
-    if (!isHexString(filter.data)) {
-      throw ArgumentError('Filter data param must be a hexadecimal string, got: ${filter.data}');
-    }
-    if (filter.data.length * 4 < filter.length) {
-      throw ArgumentError('Filter data param not match length param');
+    } else if (filter.length > 0) {
+      if (filter.data.isEmpty) {
+        throw ArgumentError('Filter data param can\'t be empty');
+      }
+      // 检查data是否为16进制字符串
+      if (!isHexString(filter.data)) {
+        throw ArgumentError('Filter data param must be a hexadecimal string, got: ${filter.data}');
+      }
+      if (filter.data.length * 4 < filter.length) {
+        throw ArgumentError('Filter data param not match length param');
+      }
     }
   }
 
