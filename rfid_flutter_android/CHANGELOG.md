@@ -1,3 +1,7 @@
+## 0.1.0-dev.3
+
+* refactor!: rename beep method to triggerBeep
+
 ## 0.1.0-dev.2
 
 * Add log interface to unify log printing;
