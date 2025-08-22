@@ -21,8 +21,8 @@ class RfidTagInfo {
   /// 标签PC值. EPC的长度由PC决定
   String pc;
 
-  /// Tag signal strength (RSSI), range: `[-80, -30]` dBm <br/>
-  /// 标签信号值，范围：`[-80, -30]` dBm
+  /// Tag signal strength (RSSI), unit: dBm <br/>
+  /// 标签信号值，单位: dBm <br/>
   String rssi;
 
   /// Tag antenna number <br/>
@@ -37,29 +37,14 @@ class RfidTagInfo {
   /// 读取到标签时的时间戳
   int timestamp;
 
-  /// #### English
-  /// Generally only needed during special operations <br/>
-  /// Tag direction, range: 0-360, default: -1 (not set)
-  ///
-  /// #### 中文
-  /// 一般只在进行特殊操作时才需要此字段数据 <br/>
-  /// 标签方位，范围：0-360，默认：-1（未设置）
-  int direction;
-
-  /// #### English
-  /// Converted from RSSI, generally only needed during special operations <br/>
-  /// Tag signal value, range: 0-100, default: -1 (not set)
-  ///
-  /// #### 中文
-  /// 标签信号值，范围：0-100，默认：-1（未设置）<br/>
-  /// 由rssi转化而来，一般只在进行特殊操作时才需要此字段数据
-  int value;
-
   /// Tag extensions for custom data storage <br/>
-  /// 标签扩展字段，用于存储自定义数据
+  /// 标签扩展字段，用于存储自定义数据 <br/>
   ///
-  /// This field allows users to attach custom data to tags without modifying the core API.
+  /// #### English
+  /// This field allows users to attach custom data to tags without modifying the core API. <br/>
   /// Default is an empty map. <br/>
+  ///
+  /// #### 中文
   /// 此字段允许用户在不修改核心API的情况下为标签附加自定义数据。
   /// 默认为空Map。
   Map<String, dynamic> extensions;
@@ -69,8 +54,8 @@ class RfidTagInfo {
   /// If timestamp is not provided, current timestamp will be used <br/>
   ///
   /// #### 中文
-  /// 如果未提供时间戳，将使用当前时间戳 <br/>
   /// 创建新的RfidTagInfo实例
+  /// 如果未提供时间戳，将使用当前时间戳 <br/>
   RfidTagInfo({
     this.reserved = '',
     required this.epc,
@@ -80,8 +65,6 @@ class RfidTagInfo {
     this.rssi = '',
     this.antenna = 1,
     this.count = 1,
-    this.direction = -1,
-    this.value = -1,
     int? timestamp,
     Map<String, dynamic>? extensions,
   })  : timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch,
@@ -98,8 +81,6 @@ class RfidTagInfo {
     String? rssi,
     int? antenna,
     int? count,
-    int? direction,
-    int? value,
     int? timestamp,
     Map<String, dynamic>? extensions,
   }) {
@@ -112,8 +93,6 @@ class RfidTagInfo {
       rssi: rssi ?? this.rssi,
       antenna: antenna ?? this.antenna,
       count: count ?? this.count,
-      direction: direction ?? this.direction,
-      value: value ?? this.value,
       timestamp: timestamp ?? this.timestamp,
       extensions: extensions ?? Map<String, dynamic>.from(this.extensions),
     );
@@ -131,8 +110,6 @@ class RfidTagInfo {
       'rssi': rssi,
       'antenna': antenna,
       'count': count,
-      'direction': direction,
-      'value': value,
       'timestamp': timestamp,
       'extensions': extensions,
     };
@@ -160,8 +137,6 @@ class RfidTagInfo {
         rssi: map['rssi'] as String? ?? '',
         count: map['count'] as int? ?? 1,
         antenna: map['antenna'] as int? ?? 1,
-        direction: map['direction'] as int? ?? -1,
-        value: map['value'] as int? ?? -1,
         timestamp: map['timestamp'] as int? ?? 0,
         extensions: map['extensions'] as Map<String, dynamic>?,
       );
@@ -181,11 +156,8 @@ class RfidTagInfo {
     buffer.write(', rssi: $rssi');
     buffer.write(', antenna: $antenna');
     buffer.write(', count: $count');
-    if (direction != -1) {
-      buffer.write(', direction: $direction');
-    }
-    if (value != -1) {
-      buffer.write(', value: $value');
+    if (extensions.isNotEmpty) {
+      buffer.write(', extensions: $extensions');
     }
     buffer.write('}');
     return buffer.toString();
@@ -194,7 +166,7 @@ class RfidTagInfo {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RfidTagInfo && other.epc == epc && other.tid == tid;
+    return other is RfidTagInfo && other.reserved == reserved && other.epc == epc && other.tid == tid;
   }
 
   @override
