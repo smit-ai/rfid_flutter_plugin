@@ -191,7 +191,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                             isDense: true,
                           ),
                           onChanged: (value) {
-                            final parsedValue = int.tryParse(value) ?? 0;
+                            final parsedValue = int.tryParse(value) ?? -1;
                             widget.filter.offset = parsedValue;
                           },
                         ),
@@ -208,7 +208,7 @@ class _FilterWidgetState extends State<FilterWidget> {
                             isDense: true,
                           ),
                           onChanged: (value) {
-                            final parsedValue = int.tryParse(value) ?? 0;
+                            final parsedValue = int.tryParse(value) ?? -1;
                             widget.filter.length = parsedValue;
                           },
                         ),
