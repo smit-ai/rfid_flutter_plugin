@@ -1,7 +1,7 @@
 package com.rfid.rfid_flutter_android.utils;
 
+import com.rscja.deviceapi.entity.BarcodeEntity;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
-import com.rscja.team.qcom.utility.LogUtility_qcom;
 import com.rscja.utility.StringUtility;
 
 import java.util.HashMap;
@@ -23,6 +23,18 @@ public class TagUtil {
         map.put("count", tagInfo.getCount());
         map.put("antenna", StringUtility.string2Int(tagInfo.getAnt(), 1));
         //LogUtility_qcom.myLogV("TagUtil", "Tag Map: " + map);
+        return map;
+    }
+
+    public static Map<String, Object> getBarcodeMap(BarcodeEntity barcodeEntity) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", "BARCODE_TAG");
+        map.put("resultCode", barcodeEntity.getResultCode());
+        map.put("barcode", barcodeEntity.getBarcodeData());
+        map.put("barcodeData", barcodeEntity.getBarcodeBytesData());
+        map.put("barcodeType", barcodeEntity.getBarcodeName());
+        map.put("decodeTime", barcodeEntity.getDecodeTime());
+        //LogUtility_qcom.myLogV("TagUtil", "Barcode Map: " + map);
         return map;
     }
 

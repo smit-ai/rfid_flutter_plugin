@@ -122,8 +122,12 @@
   "fastId": "FastId",
   "tagFocus": "TagFocus",
   "fastInventory": "FastInventory",
-  "resetUhf": "重置UHF"
-  ,
+  "resetUhf": "重置UHF",
+
+
+  "barcode": "扫码",
+
+
   "serialNumber": "序列号",
   "imei1": "IMEI 1",
   "imei2": "IMEI 2",

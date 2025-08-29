@@ -10,9 +10,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rfid_flutter_core: ^0.1.0-dev.5
-  # rfid_flutter_core:
-  #   path: ../rfid_flutter_core
+  # rfid_flutter_core: ^0.1.0-dev.5
+  rfid_flutter_core:
+    path: ../rfid_flutter_core
 
 dev_dependencies:
   flutter_test:

@@ -10,3 +10,4 @@ export 'rfid_inventory_param.dart';
 export 'rfid_lock_bank.dart';
 export 'rfid_lock_mode.dart';
 export 'rfid_antenna_state.dart';
+export 'rfid_barcode_info.dart';

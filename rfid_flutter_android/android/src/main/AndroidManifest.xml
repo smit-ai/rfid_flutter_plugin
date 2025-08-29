@@ -2,7 +2,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rfid.rfid_flutter_android">
 
-    <uses-permission
-        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
-        tools:ignore="ProtectedPermissions" />
 </manifest>

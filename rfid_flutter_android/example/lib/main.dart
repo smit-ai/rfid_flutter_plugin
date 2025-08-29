@@ -3,6 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'view/barcode_view.dart';
 import 'view/inventory_view.dart';
 import 'view/read_write_view.dart';
 import 'view/lock_kill_view.dart';
@@ -60,12 +61,13 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
     SettingsView(key: PageStorageKey<String>('SettingsView')),
     ReadWriteView(key: PageStorageKey<String>('ReadWriteView')),
     LockKillView(key: PageStorageKey<String>('LockKillView')),
+    BarcodeView(key: PageStorageKey<String>('BarcodeView')),
   ];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: _pages.length, vsync: this);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         appState.setCurrentPageIndex(_tabController.index);
@@ -96,13 +98,14 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
           ),
         ],
         bottom: TabBar(
-          isScrollable: false,
+          isScrollable: true,
           controller: _tabController,
           tabs: [
             Tab(text: AppLocalizations.of(context)!.inventory),
             Tab(text: AppLocalizations.of(context)!.settings),
             Tab(text: AppLocalizations.of(context)!.readWrite),
             Tab(text: AppLocalizations.of(context)!.lockKill),
+            Tab(text: AppLocalizations.of(context)!.barcode),
           ],
         ),
       ),
