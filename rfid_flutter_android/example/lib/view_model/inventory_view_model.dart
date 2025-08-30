@@ -36,22 +36,16 @@ class InventoryViewModel {
   Timer? _durationTimer;
 
   InventoryViewModel() {
-    // First, get appState.isHandset before using RfidManager.instance to ensure the global state appState.isHandset is updated.
-    // 先获取 appState.isHandset 再使用 RfidManager.instance，确保全局状态 appState.isHandset 已更新
-    RfidWithDeviceInfo.instance.isHandset().then((res) {
-      appState.isHandset.value = res.data ?? false;
-
-      _tagSubscription = RfidManager.instance.rfidTagStream.listen(
-        (tagInfos) {
-          for (var tagInfo in tagInfos) {
-            addTag(tagInfo);
-          }
-        },
-        onError: (error) {
-          BotToast.showText(text: 'Error: $error');
-        },
-      );
-    });
+    _tagSubscription = RfidManager.instance.rfidTagStream.listen(
+      (tagInfos) {
+        for (var tagInfo in tagInfos) {
+          addTag(tagInfo);
+        }
+      },
+      onError: (error) {
+        BotToast.showText(text: 'Error: $error');
+      },
+    );
   }
 
   void dispose() {

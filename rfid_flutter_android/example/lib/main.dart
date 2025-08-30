@@ -3,14 +3,12 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'view/barcode_view.dart';
-import 'view/inventory_view.dart';
-import 'view/read_write_view.dart';
-import 'view/lock_kill_view.dart';
-import 'view/settings_view.dart';
 import 'entity/app_global_state.dart';
 import 'widget/app_bottom_sheet.dart';
-import 'entity/rfid_manager.dart';
+import 'widget/feature_card.dart';
+import 'view/rfid_main_view.dart';
+import 'view/barcode_view.dart';
+import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,102 +52,73 @@ class RfidMainPage extends StatefulWidget {
 }
 
 class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMixin {
-  late TabController _tabController;
-
-  static const List<Widget> _pages = [
-    InventoryView(key: PageStorageKey<String>('InventoryView')),
-    SettingsView(key: PageStorageKey<String>('SettingsView')),
-    ReadWriteView(key: PageStorageKey<String>('ReadWriteView')),
-    LockKillView(key: PageStorageKey<String>('LockKillView')),
-    BarcodeView(key: PageStorageKey<String>('BarcodeView')),
-  ];
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _pages.length, vsync: this);
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        appState.setCurrentPageIndex(_tabController.index);
-      }
+    RfidWithDeviceInfo.instance.isHandset().then((res) {
+      appState.isHandset.value = res.data ?? false;
     });
-
-    // RfidWithDeviceInfo.instance.setDebug(true); // Open debug log, default is false
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('app build');
-
     return Scaffold(
       appBar: AppBar(
-        title: _buildAppBarTitle(),
+        title: const Text('RFID Flutter Demo'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        centerTitle: true,
+        elevation: 0,
         actions: [
           IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: () => AppBottomSheet.show(context),
           ),
         ],
-        bottom: TabBar(
-          isScrollable: true,
-          controller: _tabController,
-          tabs: [
-            Tab(text: AppLocalizations.of(context)!.inventory),
-            Tab(text: AppLocalizations.of(context)!.settings),
-            Tab(text: AppLocalizations.of(context)!.readWrite),
-            Tab(text: AppLocalizations.of(context)!.lockKill),
-            Tab(text: AppLocalizations.of(context)!.barcode),
-          ],
-        ),
       ),
-      body: IndexedStack(
-        index: appState.currentPageIndex.watch(context),
-        children: _pages,
-      ),
-    );
-  }
-
-  Widget _buildAppBarTitle() {
-    return Row(
-      children: [
-        Watch.builder(builder: (context) {
-          return Text(
-            appState.isHandset.value ? 'UART' : 'URA4',
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          );
-        }),
-        const SizedBox(width: 10),
-        SizedBox(
-          width: 80,
-          height: 34,
-          child: ElevatedButton(
-            onPressed: () async {
-              final res = await RfidManager.instance.init();
-              BotToast.showText(text: res.isEffective ? '✅ Init Success' : '❌ Init Failed');
-            },
-            child: const Text('Init'),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    FeatureCard(
+                      title: 'RFID Scanner',
+                      subtitle: 'Scan and manage RFID tags',
+                      icon: Icons.sensors,
+                      color: Colors.blue,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const RfidMainView(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    FeatureCard(
+                      title: 'Barcode Scanner',
+                      subtitle: 'Scan barcodes, QR codes, etc.',
+                      icon: Icons.qr_code_scanner,
+                      color: Colors.green,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const BarcodeView(),
+                          ),
+                        );
+                      },
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(width: 6),
-        SizedBox(
-          width: 80,
-          height: 34,
-          child: ElevatedButton(
-            onPressed: () async {
-              final res = await RfidManager.instance.free();
-              BotToast.showText(text: res.isEffective ? '✅ Free Success' : '❌ Free Failed');
-            },
-            child: const Text('Free'),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

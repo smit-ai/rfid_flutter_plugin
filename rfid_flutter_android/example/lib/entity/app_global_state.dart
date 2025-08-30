@@ -11,8 +11,6 @@ class AppGlobalState {
 
   // 全局状态 signals
   final Signal<Locale> currentLocale = Signal(const Locale('en'));
-  final Signal<String> selectedMode = Signal('UART');
-  final Signal<int> currentPageIndex = Signal(0);
   final Signal<bool> isHandset = Signal(true);
 
   AppGlobalState._() {
@@ -38,10 +36,6 @@ class AppGlobalState {
         currentLocale.value = const Locale('en');
       }
     }
-  }
-
-  void setCurrentPageIndex(int index) {
-    currentPageIndex.value = index;
   }
 
   Future<void> setLocale(Locale locale) async {

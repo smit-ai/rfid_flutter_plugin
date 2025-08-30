@@ -11,8 +11,6 @@ class BarcodeViewModel {
 
   BarcodeViewModel() {
     _barcodeSubscription = BarcodeDecoder.instance.barcodeStream.listen((barcode) {
-      print('barcodeStream: ${barcode.toString()}');
-
       if (barcode.resultCode == RfidBarcodeInfo.DECODE_SUCCESS) {
         barcodeList.value = [...barcodeList.value, barcode];
         AudioPlayerUtil.playSuccess();

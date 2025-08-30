@@ -21,14 +21,30 @@ class _BarcodeViewState extends State<BarcodeView> {
   }
 
   @override
+  void dispose() {
+    _viewModel.dispose();
+    print('BarcodeView dispose');
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Column(
-        children: [
-          _buildButtons(),
-          _buildBarcodeList(),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Barcode Scanner'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Column(
+            children: [
+              _buildButtons(),
+              _buildBarcodeList(),
+            ],
+          ),
+        ),
       ),
     );
   }
