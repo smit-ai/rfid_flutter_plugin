@@ -50,7 +50,8 @@ class RfidWithUra4 implements RfidInterface {
     _channel = const MethodChannel('rfid_flutter_android/ura4');
     _methodChannelHelper = MethodChannelHelper(_channel);
 
-    _tagStreamController = StreamController<List<RfidTagInfo>>();
+    // 使用广播流控制器以支持多个监听器
+    _tagStreamController = StreamController<List<RfidTagInfo>>.broadcast();
 
     const eventChannel = EventChannel('rfid_flutter_android/ura4Event');
     eventChannel.receiveBroadcastStream().listen((event) {

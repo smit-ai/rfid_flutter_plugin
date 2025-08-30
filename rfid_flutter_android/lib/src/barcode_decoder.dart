@@ -43,7 +43,8 @@ class BarcodeDecoder {
     _channel = const MethodChannel('rfid_flutter_android/barcode');
     _methodChannelHelper = MethodChannelHelper(_channel);
 
-    _barcodeStreamController = StreamController<RfidBarcodeInfo>();
+    // 使用广播流控制器以支持多个监听器
+    _barcodeStreamController = StreamController<RfidBarcodeInfo>.broadcast();
 
     const eventChannel = EventChannel('rfid_flutter_android/barcodeEvent');
     eventChannel.receiveBroadcastStream().listen((event) {
