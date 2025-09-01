@@ -36,25 +36,29 @@ class _DeviceInfoViewState extends State<DeviceInfoView> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     const maxDialogWidth = 430.0;
-    return AlertDialog(
-      title: Row(
-        children: [
-          const Icon(Icons.info_outline),
-          const SizedBox(width: 8),
-          Text(l10n.deviceInfo),
-          const Spacer(),
-          IconButton(
-            tooltip: l10n.refresh,
-            onPressed: _refresh,
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            // const Icon(Icons.info_outline),
+            // const SizedBox(width: 8),
+            Text(l10n.deviceInfo),
+            const Spacer(),
+            IconButton(
+              tooltip: l10n.refresh,
+              onPressed: _refresh,
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+        ),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      content: ConstrainedBox(
+      body: ConstrainedBox(
         constraints: const BoxConstraints(
           maxWidth: maxDialogWidth,
         ),
         child: SingleChildScrollView(
+          padding: const EdgeInsets.all(10),
           child: FutureBuilder<Map<String, dynamic>>(
             future: _future,
             builder: (context, snapshot) {
@@ -102,12 +106,6 @@ class _DeviceInfoViewState extends State<DeviceInfoView> {
           ),
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
-        ),
-      ],
     );
   }
 }

@@ -21,6 +21,10 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
   final TextEditingController _lockPasswordController = TextEditingController();
   final TextEditingController _killPasswordController = TextEditingController();
 
+  // Expanded state for sections
+  final isLockSectionExpanded = signal(true);
+  final isKillSectionExpanded = signal(true);
+
   @override
   void initState() {
     super.initState();
@@ -77,202 +81,235 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(Icons.lock, color: Colors.orange.shade600),
-              const SizedBox(width: 8.0),
-              Text(
-                AppLocalizations.of(context)!.lockAndUnlock,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16.0),
-
-          // Lock Password Input
-          TextFormField(
-            controller: _lockPasswordController,
-            decoration: InputDecoration(
-              labelText: AppLocalizations.of(context)!.accessPassword,
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-              isDense: true,
-              hintText: AppLocalizations.of(context)!.cantUseDefaultPassword,
-            ),
-            maxLength: 8,
-          ),
-
-          // const SizedBox(height: 6.0),
-
-          // Lock Mode Selection
           Watch.builder(builder: (context) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.lockMode,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 4.0),
-                // First row: Lock and Permanent Lock
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: RadioListTile<RfidLockMode>(
-                        title: Text(
-                          AppLocalizations.of(context)!.lock,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        value: RfidLockMode.lock,
-                        groupValue: _viewModel.lockMode.value,
-                        onChanged: (value) {
-                          if (value != null) {
-                            _viewModel.lockMode.value = value;
-                          }
-                        },
-                        activeColor: Colors.orange,
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 3,
-                      child: RadioListTile<RfidLockMode>(
-                        title: Text(
-                          AppLocalizations.of(context)!.permanentLock,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        value: RfidLockMode.permanentLock,
-                        groupValue: _viewModel.lockMode.value,
-                        onChanged: (value) {
-                          if (value != null) {
-                            _viewModel.lockMode.value = value;
-                          }
-                        },
-                        activeColor: Colors.orange,
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ),
-                  ],
-                ),
-                // Second row: Unlock and Permanent Unlock
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: RadioListTile<RfidLockMode>(
-                        title: Text(
-                          AppLocalizations.of(context)!.unlock,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        value: RfidLockMode.unlock,
-                        groupValue: _viewModel.lockMode.value,
-                        onChanged: (value) {
-                          if (value != null) {
-                            _viewModel.lockMode.value = value;
-                          }
-                        },
-                        activeColor: Colors.orange,
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 3,
-                      child: RadioListTile<RfidLockMode>(
-                        title: Text(
-                          AppLocalizations.of(context)!.permanentUnlock,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        value: RfidLockMode.permanentUnlock,
-                        groupValue: _viewModel.lockMode.value,
-                        onChanged: (value) {
-                          if (value != null) {
-                            _viewModel.lockMode.value = value;
-                          }
-                        },
-                        activeColor: Colors.orange,
-                        contentPadding: EdgeInsets.zero,
-                        dense: true,
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            return InkWell(
+              onTap: () {
+                isLockSectionExpanded.value = !isLockSectionExpanded.value;
+              },
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              child: Row(
+                children: [
+                  Icon(Icons.lock, color: Colors.orange.shade600),
+                  const SizedBox(width: 8.0),
+                  Text(
+                    AppLocalizations.of(context)!.lockAndUnlock,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const Expanded(child: SizedBox.shrink()),
+                  AnimatedRotation(
+                    turns: isLockSectionExpanded.value ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade500),
+                  ),
+                ],
+              ),
             );
           }),
 
-          const SizedBox(height: 10.0),
-
-          // Lock Banks Selection
+          // Expandable content
           Watch.builder(builder: (context) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.banksToLock,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 8.0),
-                // Use Wrap for automatic line wrapping
-                Wrap(
-                  spacing: 8.0,
-                  runSpacing: 4.0,
-                  children: RfidLockBank.values.map((bank) {
-                    final isSelected = _viewModel.lockBanks.value.contains(bank);
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.28, // Approximately 3 items per row
-                      child: CheckboxListTile(
-                        title: Text(bank.description, style: const TextStyle(fontSize: 14)),
-                        value: isSelected,
-                        onChanged: (value) {
-                          final currentBanks = List<RfidLockBank>.from(_viewModel.lockBanks.value);
-                          if (value == true) {
-                            if (!currentBanks.contains(bank)) {
-                              currentBanks.add(bank);
-                            }
-                          } else {
-                            currentBanks.remove(bank);
-                          }
-                          _viewModel.lockBanks.value = currentBanks;
-                        },
-                        controlAffinity: ListTileControlAffinity.leading,
-                        dense: true,
-                        contentPadding: EdgeInsets.zero,
-                        activeColor: Colors.orange,
-                        visualDensity: VisualDensity.compact,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              height: isLockSectionExpanded.value ? null : 0,
+              child: isLockSectionExpanded.value
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16.0),
+
+                        // Lock Password Input
+                        TextFormField(
+                          controller: _lockPasswordController,
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)!.accessPassword,
+                            border: const OutlineInputBorder(),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                            isDense: true,
+                            hintText: AppLocalizations.of(context)!.cantUseDefaultPassword,
+                          ),
+                          maxLength: 8,
+                        ),
+
+                        // const SizedBox(height: 6.0),
+
+                        // Lock Mode Selection
+                        Watch.builder(builder: (context) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.lockMode,
+                                style: const TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 4.0),
+                              // First row: Lock and Permanent Lock
+                              Row(
+                                children: [
+                                  Flexible(
+                                    flex: 2,
+                                    child: RadioListTile<RfidLockMode>(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.lock,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                      value: RfidLockMode.lock,
+                                      groupValue: _viewModel.lockMode.value,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          _viewModel.lockMode.value = value;
+                                        }
+                                      },
+                                      activeColor: Colors.orange,
+                                      contentPadding: EdgeInsets.zero,
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 3,
+                                    child: RadioListTile<RfidLockMode>(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.permanentLock,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                      value: RfidLockMode.permanentLock,
+                                      groupValue: _viewModel.lockMode.value,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          _viewModel.lockMode.value = value;
+                                        }
+                                      },
+                                      activeColor: Colors.orange,
+                                      contentPadding: EdgeInsets.zero,
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // Second row: Unlock and Permanent Unlock
+                              Row(
+                                children: [
+                                  Flexible(
+                                    flex: 2,
+                                    child: RadioListTile<RfidLockMode>(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.unlock,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                      value: RfidLockMode.unlock,
+                                      groupValue: _viewModel.lockMode.value,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          _viewModel.lockMode.value = value;
+                                        }
+                                      },
+                                      activeColor: Colors.orange,
+                                      contentPadding: EdgeInsets.zero,
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 3,
+                                    child: RadioListTile<RfidLockMode>(
+                                      title: Text(
+                                        AppLocalizations.of(context)!.permanentUnlock,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                      value: RfidLockMode.permanentUnlock,
+                                      groupValue: _viewModel.lockMode.value,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          _viewModel.lockMode.value = value;
+                                        }
+                                      },
+                                      activeColor: Colors.orange,
+                                      contentPadding: EdgeInsets.zero,
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        }),
+
+                        const SizedBox(height: 10.0),
+
+                        // Lock Banks Selection
+                        Watch.builder(builder: (context) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.banksToLock,
+                                style: const TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 8.0),
+                              // Use Wrap for automatic line wrapping
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 4.0,
+                                children: RfidLockBank.values.map((bank) {
+                                  final isSelected = _viewModel.lockBanks.value.contains(bank);
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.28, // Approximately 3 items per row
+                                    child: CheckboxListTile(
+                                      title: Text(bank.description, style: const TextStyle(fontSize: 14)),
+                                      value: isSelected,
+                                      onChanged: (value) {
+                                        final currentBanks = List<RfidLockBank>.from(_viewModel.lockBanks.value);
+                                        if (value == true) {
+                                          if (!currentBanks.contains(bank)) {
+                                            currentBanks.add(bank);
+                                          }
+                                        } else {
+                                          currentBanks.remove(bank);
+                                        }
+                                        _viewModel.lockBanks.value = currentBanks;
+                                      },
+                                      controlAffinity: ListTileControlAffinity.leading,
+                                      dense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      activeColor: Colors.orange,
+                                      visualDensity: VisualDensity.compact,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }),
+
+                        const SizedBox(height: 16.0),
+
+                        // Lock Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _viewModel.lockTag,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.lockTag,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
             );
           }),
-
-          const SizedBox(height: 16.0),
-
-          // Lock Button
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: _viewModel.lockTag,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-              ),
-              child: Text(
-                AppLocalizations.of(context)!.lockTag,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -285,74 +322,103 @@ class _LockKillViewState extends State<LockKillView> with AutomaticKeepAliveClie
         border: Border.all(color: Colors.red.shade300),
         color: Colors.red.shade50,
       ),
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(Icons.delete, color: Colors.red.shade600),
-              const SizedBox(width: 8.0),
-              Text(
-                AppLocalizations.of(context)!.killTag,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red.shade600),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16.0),
-          Container(
-            padding: const EdgeInsets.all(12.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.0),
-              color: Colors.red.shade100,
-              border: Border.all(color: Colors.red.shade300),
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.warning_amber, color: Colors.red.shade700),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: Text(
-                    AppLocalizations.of(context)!.warningKillTag,
-                    style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.w500, fontSize: 13),
+          Watch.builder(builder: (context) {
+            return InkWell(
+              onTap: () {
+                isKillSectionExpanded.value = !isKillSectionExpanded.value;
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.delete, color: Colors.red.shade600),
+                  const SizedBox(width: 8.0),
+                  Text(
+                    AppLocalizations.of(context)!.killTag,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.red.shade600),
                   ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16.0),
-
-          // Kill Password Input
-          TextFormField(
-            controller: _killPasswordController,
-            decoration: InputDecoration(
-              labelText: AppLocalizations.of(context)!.killPassword,
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-              isDense: true,
-              hintText: AppLocalizations.of(context)!.cantUseDefaultPassword,
-            ),
-            maxLength: 8,
-          ),
-
-          const SizedBox(height: 10.0),
-
-          // Kill Button
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: _viewModel.killTag,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                  const Expanded(child: SizedBox.shrink()),
+                  AnimatedRotation(
+                    turns: isKillSectionExpanded.value ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade500),
+                  ),
+                ],
               ),
-              child: Text(
-                AppLocalizations.of(context)!.killTag,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
+            );
+          }),
+
+          // Expandable content
+          Watch.builder(builder: (context) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              height: isKillSectionExpanded.value ? null : 0,
+              child: isKillSectionExpanded.value
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16.0),
+                        Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6.0),
+                            color: Colors.red.shade100,
+                            border: Border.all(color: Colors.red.shade300),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.warning_amber, color: Colors.red.shade700),
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!.warningKillTag,
+                                  style: TextStyle(color: Colors.red.shade700, fontWeight: FontWeight.w500, fontSize: 13),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+
+                        // Kill Password Input
+                        TextFormField(
+                          controller: _killPasswordController,
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)!.killPassword,
+                            border: const OutlineInputBorder(),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                            isDense: true,
+                            hintText: AppLocalizations.of(context)!.cantUseDefaultPassword,
+                          ),
+                          maxLength: 8,
+                        ),
+
+                        const SizedBox(height: 10.0),
+
+                        // Kill Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _viewModel.killTag,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.killTag,
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+            );
+          }),
         ],
       ),
     );

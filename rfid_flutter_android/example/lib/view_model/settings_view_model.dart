@@ -158,7 +158,6 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  // 天线状态相关方法
   Future<void> getAntennaState() async {
     final res = await RfidWithUra4.instance.getAntennaState(0); // 0表示获取所有天线状态
     if (res.result && res.data != null) {

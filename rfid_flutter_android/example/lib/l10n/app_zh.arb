@@ -1,11 +1,17 @@
 {
+
+  "deviceInfo": "设备信息",
+  "rfidScanner": "RFID扫描",
+  "barcodeScanner": "条码扫描",
+  "deviceInfoSubtitle": "SN, IMEI, 等",
+  "rfidScannerSubtitle": "RFID标签扫描、参数管理",
+  "barcodeScannerSubtitle": "扫描条码、二维码等",
+  "language" : "语言",
+
   "inventory": "盘点",
   "settings": "设置",
   "readWrite": "读-写",
   "lockKill": "锁定-销毁",
-
-  "deviceInfo": "设备信息",
-  "language" : "语言",
 
   "initSuccess": "✅ 初始化成功",
   "initFailed": "❌ 初始化失败",
@@ -23,6 +29,7 @@
 
   "clear": "清空",
   "single": "单次",
+  "start": "开始",
   "stop": "停止",
   "inventory": "盘点",
   "tagUnique": "标签去重",
@@ -126,6 +133,10 @@
 
 
   "barcode": "扫码",
+  "decodeTimeout": "解码超时",
+  "decodeCancel": "解码取消", 
+  "decodeFailure": "解码失败",
+  "decodeEngineError": "解码引擎错误",
 
 
   "serialNumber": "序列号",

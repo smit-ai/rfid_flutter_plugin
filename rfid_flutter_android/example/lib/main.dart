@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:rfid_flutter_android_example/view/device_info_view.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'entity/app_global_state.dart';
-import 'widget/app_bottom_sheet.dart';
 import 'widget/feature_card.dart';
 import 'view/rfid_main_view.dart';
 import 'view/barcode_view.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,9 +53,12 @@ class RfidMainPage extends StatefulWidget {
 }
 
 class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMixin {
+  final _appNameAndVersion = signal('RFID Flutter Demo');
+
   @override
   void initState() {
     super.initState();
+    _getAppNameAndVersion();
     RfidWithDeviceInfo.instance.isHandset().then((res) {
       appState.isHandset.value = res.data ?? false;
     });
@@ -64,14 +68,21 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('RFID Flutter Demo'),
+        title: Watch.builder(builder: (context) {
+          return Text(_appNameAndVersion.watch(context));
+        }),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        centerTitle: true,
-        elevation: 0,
+        // elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () => AppBottomSheet.show(context),
+            icon: Image.asset(
+              appState.currentLocale.value.languageCode == 'en' ? 'assets/image/lang_en.png' : 'assets/image/lang_cn.png',
+              width: 28,
+            ),
+            onPressed: () {
+              // AppBottomSheet.show(context);
+              appState.setLocale(appState.currentLocale.value.languageCode == 'en' ? const Locale('zh') : const Locale('en'));
+            },
           ),
         ],
       ),
@@ -85,8 +96,22 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
                 child: Column(
                   children: [
                     FeatureCard(
-                      title: 'RFID Scanner',
-                      subtitle: 'Scan and manage RFID tags',
+                      title: AppLocalizations.of(context)!.deviceInfo,
+                      subtitle: AppLocalizations.of(context)!.deviceInfoSubtitle,
+                      icon: Icons.info_outline,
+                      color: Colors.black,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const DeviceInfoView(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    FeatureCard(
+                      title: AppLocalizations.of(context)!.rfidScanner,
+                      subtitle: AppLocalizations.of(context)!.rfidScannerSubtitle,
                       icon: Icons.sensors,
                       color: Colors.blue,
                       onTap: () {
@@ -99,8 +124,8 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
                     ),
                     const SizedBox(height: 10),
                     FeatureCard(
-                      title: 'Barcode Scanner',
-                      subtitle: 'Scan barcodes, QR codes, etc.',
+                      title: AppLocalizations.of(context)!.barcodeScanner,
+                      subtitle: AppLocalizations.of(context)!.barcodeScannerSubtitle,
                       icon: Icons.qr_code_scanner,
                       color: Colors.green,
                       onTap: () {
@@ -120,5 +145,11 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
         ),
       ),
     );
+  }
+
+  void _getAppNameAndVersion() {
+    PackageInfo.fromPlatform().then((packageInfo) {
+      _appNameAndVersion.value = 'RFID Flutter Demo_v${packageInfo.version}';
+    });
   }
 }

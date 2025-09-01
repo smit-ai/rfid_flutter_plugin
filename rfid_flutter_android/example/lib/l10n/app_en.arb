@@ -1,11 +1,18 @@
 {
+
+  "deviceInfo": "Device Info",
+  "rfidScanner": "RFID Scanner",
+  "barcodeScanner": "Barcode Scanner",
+  "deviceInfoSubtitle": "SN, IMEI, ect",
+  "rfidScannerSubtitle": "RFID tags scanning, parameter manager",
+  "barcodeScannerSubtitle": "Scan barcodes, QR codes, etc",
+  "language": "Language",
+
+
   "inventory": "Inventory",
   "settings": "Settings",
   "readWrite": "Read-Write",
   "lockKill": "Lock-Kill",
-
-  "deviceInfo": "Device Info",
-  "language": "Language",
   
   "initSuccess": "✅ Init Success",
   "initFailed": "❌ Init Failed",
@@ -25,6 +32,7 @@
 
   "clear": "Clear",
   "single": "Single",
+  "start": "Start",
   "stop": "Stop",
   "inventory": "Inventory",
   "tagUnique": "Unique",
@@ -126,6 +134,10 @@
 
 
   "barcode": "Barcode",
+  "decodeTimeout": "Decode timeout",
+  "decodeCancel": "Decode cancel", 
+  "decodeFailure": "Decode failure",
+  "decodeEngineError": "Decode engine error",
 
 
   "serialNumber": "Serial Number",
