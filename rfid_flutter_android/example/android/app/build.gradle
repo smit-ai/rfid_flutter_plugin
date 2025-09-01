@@ -43,14 +43,39 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        debug {
+            File strFile = new File("/release.jks")
+            storeFile file(strFile)
+            storePassword "123456"
+            keyPassword "123456"
+            keyAlias "uhf-serial-key"
+        }
+        release {
+            File strFile = new File("/release.jks")
+            storeFile file(strFile)
+            storePassword "123456"
+            keyPassword "123456"
+            keyAlias "uhf-serial-key"
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-                // 自定义apk名称
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        // 自定义apk名称
         android.applicationVariants.all { variant ->
             variant.outputs.all {
                 outputFileName = "Flutter_RFID_v${defaultConfig.versionName}_${variant.buildType.name}.apk"
