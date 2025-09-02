@@ -6,7 +6,7 @@ import '../view/inventory_view.dart';
 import '../view/read_write_view.dart';
 import '../view/lock_kill_view.dart';
 import '../view/settings_view.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 
 class RfidMainView extends StatefulWidget {
   const RfidMainView({super.key});

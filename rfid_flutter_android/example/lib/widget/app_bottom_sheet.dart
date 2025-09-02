@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../entity/app_global_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 import 'package:rfid_flutter_android_example/view/device_info_view.dart';
 
 class AppBottomSheet extends StatelessWidget {

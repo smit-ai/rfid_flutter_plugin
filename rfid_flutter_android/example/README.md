@@ -4,13 +4,10 @@ Demonstrates how to use the rfid_flutter_android plugin.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Test version of flutter: 3.35.2
 
-A few resources to get you started if this is your first Flutter project:
+Run in debug mode: `flutter run`   
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Run in release mode: `flutter run --release`   
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Update l10n resources: `flutter gen-l10n`

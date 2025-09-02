@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfid_flutter_android_example/view_model/barcode_view_model.dart';
 import 'package:signals/signals_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 
 class BarcodeView extends StatefulWidget {
   const BarcodeView({super.key});

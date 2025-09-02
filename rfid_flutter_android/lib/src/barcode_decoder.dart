@@ -48,7 +48,7 @@ class BarcodeDecoder {
 
     const eventChannel = EventChannel('rfid_flutter_android/barcodeEvent');
     eventChannel.receiveBroadcastStream().listen((event) {
-      print('barcodeEvent: $event');
+      // print('barcodeEvent: $event');
       if (event['type'] == 'BARCODE_TAG') {
         final barcodeInfo = RfidBarcodeInfo.fromMap(event);
         if (barcodeInfo == null) return;

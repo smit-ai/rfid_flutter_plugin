@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 import '../entity/app_global_state.dart';
 import '../view_model/settings_view_model.dart';
 

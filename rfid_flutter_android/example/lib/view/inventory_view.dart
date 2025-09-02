@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 import '../entity/rfid_tag_info_display.dart';
 import '../view_model/inventory_view_model.dart';
 import '../widget/filter_widget.dart';

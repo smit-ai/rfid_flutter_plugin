@@ -3,7 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android_example/view/device_info_view.dart';
 import 'package:signals/signals_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'l10n/app_localizations.dart';
 import 'entity/app_global_state.dart';
 import 'widget/feature_card.dart';
 import 'view/rfid_main_view.dart';
