@@ -99,6 +99,7 @@ class MethodChannelHelper {
         await validation();
       }
       final result = await _channel.invokeMethod(methodName, arguments);
+      // print('result: $result');
       final object = fromData(result);
       if (object != null) {
         return RfidResult.success(object);

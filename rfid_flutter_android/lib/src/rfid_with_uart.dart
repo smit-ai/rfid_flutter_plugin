@@ -334,6 +334,11 @@ class RfidWithUart implements RfidInterface {
   }
 
   @override
+  Future<RfidResult<bool>> isInventorying() async {
+    return _methodChannelHelper.invokeBoolMethod('isInventorying');
+  }
+
+  @override
   Future<RfidResult<String>> readData({
     RfidFilter? filter,
     required RfidBank bank,

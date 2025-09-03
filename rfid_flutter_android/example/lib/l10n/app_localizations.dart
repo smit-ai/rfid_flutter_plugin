@@ -767,7 +767,7 @@ abstract class AppLocalizations {
   /// No description provided for @fastId.
   ///
   /// In en, this message translates to:
-  /// **'FastId'**
+  /// **'FastID'**
   String get fastId;
 
   /// No description provided for @tagFocus.

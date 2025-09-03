@@ -347,7 +347,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get getAntennaState => 'Get Antenna State';
 
   @override
-  String get fastId => 'FastId';
+  String get fastId => 'FastID';
 
   @override
   String get tagFocus => 'TagFocus';

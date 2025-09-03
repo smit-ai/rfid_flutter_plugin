@@ -58,7 +58,11 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _getAppNameAndVersion();
+
+    PackageInfo.fromPlatform().then((packageInfo) {
+      _appNameAndVersion.value = 'RFID Flutter Demo_v${packageInfo.version}';
+    });
+
     RfidWithDeviceInfo.instance.isHandset().then((res) {
       appState.isHandset.value = res.data ?? false;
     });
@@ -145,11 +149,5 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
         ),
       ),
     );
-  }
-
-  void _getAppNameAndVersion() {
-    PackageInfo.fromPlatform().then((packageInfo) {
-      _appNameAndVersion.value = 'RFID Flutter Demo_v${packageInfo.version}';
-    });
   }
 }

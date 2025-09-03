@@ -41,9 +41,9 @@ class _RfidMainViewState extends State<RfidMainView> with TickerProviderStateMix
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
     RfidMainViewModel.instance.free();
+    super.dispose();
   }
 
   @override
@@ -55,8 +55,10 @@ class _RfidMainViewState extends State<RfidMainView> with TickerProviderStateMix
         }),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         bottom: TabBar(
-          isScrollable: false,
+          isScrollable: true,
           controller: _tabController,
+          indicatorSize: TabBarIndicatorSize.tab,
+          tabAlignment: TabAlignment.start,
           tabs: [
             Tab(text: AppLocalizations.of(context)!.inventory),
             Tab(text: AppLocalizations.of(context)!.settings),

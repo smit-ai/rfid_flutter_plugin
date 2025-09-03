@@ -165,16 +165,16 @@ class SettingsViewModel {
       for (var state in antennaStates) {
         switch (state.antenna) {
           case 1:
-            antenna1State.value = RfidAntennaState(antenna: 1, enable: state.enable ?? true, power: state.power ?? 20);
+            antenna1State.value = RfidAntennaState(antenna: 1, enable: state.enable ?? false, power: state.power ?? 20);
             break;
           case 2:
-            antenna2State.value = RfidAntennaState(antenna: 2, enable: state.enable ?? true, power: state.power ?? 20);
+            antenna2State.value = RfidAntennaState(antenna: 2, enable: state.enable ?? false, power: state.power ?? 20);
             break;
           case 3:
-            antenna3State.value = RfidAntennaState(antenna: 3, enable: state.enable ?? true, power: state.power ?? 20);
+            antenna3State.value = RfidAntennaState(antenna: 3, enable: state.enable ?? false, power: state.power ?? 20);
             break;
           case 4:
-            antenna4State.value = RfidAntennaState(antenna: 4, enable: state.enable ?? true, power: state.power ?? 20);
+            antenna4State.value = RfidAntennaState(antenna: 4, enable: state.enable ?? false, power: state.power ?? 20);
             break;
         }
       }

@@ -1,6 +1,7 @@
 package com.rfid.rfid_flutter_android.channel;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -82,13 +83,13 @@ public class DeviceInfoChannelHandler implements MethodChannel.MethodCallHandler
     }
 
     private void setDebug(MethodCall methodCall, MethodChannel.Result result) {
-        boolean value = methodCall.argument("value");
+        boolean value = Boolean.TRUE.equals(methodCall.argument("value"));
         LogUtility_qcom.setDebug(value);
         result.success(true);
     }
 
     private void setWriteLog(MethodCall methodCall, MethodChannel.Result result) {
-        boolean value = methodCall.argument("value");
+        boolean value = Boolean.TRUE.equals(methodCall.argument("value"));
 
         // 开启日志写入，需要检查权限
         if (value && !hasWriteExternalStoragePermission()) {
@@ -104,6 +105,7 @@ public class DeviceInfoChannelHandler implements MethodChannel.MethodCallHandler
      * 检查是否有外部存储写入权限
      * LogUtility_qcom会将日志保存在根目录/DeviceAPI_Log.txt，需要存储权限
      */
+    @SuppressLint("ObsoleteSdkInt")
     private boolean hasWriteExternalStoragePermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;

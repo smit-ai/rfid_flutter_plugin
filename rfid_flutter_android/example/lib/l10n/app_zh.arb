@@ -126,7 +126,7 @@
   "powerDbm": "功率 (dBm)",
   "setAntennaState": "设置天线状态",
   "getAntennaState": "获取天线状态",
-  "fastId": "FastId",
+  "fastId": "FastID",
   "tagFocus": "TagFocus",
   "fastInventory": "FastInventory",
   "resetUhf": "重置UHF",

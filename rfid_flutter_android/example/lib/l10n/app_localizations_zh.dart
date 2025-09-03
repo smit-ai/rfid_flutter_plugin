@@ -342,7 +342,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get getAntennaState => '获取天线状态';
 
   @override
-  String get fastId => 'FastId';
+  String get fastId => 'FastID';
 
   @override
   String get tagFocus => 'TagFocus';

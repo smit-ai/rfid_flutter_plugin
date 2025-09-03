@@ -50,6 +50,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
             put("singleInventory", URA4ChannelHandler.this::singleInventory);
             put("startInventory", URA4ChannelHandler.this::startInventory);
             put("stopInventory", URA4ChannelHandler.this::stopInventory);
+            put("isInventorying", URA4ChannelHandler.this::isInventorying);
 
             // 标签操作
             put("readData", URA4ChannelHandler.this::readData);
@@ -161,6 +162,10 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
 
     private void stopInventory(MethodCall methodCall, MethodChannel.Result result) {
         result.success(mReader.stopInventory());
+    }
+
+    private void isInventorying(MethodCall methodCall, MethodChannel.Result result) {
+        result.success(mReader.isInventorying());
     }
 
     /** @noinspection DataFlowIssue */

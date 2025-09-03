@@ -127,7 +127,7 @@
   "powerDbm": "Power (dBm)",
   "setAntennaState": "Set Antenna State",
   "getAntennaState": "Get Antenna State",
-  "fastId": "FastId",
+  "fastId": "FastID",
   "tagFocus": "TagFocus",
   "fastInventory": "FastInventory",
   "resetUhf": "Reset UHF",

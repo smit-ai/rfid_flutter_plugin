@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:rfid_flutter_android_example/view_model/rfid_main_view_model.dart';
 import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
@@ -21,6 +22,7 @@ class InventoryViewModel {
 
   // RFID Tag Listener
   StreamSubscription<List<RfidTagInfo>>? _tagSubscription;
+  StreamSubscription<RfidKeyEvent>? _keyDownSubscription;
 
   // Timestamp for updating the inventory data UI, used to control UI refresh rate.
   // It is not recommended to listen to tagList for UI updates, as tagList changes too frequently during inventory.
@@ -46,9 +48,16 @@ class InventoryViewModel {
         BotToast.showText(text: 'Error: $error');
       },
     );
+
+    _keyDownSubscription = RfidWithDeviceInfo.instance.keyDownEventStream.listen((event) {
+      if (event.keyCode == 293 && RfidMainViewModel.instance.currentPageIndex.value == 0) {
+        inventoryToggle();
+      }
+    });
   }
 
   void dispose() {
+    _keyDownSubscription?.cancel();
     _tagSubscription?.cancel();
     _delayedUpdateTimer?.cancel();
     _inventoryTimer?.cancel();
@@ -87,7 +96,7 @@ class InventoryViewModel {
     if (res.result) {
       final tagInfo = res.data;
       if (tagInfo != null) {
-        BotToast.showText(text: tagInfo.epc);
+        BotToast.showText(text: appState.localizations.success);
         addTag(tagInfo);
       }
     } else {

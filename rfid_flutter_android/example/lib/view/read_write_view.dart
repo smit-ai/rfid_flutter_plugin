@@ -154,6 +154,9 @@ class _ReadWriteViewState extends State<ReadWriteView> with AutomaticKeepAliveCl
                 Watch.builder(builder: (context) {
                   return TextFormField(
                     controller: _dataController,
+                    maxLines: null,
+                    minLines: 1,
+                    keyboardType: TextInputType.multiline,
                     decoration: InputDecoration(
                       labelText: '${AppLocalizations.of(context)!.data} (hex)',
                       border: const OutlineInputBorder(),

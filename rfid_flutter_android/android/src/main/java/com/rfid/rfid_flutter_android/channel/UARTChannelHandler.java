@@ -43,6 +43,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
         put("singleInventory", UARTChannelHandler.this::singleInventory);
         put("startInventory", UARTChannelHandler.this::startInventory);
         put("stopInventory", UARTChannelHandler.this::stopInventory);
+        put("isInventorying", UARTChannelHandler.this::isInventorying);
 
         // 标签操作
         put("readData", UARTChannelHandler.this::readData);
@@ -155,6 +156,9 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
         result.success(mReader.stopInventory());
     }
 
+    private void isInventorying(MethodCall methodCall, MethodChannel.Result result) {
+        result.success(mReader.isInventorying());
+    }
     /** @noinspection DataFlowIssue */
     private void readData(MethodCall methodCall, MethodChannel.Result result) {
         Map<String, Object> map = methodCall.arguments();

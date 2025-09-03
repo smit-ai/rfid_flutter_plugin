@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 import 'package:rfid_flutter_android/src/method_channel_helper.dart';
+import 'dart:async';
+import 'package:rfid_flutter_android/src/rfid_key_event.dart';
 
 /// Device information interface for RFID Flutter Android plugin.
 /// Provides the function of accessing device information such as device serial number, IMEI, etc. <br/>
@@ -18,11 +20,38 @@ class RfidWithDeviceInfo {
   late final MethodChannel _channel;
   late final MethodChannelHelper _methodChannelHelper;
 
+  late final StreamController<RfidKeyEvent> _keyUpEventStreamController;
+  late final StreamController<RfidKeyEvent> _keyDownEventStreamController;
+
   // Private constructor for singleton
   RfidWithDeviceInfo._() {
     _channel = const MethodChannel('rfid_flutter_android/deviceInfo');
     _methodChannelHelper = MethodChannelHelper(_channel);
+
+    _keyUpEventStreamController = StreamController<RfidKeyEvent>.broadcast();
+    _keyDownEventStreamController = StreamController<RfidKeyEvent>.broadcast();
+
+    const eventChannel = EventChannel('rfid_flutter_android/windowEvent');
+    eventChannel.receiveBroadcastStream().listen((event) {
+      if (event['type'] == 'KEY_EVENT') {
+        final keyEvent = RfidKeyEvent.fromMap(event);
+        if (keyEvent == null) return;
+        if (keyEvent.isKeyUp()) {
+          _keyUpEventStreamController.add(keyEvent);
+        } else if (keyEvent.isKeyDown()) {
+          _keyDownEventStreamController.add(keyEvent);
+        }
+      }
+    });
   }
+
+  /// The stream of key up event. <br/>
+  /// 按键抬起事件流。 <br/>
+  Stream<RfidKeyEvent> get keyUpEventStream => _keyUpEventStreamController.stream;
+
+  /// The stream of key down event. <br/>
+  /// 按键按下事件流。 <br/>
+  Stream<RfidKeyEvent> get keyDownEventStream => _keyDownEventStreamController.stream;
 
   /// Get the device serial number. <br/>
   /// 获取设备序列号。 <br/>
@@ -60,14 +89,17 @@ class RfidWithDeviceInfo {
   /// }
   /// ```
   /// <br/>
-  Future<RfidResult<Map<String, String>>> getImei() async {
-    return _methodChannelHelper.invokeObjectMethod<Map<String, String>>(
+  Future<RfidResult<Map<String, String?>>> getImei() async {
+    return _methodChannelHelper.invokeObjectMethod<Map<String, String?>>(
       'getImei',
       (result) {
-        if (result is Map) {
-          return Map<String, String>.from(result);
+        if (result is! Map) {
+          return null;
         }
-        return null;
+        if ((result['imei1'] == null || result['imei1'].isEmpty) && (result['imei2'] == null || result['imei2'].isEmpty)) {
+          return null;
+        }
+        return Map<String, String?>.from(result);
       },
     );
   }
@@ -92,33 +124,63 @@ class RfidWithDeviceInfo {
   /// #### English
   /// Returns a [RfidResult] where `data` is a Map containing all device information. <br/>
   /// On failure, `error` contains the error description. <br/>
+  /// For example:
+  /// ```json
+  /// {
+  ///   "serialNumber": "123456789012345",
+  ///   "imei1": "123456789012345",
+  ///   "imei2": "123456789012345",
+  ///   "isHandset": true,
+  ///   "deviceType": "Handheld"
+  /// }
+  /// ```
   ///
   /// #### 中文
   /// 返回 [RfidResult]，成功时 `data` 为包含所有设备信息的 Map。 <br/>
   /// 失败时 `error` 包含错误描述信息。 <br/>
+  /// 例如：
+  /// ```json
+  /// {
+  ///   "serialNumber": "123456789012345",
+  ///   "imei1": "123456789012345",
+  ///   "imei2": "123456789012345",
+  ///   "isHandset": true,
+  ///   "deviceType": "Handheld"
+  /// }
+  /// ```
   Future<RfidResult<Map<String, dynamic>>> getDeviceInfo() async {
     try {
+      String sn = '', imei1 = '', imei2 = '';
+      bool isHandheld = false;
+
       final serialResult = await getSerialNumber();
       if (!serialResult.result) {
-        return RfidResult.failure('Failed to get serial number: ${serialResult.error}');
+        // return RfidResult.failure('Failed to get serial number: ${serialResult.error}');
+      } else {
+        sn = serialResult.data ?? '';
       }
 
       final imeiResult = await getImei();
       if (!imeiResult.result) {
-        return RfidResult.failure('Failed to get IMEI: ${imeiResult.error}');
+        // return RfidResult.failure('Failed to get IMEI: ${imeiResult.error}');
+      } else {
+        imei1 = imeiResult.data?['imei1'] ?? '';
+        imei2 = imeiResult.data?['imei2'] ?? '';
       }
 
       final handsetResult = await isHandset();
       if (!handsetResult.result) {
-        return RfidResult.failure('Failed to check device type: ${handsetResult.error}');
+        // return RfidResult.failure('Failed to check device type: ${handsetResult.error}');
+      } else {
+        isHandheld = handsetResult.data ?? false;
       }
 
       final deviceInfo = <String, dynamic>{
-        'serialNumber': serialResult.data,
-        'imei1': imeiResult.data?['imei1'],
-        'imei2': imeiResult.data?['imei2'],
-        'isHandset': handsetResult.data,
-        'deviceType': handsetResult.data == true ? 'Handheld' : 'URA4',
+        'serialNumber': sn,
+        'imei1': imei1,
+        'imei2': imei2,
+        'isHandset': isHandheld,
+        'deviceType': isHandheld ? 'Handheld' : 'URA4',
       };
 
       return RfidResult.success(deviceInfo);

@@ -30,6 +30,7 @@ class RfidMainViewModel {
   }
 
   void free() async {
+    currentPageIndex.value = 0;
     final result = await RfidManager.instance.free();
     if (result.isIneffective) {
       BotToast.showText(text: '❌ Free Failed:\n${result.error}');
