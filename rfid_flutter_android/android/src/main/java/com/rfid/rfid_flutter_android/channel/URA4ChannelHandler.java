@@ -9,6 +9,7 @@ import com.rscja.deviceapi.RFIDWithUHFA4;
 import com.rscja.deviceapi.entity.AntennaConnectState;
 import com.rscja.deviceapi.entity.AntennaPowerEntity;
 import com.rscja.deviceapi.entity.AntennaState;
+import com.rscja.deviceapi.entity.FastInventoryEntity;
 import com.rscja.deviceapi.entity.Gen2Entity;
 import com.rscja.deviceapi.entity.InventoryModeEntity;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
@@ -651,12 +652,22 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
     }
 
     private void setFastInventory(MethodCall methodCall, MethodChannel.Result result) {
-        boolean value = Boolean.TRUE.equals(methodCall.argument("value"));
-        result.success(mReader.setFastInventoryMode(value));
+        Map<String, Object> map = methodCall.arguments();
+        if (map == null) {
+            result.error(TAG, "Invalid arguments", null);
+            return;
+        }
+        Object crObj = map.get("cr");
+        int cr = crObj instanceof Integer ? (int) crObj : -1;
+        FastInventoryEntity fastInventory = new FastInventoryEntity(cr);
+        result.success(mReader.setFastInventoryMode(fastInventory));
     }
 
     private void getFastInventory(MethodCall methodCall, MethodChannel.Result result) {
-        result.success(mReader.getFastInventoryMode());
+        FastInventoryEntity fastInventoryMode = mReader.getFastInventoryMode();
+        Map<String, Object> map = new HashMap<>();
+        map.put("cr", fastInventoryMode.getCr());
+        result.success(map);
     }
 
     private void setTagFocus(MethodCall methodCall, MethodChannel.Result result) {
@@ -665,8 +676,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
     }
 
     private void getTagFocus(MethodCall methodCall, MethodChannel.Result result) {
-        // result.success(mReader.getTagFocus());
-        result.notImplemented();
+         result.success(mReader.getTagFocus() == 1);
     }
 
     private void setFastId(MethodCall methodCall, MethodChannel.Result result) {
@@ -675,7 +685,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
     }
 
     private void getFastId(MethodCall methodCall, MethodChannel.Result result) {
-        // result.success(mReader.getFastID());
+//         result.success(mReader.getFastID() == 1);
         result.notImplemented();
     }
 

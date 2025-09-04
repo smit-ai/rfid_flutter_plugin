@@ -220,7 +220,9 @@ class RfidWithUart implements RfidInterface {
 
   @override
   Future<RfidResult<bool>> getFastId() async {
-    return const RfidResult.failure('not implemented');
+    return _methodChannelHelper.invokeBoolMethod(
+      'getFastId',
+    );
   }
 
   @override
@@ -233,20 +235,25 @@ class RfidWithUart implements RfidInterface {
 
   @override
   Future<RfidResult<bool>> getTagFocus() async {
-    return const RfidResult.failure('not implemented');
-  }
-
-  @override
-  Future<RfidResult<bool>> setFastInventory(bool fastInventory) async {
     return _methodChannelHelper.invokeBoolMethod(
-      'setFastInventory',
-      {'value': fastInventory},
+      'getTagFocus',
     );
   }
 
   @override
-  Future<RfidResult<bool>> getFastInventory() async {
-    return const RfidResult.failure('not implemented');
+  Future<RfidResult<bool>> setFastInventory(RfidFastInventory fastInventory) async {
+    return _methodChannelHelper.invokeBoolMethod(
+      'setFastInventory',
+      fastInventory.toMap(),
+    );
+  }
+
+  @override
+  Future<RfidResult<RfidFastInventory>> getFastInventory() async {
+    return _methodChannelHelper.invokeObjectMethod<RfidFastInventory>(
+      'getFastInventory',
+      (result) => RfidFastInventory.fromMap(result),
+    );
   }
 
   //  11    111    11    111    111111111

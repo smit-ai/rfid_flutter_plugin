@@ -5,7 +5,6 @@ import '../entity/rfid_tag_info_display.dart';
 import '../view_model/inventory_view_model.dart';
 import '../widget/filter_widget.dart';
 import '../entity/app_global_state.dart';
-import 'package:rfid_flutter_android/rfid_flutter_android.dart';
 
 class InventoryView extends StatefulWidget {
   const InventoryView({super.key});

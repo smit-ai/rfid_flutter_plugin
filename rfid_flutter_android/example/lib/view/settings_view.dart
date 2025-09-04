@@ -45,6 +45,14 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     DropdownMenuItem(value: RfidGen2.queryTargetB, child: Text('B')),
   ];
 
+  static const List<DropdownMenuItem<int>> _fastInventoryCrItems = [
+    DropdownMenuItem(value: RfidFastInventory.crClose, child: Text('Close')),
+    DropdownMenuItem(value: RfidFastInventory.crID16, child: Text('CrID16')),
+    DropdownMenuItem(value: RfidFastInventory.crStoredCRC, child: Text('CrStoredCRC')),
+    DropdownMenuItem(value: RfidFastInventory.crRN16, child: Text('CrRN16')),
+    DropdownMenuItem(value: RfidFastInventory.crID32, child: Text('CrID32')),
+  ];
+
   @override
   bool get wantKeepAlive => true;
 
@@ -79,6 +87,8 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
               _buildInventoryModeSection(),
               const SizedBox(height: 20),
               _buildGen2Section(),
+              const SizedBox(height: 20),
+              _buildFastInventorySection(),
               const SizedBox(height: 20),
               _buildOtherFunctions(),
               const SizedBox(height: 40),
@@ -446,6 +456,44 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     );
   }
 
+  Widget _buildFastInventorySection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(AppLocalizations.of(context)!.fastInventory, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+        const SizedBox(height: 12),
+        Watch.builder(builder: (context) {
+          return DropdownButtonFormField<int>(
+            value: viewModel.selectedFastInventory.value,
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!.fastInventory,
+              border: const OutlineInputBorder(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            ),
+            items: _fastInventoryCrItems,
+            onChanged: (rfLink) {
+              if (rfLink != null) {
+                viewModel.selectedFastInventory.value = rfLink;
+              }
+            },
+          );
+        }),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: ElevatedButton(onPressed: viewModel.setFastInventory, child: Text(AppLocalizations.of(context)!.set)),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: ElevatedButton(onPressed: viewModel.getFastInventory, child: Text(AppLocalizations.of(context)!.get)),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildAntennaStateSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -562,70 +610,93 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context)!.fastId, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => viewModel.setFastId(true),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
-                child: Text(AppLocalizations.of(context)!.enable),
+        // Fast ID Section
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.blue.shade50,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.fastId,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                  Watch.builder(builder: (context) {
+                    return Switch(
+                      value: viewModel.selectedFastId.watch(context),
+                      onChanged: (value) {
+                        viewModel.selectedFastId.value = value;
+                      },
+                      activeColor: Colors.green,
+                    );
+                  }),
+                ],
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => viewModel.setFastId(false),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                child: Text(AppLocalizations.of(context)!.disable),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(onPressed: viewModel.setFastId, child: Text(AppLocalizations.of(context)!.set)),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(onPressed: viewModel.getFastId, child: Text(AppLocalizations.of(context)!.get)),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 16),
-        Text(AppLocalizations.of(context)!.tagFocus, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => viewModel.setTagFocus(true),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
-                child: Text(AppLocalizations.of(context)!.enable),
+
+        // Tag Focus Section
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.blue.shade50,
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.tagFocus,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                  Watch.builder(builder: (context) {
+                    return Switch(
+                      value: viewModel.selectedTagFocus.watch(context),
+                      onChanged: (value) {
+                        viewModel.selectedTagFocus.value = value;
+                      },
+                      activeColor: Colors.green,
+                    );
+                  }),
+                ],
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => viewModel.setTagFocus(false),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                child: Text(AppLocalizations.of(context)!.disable),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(onPressed: viewModel.setTagFocus, child: Text(AppLocalizations.of(context)!.set)),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(onPressed: viewModel.getTagFocus, child: Text(AppLocalizations.of(context)!.get)),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Text(AppLocalizations.of(context)!.fastInventory, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => viewModel.setFastInventory(true),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
-                child: Text(AppLocalizations.of(context)!.enable),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () => viewModel.setFastInventory(false),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                child: Text(AppLocalizations.of(context)!.disable),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

@@ -259,7 +259,7 @@ abstract class RfidInterface {
   ///
   /// 返回 [RfidResult]，成功时 `data` 为 [bool]，true 表示设置成功，false 表示设置失败。 <br/>
   /// 失败时 `error` 包含错误描述信息。 <br/>
-  Future<RfidResult<bool>> setFastInventory(bool fastInventory);
+  Future<RfidResult<bool>> setFastInventory(RfidFastInventory fastInventory);
 
   /// Get FastInventory parameter. <br/>
   /// 获取 FastInventory 参数。 <br/>
@@ -271,7 +271,7 @@ abstract class RfidInterface {
   /// #### 中文
   /// 返回 [RfidResult]，成功时 `data` 为 [bool]，true 表示获取成功，false 表示获取失败。 <br/>
   /// 失败时 `error` 包含错误描述信息。 <br/>
-  Future<RfidResult<bool>> getFastInventory();
+  Future<RfidResult<RfidFastInventory>> getFastInventory();
 
   /// Set TagFocus parameter. <br/>
   /// 设置 TagFocus 参数。 <br/>
@@ -489,6 +489,18 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [bool]，true 表示停止盘点成功，false 表示停止盘点失败。 <br/>
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> stopInventory();
+
+  /// Is Inventorying. <br/>
+  /// 是否正在盘点。 <br/>
+  ///
+  /// #### English
+  /// Returns a [RfidResult] where `data` is [bool], `true` if the inventory is running, `false` if the inventory is not running. <br/>
+  /// On failure, `error` contains the error description. <br/>
+  ///
+  /// #### 中文
+  /// 返回 [RfidResult]，成功时 `data` 为 [bool]，true 表示正在盘点，false 表示正在盘点。 <br/>
+  /// 失败时 `error` 包含错误描述信息。 <br/>
+  Future<RfidResult<bool>> isInventorying();
 
   /// Read Data from Tag. <br/>
   /// 读取标签数据。 <br/>

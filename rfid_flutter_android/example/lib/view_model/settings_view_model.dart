@@ -16,6 +16,10 @@ class SettingsViewModel {
   final selectedQuerySession = signal(RfidGen2.querySessionS0);
   final selectedQueryTarget = signal(RfidGen2.queryTargetA);
 
+  final selectedFastInventory = signal(RfidFastInventory.crClose);
+  final selectedFastId = signal(false);
+  final selectedTagFocus = signal(false);
+
   final antenna1State = signal(RfidAntennaState(antenna: 1, enable: false, power: 1));
   final antenna2State = signal(RfidAntennaState(antenna: 2, enable: false, power: 1));
   final antenna3State = signal(RfidAntennaState(antenna: 3, enable: false, power: 1));
@@ -143,19 +147,43 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> setFastId(bool enabled) async {
-    final result = await RfidManager.instance.setFastId(enabled);
+  Future<void> setFastInventory() async {
+    final result = await RfidManager.instance.setFastInventory(RfidFastInventory(cr: selectedFastInventory.value));
     showResult(result);
   }
 
-  Future<void> setTagFocus(bool enabled) async {
-    final result = await RfidManager.instance.setTagFocus(enabled);
+  Future<void> getFastInventory() async {
+    final res = await RfidManager.instance.getFastInventory();
+    if (res.result) {
+      selectedFastInventory.value = res.data?.cr ?? RfidFastInventory.crClose;
+    }
+    showResult(res);
+  }
+
+  Future<void> setFastId() async {
+    final result = await RfidManager.instance.setFastId(selectedFastId.value);
     showResult(result);
   }
 
-  Future<void> setFastInventory(bool enabled) async {
-    final result = await RfidManager.instance.setFastInventory(enabled);
+  Future<void> getFastId() async {
+    final res = await RfidManager.instance.getFastId();
+    if (res.result) {
+      selectedFastId.value = res.data ?? false;
+    }
+    showResult(res);
+  }
+
+  Future<void> setTagFocus() async {
+    final result = await RfidManager.instance.setTagFocus(selectedTagFocus.value);
     showResult(result);
+  }
+
+  Future<void> getTagFocus() async {
+    final res = await RfidManager.instance.getTagFocus();
+    if (res.result) {
+      selectedTagFocus.value = res.data ?? false;
+    }
+    showResult(res);
   }
 
   Future<void> getAntennaState() async {
