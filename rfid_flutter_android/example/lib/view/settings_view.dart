@@ -58,8 +58,14 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
 
   @override
   void initState() {
-    super.initState();
     viewModel = SettingsViewModel();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewModel.dispose();
+    super.dispose();
   }
 
   @override
@@ -279,12 +285,12 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('1 dBm', style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
+                        const Text('1 dBm'),
                         Text(
                           '${AppLocalizations.of(context)!.current}: ${power.round()} dBm',
                           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
                         ),
-                        Text('30 dBm', style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
+                        const Text('30 dBm'),
                       ],
                     ),
                   ],
@@ -509,13 +515,14 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
           ),
           child: Column(
             children: [
-              _buildAntennaRow(1, viewModel.antenna1State),
-              const SizedBox(height: 12),
-              _buildAntennaRow(2, viewModel.antenna2State),
-              const SizedBox(height: 12),
-              _buildAntennaRow(3, viewModel.antenna3State),
-              const SizedBox(height: 12),
-              _buildAntennaRow(4, viewModel.antenna4State),
+              _buildAntennaRow(1, viewModel.antennaState1),
+              _buildAntennaRow(2, viewModel.antennaState2),
+              _buildAntennaRow(3, viewModel.antennaState3),
+              _buildAntennaRow(4, viewModel.antennaState4),
+              _buildAntennaRow(5, viewModel.antennaState5),
+              _buildAntennaRow(6, viewModel.antennaState6),
+              _buildAntennaRow(7, viewModel.antennaState7),
+              _buildAntennaRow(8, viewModel.antennaState8),
             ],
           ),
         ),
@@ -536,72 +543,95 @@ class _SettingsViewState extends State<SettingsView> with AutomaticKeepAliveClie
   }
 
   Widget _buildAntennaRow(int antennaNumber, Signal<RfidAntennaState> antennaStateSignal) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          flex: 2,
-          child: Watch.builder(builder: (context) {
-            final antennaState = antennaStateSignal.watch(context);
-            final enabled = antennaState.enable ?? false;
-            return GestureDetector(
-              onTap: () {
-                antennaStateSignal.value = RfidAntennaState(
-                  antenna: antennaState.antenna,
-                  enable: !enabled,
-                  power: antennaState.power,
-                );
-              },
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: enabled,
-                    onChanged: (value) {
-                      antennaStateSignal.value = RfidAntennaState(
-                        antenna: antennaState.antenna,
-                        enable: value ?? false,
-                        power: antennaState.power,
-                      );
-                    },
-                    visualDensity: VisualDensity.standard,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Watch.builder(builder: (context) {
+                final antennaState = antennaStateSignal.watch(context);
+                final enabled = antennaState.enable ?? false;
+
+                return GestureDetector(
+                  onTap: () {
+                    antennaStateSignal.value = RfidAntennaState(
+                      antenna: antennaState.antenna,
+                      enable: !enabled,
+                      power: antennaState.power,
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: enabled,
+                        onChanged: (value) {
+                          antennaStateSignal.value = RfidAntennaState(
+                            antenna: antennaState.antenna,
+                            enable: value ?? false,
+                            power: antennaState.power,
+                          );
+                        },
+                        visualDensity: VisualDensity.standard,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      Text('${AppLocalizations.of(context)!.antenna} $antennaNumber'),
+                    ],
                   ),
-                  Text('${AppLocalizations.of(context)!.antenna} $antennaNumber'),
-                ],
-              ),
-            );
-          }),
+                );
+              }),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              flex: 3,
+              child: Watch.builder(builder: (context) {
+                final antennaState = antennaStateSignal.watch(context);
+
+                return Column(
+                  children: [
+                    SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        activeTrackColor: Colors.blue,
+                        inactiveTrackColor: Colors.blue.shade200,
+                        trackHeight: 6,
+                        thumbColor: Colors.blue.shade700,
+                        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12),
+                        overlayColor: Colors.blue.withValues(alpha: 0.2),
+                      ),
+                      child: Slider(
+                        value: antennaState.power?.toDouble() ?? 20,
+                        min: 1,
+                        max: 30,
+                        divisions: 29,
+                        label: '${antennaState.power?.round() ?? 20} dBm',
+                        onChanged: (value) {
+                          antennaStateSignal.value = RfidAntennaState(
+                            antenna: antennaState.antenna,
+                            enable: antennaState.enable,
+                            power: value.round(),
+                          );
+                        },
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('1 dBm'),
+                        Text(
+                          '${AppLocalizations.of(context)!.current}: ${antennaState.power?.round() ?? 20} dBm',
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.blue),
+                        ),
+                        const Text('30 dBm'),
+                      ],
+                    ),
+                  ],
+                );
+              }),
+            ),
+          ],
         ),
-        const SizedBox(width: 12),
-        Expanded(
-          flex: 3,
-          child: Watch.builder(builder: (context) {
-            final antennaState = antennaStateSignal.watch(context);
-            final enabled = antennaState.enable ?? false;
-            final power = antennaState.power ?? 20;
-            return TextFormField(
-              key: ValueKey('antenna${antennaNumber}Power_$power'),
-              initialValue: power.toString(),
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.powerDbm,
-                border: const OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                suffixText: 'dBm',
-                enabled: enabled,
-              ),
-              onChanged: (value) {
-                final parsedValue = int.tryParse(value);
-                if (parsedValue != null && parsedValue >= 1 && parsedValue <= 30) {
-                  antennaStateSignal.value = RfidAntennaState(
-                    antenna: antennaState.antenna,
-                    enable: antennaState.enable,
-                    power: parsedValue,
-                  );
-                }
-              },
-            );
-          }),
-        ),
+        const SizedBox(height: 4),
+        const Divider(height: 1),
       ],
     );
   }

@@ -37,6 +37,8 @@ class InventoryViewModel {
   DateTime? _inventoryStartTime;
   Timer? _durationTimer;
 
+  late EffectCleanup _pageIndexEffectCleanup;
+
   InventoryViewModel() {
     _tagSubscription = RfidManager.instance.rfidTagStream.listen(
       (tagInfos) {
@@ -54,6 +56,13 @@ class InventoryViewModel {
         inventoryToggle();
       }
     });
+
+    _pageIndexEffectCleanup = effect(() async {
+      final currentPageIndex = RfidMainViewModel.instance.currentPageIndex.value;
+      if (currentPageIndex != 0 && isInventoryRunning.value) {
+        stopInventory();
+      }
+    });
   }
 
   void dispose() {
@@ -62,6 +71,7 @@ class InventoryViewModel {
     _delayedUpdateTimer?.cancel();
     _inventoryTimer?.cancel();
     _durationTimer?.cancel();
+    _pageIndexEffectCleanup();
   }
 
   void addTag(RfidTagInfo tagInfo) {

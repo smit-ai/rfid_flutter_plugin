@@ -1,3 +1,4 @@
+import 'package:rfid_flutter_android_example/view_model/rfid_main_view_model.dart';
 import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:rfid_flutter_android/rfid_flutter_android.dart';
@@ -20,17 +21,40 @@ class SettingsViewModel {
   final selectedFastId = signal(false);
   final selectedTagFocus = signal(false);
 
-  final antenna1State = signal(RfidAntennaState(antenna: 1, enable: false, power: 1));
-  final antenna2State = signal(RfidAntennaState(antenna: 2, enable: false, power: 1));
-  final antenna3State = signal(RfidAntennaState(antenna: 3, enable: false, power: 1));
-  final antenna4State = signal(RfidAntennaState(antenna: 4, enable: false, power: 1));
+  final antennaNumber = signal<int>(4);
+  final antennaState1 = signal(RfidAntennaState(antenna: 1, enable: false, power: 1));
+  final antennaState2 = signal(RfidAntennaState(antenna: 2, enable: false, power: 1));
+  final antennaState3 = signal(RfidAntennaState(antenna: 3, enable: false, power: 1));
+  final antennaState4 = signal(RfidAntennaState(antenna: 4, enable: false, power: 1));
+  final antennaState5 = signal(RfidAntennaState(antenna: 5, enable: false, power: 1));
+  final antennaState6 = signal(RfidAntennaState(antenna: 6, enable: false, power: 1));
+  final antennaState7 = signal(RfidAntennaState(antenna: 7, enable: false, power: 1));
+  final antennaState8 = signal(RfidAntennaState(antenna: 8, enable: false, power: 1));
+
+  late EffectCleanup _pageIndexEffectCleanup;
 
   SettingsViewModel() {
-    //
+    _pageIndexEffectCleanup = effect(() async {
+      final currentPageIndex = RfidMainViewModel.instance.currentPageIndex.value;
+      if (currentPageIndex == 1) {
+        await getFrequency(showToast: false);
+        if (appState.isHandset.value) {
+          await getPower(showToast: false);
+        } else {
+          await getAntennaState(showToast: false);
+        }
+        await getRfLink(showToast: false);
+        await getInventoryMode(showToast: false);
+        await getGen2(showToast: false);
+        await getFastInventory(showToast: false);
+        await getFastId(showToast: false);
+        await getTagFocus(showToast: false);
+      }
+    });
   }
 
   void dispose() {
-    // signals will be automatically disposed when no longer watched
+    _pageIndexEffectCleanup();
   }
 
   void showResult(RfidResult<dynamic> res, {showData = false}) {
@@ -65,12 +89,14 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getFrequency() async {
+  Future<void> getFrequency({bool showToast = true}) async {
     final res = await RfidManager.instance.getFrequency();
     if (res.result) {
       selectedFrequency.value = res.data ?? RfidFrequency.china1;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setFrequency() async {
@@ -78,12 +104,14 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getPower() async {
+  Future<void> getPower({bool showToast = true}) async {
     final res = await RfidWithUart.instance.getPower();
     if (res.result) {
       selectedPower.value = res.data ?? 1;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setPower() async {
@@ -91,12 +119,14 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getRfLink() async {
+  Future<void> getRfLink({bool showToast = true}) async {
     final res = await RfidManager.instance.getRfLink();
     if (res.result) {
       selectedRfLink.value = res.data!;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setRfLink() async {
@@ -114,14 +144,16 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getInventoryMode() async {
+  Future<void> getInventoryMode({bool showToast = true}) async {
     final res = await RfidManager.instance.getInventoryMode();
     if (res.result) {
       selectedInventoryBank.value = res.data!.inventoryBank;
       selectedOffset.value = res.data!.offset;
       selectedLength.value = res.data!.length;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setGen2() async {
@@ -133,13 +165,15 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getGen2() async {
+  Future<void> getGen2({bool showToast = true}) async {
     final res = await RfidManager.instance.getGen2();
     if (res.result) {
       selectedQuerySession.value = res.data!.querySession ?? RfidGen2.querySessionS0;
       selectedQueryTarget.value = res.data!.queryTarget ?? RfidGen2.queryTargetA;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> resetUhf() async {
@@ -152,12 +186,14 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getFastInventory() async {
+  Future<void> getFastInventory({bool showToast = true}) async {
     final res = await RfidManager.instance.getFastInventory();
     if (res.result) {
       selectedFastInventory.value = res.data?.cr ?? RfidFastInventory.crClose;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setFastId() async {
@@ -165,12 +201,14 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getFastId() async {
+  Future<void> getFastId({bool showToast = true}) async {
     final res = await RfidManager.instance.getFastId();
     if (res.result) {
       selectedFastId.value = res.data ?? false;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setTagFocus() async {
@@ -178,44 +216,65 @@ class SettingsViewModel {
     showResult(result);
   }
 
-  Future<void> getTagFocus() async {
+  Future<void> getTagFocus({bool showToast = true}) async {
     final res = await RfidManager.instance.getTagFocus();
     if (res.result) {
       selectedTagFocus.value = res.data ?? false;
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
-  Future<void> getAntennaState() async {
+  Future<void> getAntennaState({bool showToast = true}) async {
     final res = await RfidWithUra4.instance.getAntennaState(0); // 0表示获取所有天线状态
     if (res.result && res.data != null) {
       final antennaStates = res.data!;
+      antennaNumber.value = antennaStates.length;
       for (var state in antennaStates) {
         switch (state.antenna) {
           case 1:
-            antenna1State.value = RfidAntennaState(antenna: 1, enable: state.enable ?? false, power: state.power ?? 20);
+            antennaState1.value = RfidAntennaState(antenna: 1, enable: state.enable ?? false, power: state.power ?? 20);
             break;
           case 2:
-            antenna2State.value = RfidAntennaState(antenna: 2, enable: state.enable ?? false, power: state.power ?? 20);
+            antennaState2.value = RfidAntennaState(antenna: 2, enable: state.enable ?? false, power: state.power ?? 20);
             break;
           case 3:
-            antenna3State.value = RfidAntennaState(antenna: 3, enable: state.enable ?? false, power: state.power ?? 20);
+            antennaState3.value = RfidAntennaState(antenna: 3, enable: state.enable ?? false, power: state.power ?? 20);
             break;
           case 4:
-            antenna4State.value = RfidAntennaState(antenna: 4, enable: state.enable ?? false, power: state.power ?? 20);
+            antennaState4.value = RfidAntennaState(antenna: 4, enable: state.enable ?? false, power: state.power ?? 20);
+            break;
+          case 5:
+            antennaState5.value = RfidAntennaState(antenna: 5, enable: state.enable ?? false, power: state.power ?? 20);
+            break;
+          case 6:
+            antennaState6.value = RfidAntennaState(antenna: 6, enable: state.enable ?? false, power: state.power ?? 20);
+            break;
+          case 7:
+            antennaState7.value = RfidAntennaState(antenna: 7, enable: state.enable ?? false, power: state.power ?? 20);
+            break;
+          case 8:
+            antennaState8.value = RfidAntennaState(antenna: 8, enable: state.enable ?? false, power: state.power ?? 20);
             break;
         }
       }
     }
-    showResult(res);
+    if (showToast) {
+      showResult(res);
+    }
   }
 
   Future<void> setAntennaState() async {
     final antennaStates = [
-      antenna1State.value,
-      antenna2State.value,
-      antenna3State.value,
-      antenna4State.value,
+      antennaState1.value,
+      antennaState2.value,
+      antennaState3.value,
+      antennaState4.value,
+      antennaState5.value,
+      antennaState6.value,
+      antennaState7.value,
+      antennaState8.value,
     ];
     final result = await RfidWithUra4.instance.setAntennaState(antennaStates);
     showResult(result);

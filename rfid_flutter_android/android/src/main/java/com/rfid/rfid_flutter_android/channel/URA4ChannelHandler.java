@@ -458,15 +458,17 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
                 }
 
                 for (AntennaState antennaState : antList) {
-                    Map<String, Object> stateMap = new HashMap<>();
-                    stateMap.put("antenna", antennaState.getAntennaName().getValue());
-                    stateMap.put("enable", antennaState.isEnable());
-                    Integer power = powerMap.getOrDefault(antennaState.getAntennaName(), -1);
-                    if (power != null && power > 0) {
-                        stateMap.put("power", power);
-                    }
+                    if (antennaState.getAntennaName().getValue() <= 8) { // 目前设备最多8天线
+                        Map<String, Object> stateMap = new HashMap<>();
+                        stateMap.put("antenna", antennaState.getAntennaName().getValue());
+                        stateMap.put("enable", antennaState.isEnable());
+                        Integer power = powerMap.getOrDefault(antennaState.getAntennaName(), -1);
+                        if (power != null && power > 0) {
+                            stateMap.put("power", power);
+                        }
 
-                    antennaStateList.add(stateMap);
+                        antennaStateList.add(stateMap);
+                    }
                 }
 
             } else if (antenna > 0) { /////////////////////// 获取指定天线状态
@@ -676,7 +678,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
     }
 
     private void getTagFocus(MethodCall methodCall, MethodChannel.Result result) {
-         result.success(mReader.getTagFocus() == 1);
+        result.success(mReader.getTagFocus() == 1);
     }
 
     private void setFastId(MethodCall methodCall, MethodChannel.Result result) {
@@ -685,8 +687,7 @@ public class URA4ChannelHandler implements MethodChannel.MethodCallHandler {
     }
 
     private void getFastId(MethodCall methodCall, MethodChannel.Result result) {
-//         result.success(mReader.getFastID() == 1);
-        result.notImplemented();
+         result.success(mReader.getFastId() == 1);
     }
 
     // 硬件信息相关方法
