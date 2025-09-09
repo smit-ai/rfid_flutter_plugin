@@ -63,7 +63,7 @@ class _RfidMainPageState extends State<RfidMainPage> with TickerProviderStateMix
       _appNameAndVersion.value = 'RFID Flutter Demo_v${packageInfo.version}';
     });
 
-    RfidWithDeviceInfo.instance.isHandset().then((res) {
+    DeviceManager.instance.isHandset().then((res) {
       appState.isHandset.value = res.data ?? false;
     });
   }

@@ -19,7 +19,7 @@ class _DeviceInfoViewState extends State<DeviceInfoView> {
   }
 
   Future<Map<String, dynamic>> _loadDeviceInfo() async {
-    final result = await RfidWithDeviceInfo.instance.getDeviceInfo();
+    final result = await DeviceManager.instance.getDeviceInfo();
     if (result.result && result.data != null) {
       return result.data!;
     }

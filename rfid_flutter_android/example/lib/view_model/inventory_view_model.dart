@@ -51,7 +51,7 @@ class InventoryViewModel {
       },
     );
 
-    _keyDownSubscription = RfidWithDeviceInfo.instance.keyDownEventStream.listen((event) {
+    _keyDownSubscription = DeviceManager.instance.keyDownEventStream.listen((event) {
       if (event.keyCode == 293 && RfidMainViewModel.instance.currentPageIndex.value == 0) {
         inventoryToggle();
       }

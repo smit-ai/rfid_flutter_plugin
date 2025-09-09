@@ -15,7 +15,7 @@ class AppGlobalState {
 
   AppGlobalState._() {
     _initLocale();
-    RfidWithDeviceInfo.instance.isHandset().then((res) {
+    DeviceManager.instance.isHandset().then((res) {
       isHandset.value = res.isEffective;
     });
   }

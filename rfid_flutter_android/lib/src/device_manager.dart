@@ -7,13 +7,13 @@ import 'package:rfid_flutter_android/src/rfid_key_event.dart';
 /// Device information interface for RFID Flutter Android plugin.
 /// Provides the function of accessing device information such as device serial number, IMEI, etc. <br/>
 /// 设备信息接口。提供访问设备序列号、IMEI 等设备信息的功能。
-class RfidWithDeviceInfo {
-  static RfidWithDeviceInfo? _instance;
+class DeviceManager {
+  static DeviceManager? _instance;
 
-  /// Get the singleton instance of RfidWithDeviceInfo. <br/>
-  /// 获取 RfidWithDeviceInfo 的单例实例。 <br/>
-  static RfidWithDeviceInfo get instance {
-    _instance ??= RfidWithDeviceInfo._();
+  /// Get the singleton instance of DeviceManager. <br/>
+  /// 获取 DeviceManager 的单例实例。 <br/>
+  static DeviceManager get instance {
+    _instance ??= DeviceManager._();
     return _instance!;
   }
 
@@ -24,7 +24,7 @@ class RfidWithDeviceInfo {
   late final StreamController<RfidKeyEvent> _keyDownEventStreamController;
 
   // Private constructor for singleton
-  RfidWithDeviceInfo._() {
+  DeviceManager._() {
     _channel = const MethodChannel('rfid_flutter_android/deviceInfo');
     _methodChannelHelper = MethodChannelHelper(_channel);
 

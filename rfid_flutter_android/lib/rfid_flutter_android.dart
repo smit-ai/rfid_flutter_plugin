@@ -8,7 +8,7 @@
 ///
 /// - [RfidWithUart] - Interfaces for handheld devices with UART-based UHF modules.
 /// - [RfidWithUra4] - Interfaces for URA4 series UHF modules.
-/// - [RfidWithDeviceInfo] - Interfaces for obtaining device information.
+/// - [DeviceManager] - Interfaces for obtaining device information.
 /// - [BarcodeDecoder] - Interfaces for barcode decoding.
 ///
 ///
@@ -18,14 +18,14 @@
 ///
 /// - [RfidWithUart] - 手持机设备相关接口
 /// - [RfidWithUra4] - URA4设备相关接口
-/// - [RfidWithDeviceInfo] - 设备信息相关接口
+/// - [DeviceManager] - 设备信息相关接口
 /// - [BarcodeDecoder] - 条码解码器接口
 ///
 library;
 
 export 'src/rfid_with_uart.dart';
 export 'src/rfid_with_ura4.dart';
-export 'src/rfid_with_device_info.dart';
+export 'src/device_manager.dart';
 export 'src/barcode_decoder.dart';
 export 'src/rfid_key_event.dart';
 
