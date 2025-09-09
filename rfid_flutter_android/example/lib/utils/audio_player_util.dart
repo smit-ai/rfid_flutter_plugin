@@ -1,23 +1,25 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+import 'package:rfid_flutter_android_example/entity/app_global_state.dart';
 
-/// Audio player utility class
+/// Audio player utility class <br>
 /// 音频播放器工具类
 class AudioPlayerUtil {
-  /// Player pool, used to take turns to play audio, can achieve a more rapid sound effect when inventorying
+  /// Player pool, used to take turns to play audio, can achieve a more rapid sound effect when inventorying <br>
   /// 播放器池，用于轮流播放音频，可实现盘点时声音更急促的效果
   static final List<AudioPlayer> _playerPool = _initPlayerPool();
 
-  /// Mark the player as busy, prevent multiple asynchronous tasks from operating on the same player
+  /// Mark the player as busy, prevent multiple asynchronous tasks from operating on the same player <br>
   /// 标记播放器是否忙碌，防止多个异步任务同时操作同一个播放器
   static final List<bool> _playerBusy = List.filled(_maxPlayers, false);
 
-  /// The index of the current player
+  /// The index of the current player <br>
   /// 当前播放器索引
   static int _currentPlayerIndex = 0;
 
-  /// The maximum number of players
+  /// The maximum number of players <br>
   /// 最大播放器数量
-  static const int _maxPlayers = 3;
+  static const int _maxPlayers = 30;
 
   static final AssetSource _successPath = AssetSource('audio/success.ogg');
   static final AssetSource _failurePath = AssetSource('audio/failure.ogg');
@@ -47,7 +49,7 @@ class AudioPlayerUtil {
         await player.stop();
         // Give the MediaPlayer a little time to complete the state transition
         // 给 MediaPlayer 一点时间来完成状态转换
-        await Future.delayed(const Duration(milliseconds: 10));
+        await Future.delayed(const Duration(milliseconds: 5));
       }
 
       await player.play(sound);
@@ -70,8 +72,19 @@ class AudioPlayerUtil {
     return state == PlayerState.playing || state == PlayerState.paused || state == PlayerState.disposed;
   }
 
-  static Future<void> playSuccess() => _playSound(_successPath);
-  static Future<void> playFailure() => _playSound(_failurePath);
+  static Future<void> playSuccess() async {
+    if (appState.isHandset.value) {
+      _playSound(_successPath);
+    } else {
+      RfidWithUra4.instance.triggerBeep();
+    }
+  }
+
+  static Future<void> playFailure() async {
+    if (appState.isHandset.value) {
+      _playSound(_failurePath);
+    }
+  }
 
   static Future<void> dispose() async {
     for (final player in _playerPool) {

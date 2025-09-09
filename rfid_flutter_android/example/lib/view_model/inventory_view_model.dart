@@ -88,11 +88,7 @@ class InventoryViewModel {
     }
     allCount.value += tagInfo.count;
 
-    if (appState.isHandset.value) {
-      AudioPlayerUtil.playSuccess();
-    } else {
-      RfidWithUra4.instance.triggerBeep();
-    }
+    AudioPlayerUtil.playSuccess();
 
     updateTagListUI();
   }

@@ -70,7 +70,7 @@
   "permanentLock": "永久锁定",
   "unlock": "解锁",
   "permanentUnlock": "永久解锁",
-  "banksToLock": "需要锁定的存储区：",
+  "banksToLock": "存储区：",
   "lockTag": "锁定标签",
   "killTag": "销毁标签",
   "killPassword": "销毁密码",

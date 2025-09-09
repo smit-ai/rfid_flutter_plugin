@@ -186,7 +186,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get permanentUnlock => '永久解锁';
 
   @override
-  String get banksToLock => '需要锁定的存储区：';
+  String get banksToLock => '存储区：';
 
   @override
   String get lockTag => '锁定标签';
