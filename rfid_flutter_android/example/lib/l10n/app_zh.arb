@@ -137,6 +137,7 @@
   "decodeCancel": "解码取消", 
   "decodeFailure": "解码失败",
   "decodeEngineError": "解码引擎错误",
+  "decodingFormat": "解码格式",
 
 
   "serialNumber": "序列号",

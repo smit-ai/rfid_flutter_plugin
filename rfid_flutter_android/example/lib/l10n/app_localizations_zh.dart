@@ -369,6 +369,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get decodeEngineError => '解码引擎错误';
 
   @override
+  String get decodingFormat => '解码格式';
+
+  @override
   String get serialNumber => '序列号';
 
   @override

@@ -138,6 +138,7 @@
   "decodeCancel": "Decode cancel", 
   "decodeFailure": "Decode failure",
   "decodeEngineError": "Decode engine error",
+  "decodingFormat": "Decoding Format",
 
 
   "serialNumber": "Serial Number",

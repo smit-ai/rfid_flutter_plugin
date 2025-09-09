@@ -818,6 +818,12 @@ abstract class AppLocalizations {
   /// **'Decode engine error'**
   String get decodeEngineError;
 
+  /// No description provided for @decodingFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoding Format'**
+  String get decodingFormat;
+
   /// No description provided for @serialNumber.
   ///
   /// In en, this message translates to:

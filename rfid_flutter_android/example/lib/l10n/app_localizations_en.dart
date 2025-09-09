@@ -374,6 +374,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get decodeEngineError => 'Decode engine error';
 
   @override
+  String get decodingFormat => 'Decoding Format';
+
+  @override
   String get serialNumber => 'Serial Number';
 
   @override

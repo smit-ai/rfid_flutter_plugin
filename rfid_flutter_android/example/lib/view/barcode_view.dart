@@ -40,15 +40,41 @@ class _BarcodeViewState extends State<BarcodeView> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Column(
-            children: [
-              _buildBarcodeList(),
-              _buildButtons(),
-            ],
-          ),
+        child: Column(
+          children: [
+            _buildDecodingFormat(),
+            _buildBarcodeList(),
+            _buildButtons(),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDecodingFormat() {
+    return Container(
+      color: Colors.blue.shade100,
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+      child: Row(
+        children: [
+          Text('${AppLocalizations.of(context)!.decodingFormat}:'),
+          const SizedBox(width: 6),
+          Watch.builder(builder: (context) {
+            return DropdownButton(
+              value: _viewModel.decodingFormat.watch(context),
+              borderRadius: BorderRadius.circular(4),
+              items: const [
+                DropdownMenuItem(value: 'UTF-8', child: Text('UTF-8')),
+                DropdownMenuItem(value: 'GB18030', child: Text('GB18030')),
+                DropdownMenuItem(value: 'ISO-8859-1', child: Text('ISO-8859-1')),
+                DropdownMenuItem(value: 'SHIFT_JIS', child: Text('SHIFT_JIS')),
+              ],
+              onChanged: (value) {
+                _viewModel.decodingFormat.value = value ?? 'UTF-8';
+              },
+            );
+          }),
+        ],
       ),
     );
   }
@@ -75,9 +101,13 @@ class _BarcodeViewState extends State<BarcodeView> {
             itemCount: barcodeList.length,
             separatorBuilder: (context, index) => Divider(height: 1, color: Colors.grey.shade300),
             itemBuilder: (context, index) {
+              var text = barcodeList[index].extensions['decodingFormatData'];
+              if (text == null || text.isEmpty) {
+                text = barcodeList[index].barcode;
+              }
               return Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: Text(barcodeList[index].barcode),
+                child: SelectableText(text),
               );
             },
           ),
@@ -89,24 +119,28 @@ class _BarcodeViewState extends State<BarcodeView> {
   Widget _buildButtons() {
     return Row(
       children: [
+        const SizedBox(width: 4),
         Expanded(
           child: ElevatedButton(
             onPressed: _viewModel.startScan,
             child: Text(AppLocalizations.of(context)!.start),
           ),
         ),
+        const SizedBox(width: 4),
         Expanded(
           child: ElevatedButton(
             onPressed: _viewModel.stopScan,
             child: Text(AppLocalizations.of(context)!.stop),
           ),
         ),
+        const SizedBox(width: 4),
         Expanded(
           child: ElevatedButton(
             onPressed: _viewModel.clear,
             child: Text(AppLocalizations.of(context)!.clear),
           ),
         ),
+        const SizedBox(width: 4),
       ],
     );
   }
