@@ -516,7 +516,7 @@ public class UARTChannelHandler implements MethodChannel.MethodCallHandler {
     private void getFastInventory(MethodCall methodCall, MethodChannel.Result result) {
         FastInventoryEntity fastInventoryMode = mReader.getFastInventoryMode();
         Map<String, Object> map = new HashMap<>();
-        map.put("cr", fastInventoryMode.getCr());
+        map.put("cr", fastInventoryMode == null ? 0x00 : fastInventoryMode.getCr());
         result.success(map);
     }
 

@@ -14,18 +14,18 @@ void main() {
       return;
     }
 
-    final handset = await RfidWithDeviceInfo.instance.isHandset();
+    final handset = await DeviceManager.instance.isHandset();
     expect(handset.result, true, reason: "isHandset false");
     expect(handset.data, true, reason: '请检查设备是否为手持设备');
 
-    final serial = await RfidWithDeviceInfo.instance.getSerialNumber();
+    final serial = await DeviceManager.instance.getSerialNumber();
     expect(serial.result, true, reason: "getSerialNumber false");
     expect(serial.data, isNotNull, reason: "getSerialNumber null");
     expect(serial.data!.isNotEmpty, true, reason: "getSerialNumber empty");
 
-    final imei = await RfidWithDeviceInfo.instance.getImei();
+    final imei = await DeviceManager.instance.getImei();
     expect(imei.result, true, reason: "getImei false");
-    final imeiData = imei.data as Map<String, String>;
+    final imeiData = imei.data as Map<String, String?>;
     expect(imeiData.length, 2, reason: "getImei length");
     expect(imeiData['imei1'], isNotNull, reason: "getImei imei1 null");
     expect(imeiData['imei2'], isNotNull, reason: "getImei imei2 null");
@@ -84,26 +84,26 @@ void main() {
     final setGen2 = await RfidWithUart.instance.setGen2(gen2.data!);
     expect(setGen2.isEffective, true, reason: "setGen2 false");
 
-    // // 获取并设置 FastId
-    // final fastId = await RfidWithUart.instance.getFastId();
-    // expect(fastId.result, true, reason: "getFastId false");
-    // expect(fastId.data, isA<bool>(), reason: "getFastId null");
-    // final setFastId = await RfidWithUart.instance.setFastId(fastId.data!);
-    // expect(setFastId.isEffective, true, reason: "setFastId false");
+    // 获取并设置 FastInventory
+    final fastInventory = await RfidWithUart.instance.getFastInventory();
+    expect(fastInventory.result, true, reason: "getFastInventory false");
+    expect(fastInventory.data, isA<RfidFastInventory>(), reason: "getFastInventory null");
+    final setFastInventory = await RfidWithUart.instance.setFastInventory(fastInventory.data!);
+    expect(setFastInventory.isEffective, true, reason: "setFastInventory false");
 
-    // // 获取并设置 tagFocus 参数
-    // final tagFocus = await RfidWithUart.instance.getTagFocus();
-    // expect(tagFocus.result, true, reason: "getTagFocus false");
-    // expect(tagFocus.data, isA<bool>(), reason: "getTagFocus null");
-    // final setTagFocus = await RfidWithUart.instance.setTagFocus(tagFocus.data!);
-    // expect(setTagFocus.isEffective, true, reason: "setTagFocus false");
+    // 获取并设置 FastId
+    final fastId = await RfidWithUart.instance.getFastId();
+    expect(fastId.result, true, reason: "getFastId false");
+    expect(fastId.data, isA<bool>(), reason: "getFastId null");
+    final setFastId = await RfidWithUart.instance.setFastId(fastId.data!);
+    expect(setFastId.isEffective, true, reason: "setFastId false");
 
-    // // 获取并设置 fastInventoy 参数
-    // final fastInventory = await RfidWithUart.instance.getFastInventory();
-    // expect(fastInventory.result, true, reason: "getFastInventory false");
-    // expect(fastInventory.data, isA<bool>(), reason: "getFastInventory null");
-    // final setFastInventory = await RfidWithUart.instance.setFastInventory(fastInventory.data!);
-    // expect(setFastInventory.isEffective, true, reason: "setFastInventory false");
+    // 获取并设置 tagFocus 参数
+    final tagFocus = await RfidWithUart.instance.getTagFocus();
+    expect(tagFocus.result, true, reason: "getTagFocus false");
+    expect(tagFocus.data, isA<bool>(), reason: "getTagFocus null");
+    final setTagFocus = await RfidWithUart.instance.setTagFocus(tagFocus.data!);
+    expect(setTagFocus.isEffective, true, reason: "setTagFocus false");
 
     // // 重置 UHF（可选）
     // final reset = await RfidWithUart.instance.resetUhf();
@@ -123,6 +123,6 @@ void main() {
     final free = await RfidWithUart.instance.free();
     expect(free.isEffective, true, reason: "free false");
 
-    print('UART real device smoke test success');
+    print('UART real device test success');
   });
 }

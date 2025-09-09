@@ -31,8 +31,6 @@ public class RfidFlutterAndroidPlugin implements FlutterPlugin, ActivityAware {
 
     private ExecutorService executor;
 
-
-
     // 插件初始化
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
