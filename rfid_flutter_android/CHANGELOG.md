@@ -1,3 +1,11 @@
+## 0.1.0-dev.4
+
+* refactor!: Rename RfidWithDeviceInfo to DeviceManager
+* feat!: refactor fastInventory interface
+* feat: Add scan barcode related interface
+* feat: Add key event callback
+* fix: A4 gets the antenna interface to return up to 8
+
 ## 0.1.0-dev.3
 
 * refactor!: rename beep method to triggerBeep
