@@ -1,8 +1,14 @@
+## 0.1.0-dev.6
+
+* feat!: refactor fastInventory interface  
+* feat: Add scan barcode related interface  
+* fix: power param check cancels 30 limit  
+
 ## 0.1.0-dev.5
 
 * refactor!: rename ETSI frequency enums for clarity  
 * feat: RfidTagInfo removes direction and value parameters  
-* fix: Fixed the issue of filter parameter verification error  
+* fix: Fix the issue of filter parameter verification error  
 
 ## 0.1.0-dev.4
 
