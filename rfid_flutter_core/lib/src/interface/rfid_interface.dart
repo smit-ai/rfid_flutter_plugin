@@ -1,9 +1,9 @@
 import 'package:rfid_flutter_core/src/entity/index.dart';
 
-/// RFID interface. <br/>
+/// RFID interface <br/>
 /// RFID接口 <br/>
 abstract class RfidInterface {
-  /// Init RFID Module. <br/>
+  /// Init RFID Module <br/>
   /// 初始化RFID模块 <br/>
   ///
   /// #### English
@@ -19,7 +19,7 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。
   Future<RfidResult<bool>> init();
 
-  /// Release RFID Module. <br/>
+  /// Release RFID Module <br/>
   /// 释放RFID模块 <br/>
   ///
   /// #### English
@@ -37,7 +37,7 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。
   Future<RfidResult<bool>> free();
 
-  /// Get RFID tag stream. <br/>
+  /// Get RFID tag stream <br/>
   /// 获取RFID标签的信息流 <br/>
   ///
   /// #### English
@@ -47,8 +47,8 @@ abstract class RfidInterface {
   /// 调用 [startInventory] 后，盘点到的RFID标签会通过该信息流返回。
   Stream<List<RfidTagInfo>> get rfidTagStream;
 
-  /// Get RFID module firmware version. <br/>
-  /// 获取RFID模块的固件版本信息。 <br/>
+  /// Get RFID module firmware version <br/>
+  /// 获取RFID模块的固件版本信息 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [String], the RFID firmware version string.
@@ -58,7 +58,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [String]，UHF固件版本字符串。失败时 `error` 包含错误描述信息。
   Future<RfidResult<String>> getUhfFirmwareVersion();
 
-  /// Get RFID module hardware version. <br/>
+  /// Get RFID module hardware version <br/>
+  /// 获取RFID模块的硬件版本信息 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [String], the RFID hardware version string.
@@ -68,7 +69,7 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [String]，UHF硬件版本字符串。失败时 `error` 包含错误描述信息。
   Future<RfidResult<String>> getUhfHardwareVersion();
 
-  /// Reset RFID Module. <br/>
+  /// Reset RFID Module <br/>
   /// 重置RFID模块 <br/>
   ///
   /// #### English
@@ -80,8 +81,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。
   Future<RfidResult<bool>> resetUhf();
 
-  /// Get temperature of the RFID module. <br/>
-  /// 获取RFID模块的温度。 <br/>
+  /// Get temperature of the RFID module <br/>
+  /// 获取RFID模块的温度 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [int], the temperature of the RFID module, unit: ℃. <br/>
@@ -113,8 +114,8 @@ abstract class RfidInterface {
   //                                                                           11111111
   //                                                                            111111
 
-  /// Set frequency parameter. <br/>
-  /// 设置频段参数。 <br/>
+  /// Set frequency parameter <br/>
+  /// 设置频段参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if set successfully, `false` if set fails. <br/>
@@ -125,8 +126,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setFrequency(RfidFrequency frequency);
 
-  /// Get frequency parameter. <br/>
-  /// 获取频段参数。 <br/>
+  /// Get frequency parameter <br/>
+  /// 获取频段参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [RfidFrequency]. On failure, `error` contains the error description. <br/>
@@ -135,8 +136,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [RfidFrequency]，失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<RfidFrequency>> getFrequency();
 
-  /// Set power parameter. <br/>
-  /// 设置功率参数。 <br/>
+  /// Set power parameter <br/>
+  /// 设置功率参数 <br/>
   ///
   /// #### English
   /// [power] value range: 1-30. <br/>
@@ -151,8 +152,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setPower(int power);
 
-  /// Get power parameter. <br/>
-  /// 获取功率参数。 <br/>
+  /// Get power parameter <br/>
+  /// 获取功率参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [int], the power parameter value. On failure, `error` contains the error description. <br/>
@@ -161,8 +162,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [int]，失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<int>> getPower();
 
-  /// Set RFLink parameter. <br/>
-  /// 设置RFLink参数。 <br/>
+  /// Set RFLink parameter <br/>
+  /// 设置RFLink参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if set successfully, `false` if set fails. <br/>
@@ -173,8 +174,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setRfLink(RfidRfLink rfLink);
 
-  /// Get RFLink parameter. <br/>
-  /// 获取RFLink参数。 <br/>
+  /// Get RFLink parameter <br/>
+  /// 获取RFLink参数 <br/>
   ///
   /// #### English
   /// Get the RFID RFLink parameter value. <br/>
@@ -184,8 +185,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [RfidRfLink]，失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<RfidRfLink>> getRfLink();
 
-  /// Set inventory mode parameter. <br/>
-  /// 设置盘点模式参数。 <br/>
+  /// Set inventory mode parameter <br/>
+  /// 设置盘点模式参数 <br/>
   ///
   /// #### English
   /// When [inventoryMode.inventoryBank] is [RfidInventoryBank.epcTidUser], set the EPC + TID + USER inventory mode. <br/>
@@ -202,8 +203,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setInventoryMode(RfidInventoryMode inventoryMode);
 
-  /// Get inventory mode parameter. <br/>
-  /// 获取盘点模式参数。 <br/>
+  /// Get inventory mode parameter <br/>
+  /// 获取盘点模式参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [RfidInventoryMode], the inventory mode parameter value. On failure, `error` contains the error description. <br/>
@@ -212,8 +213,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [RfidInventoryMode]，失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<RfidInventoryMode>> getInventoryMode();
 
-  /// Set Gen2 parameter. <br/>
-  /// 设置Gen2参数。 <br/>
+  /// Set Gen2 parameter <br/>
+  /// 设置Gen2参数 <br/>
   ///
   /// #### English
   /// Only the properties provided in the input [gen2] will be set; other Gen2 parameters will remain unchanged. <br/>
@@ -235,8 +236,8 @@ abstract class RfidInterface {
   /// ```
   Future<RfidResult<bool>> setGen2(RfidGen2 gen2);
 
-  /// Get Gen2 parameter. <br/>
-  /// 获取Gen2参数。 <br/>
+  /// Get Gen2 parameter <br/>
+  /// 获取Gen2参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [RfidGen2], the Gen2 parameter value. On failure, `error` contains the error description. <br/>
@@ -245,8 +246,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [RfidGen2]，失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<RfidGen2>> getGen2();
 
-  /// Set FastInventory parameter. <br/>
-  /// 设置 FastInventory 参数。 <br/>
+  /// Set FastInventory parameter <br/>
+  /// 设置 FastInventory 参数 <br/>
   ///
   /// #### English
   /// [fastInventory] - true: Open, false: Close
@@ -261,8 +262,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setFastInventory(RfidFastInventory fastInventory);
 
-  /// Get FastInventory parameter. <br/>
-  /// 获取 FastInventory 参数。 <br/>
+  /// Get FastInventory parameter <br/>
+  /// 获取 FastInventory 参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if get successfully, `false` if get fails. <br/>
@@ -273,8 +274,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<RfidFastInventory>> getFastInventory();
 
-  /// Set TagFocus parameter. <br/>
-  /// 设置 TagFocus 参数。 <br/>
+  /// Set TagFocus parameter <br/>
+  /// 设置 TagFocus 参数 <br/>
   ///
   /// #### English
   /// [tagFocus] - true: Open, false: Close
@@ -289,8 +290,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setTagFocus(bool tagFocus);
 
-  /// Get TagFocus parameter. <br/>
-  /// 获取 TagFocus 参数。 <br/>
+  /// Get TagFocus parameter <br/>
+  /// 获取 TagFocus 参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if get successfully, `false` if get fails. <br/>
@@ -301,8 +302,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> getTagFocus();
 
-  /// Set FastId parameter. <br/>
-  /// 设置 FastId 参数。 <br/>
+  /// Set FastId parameter <br/>
+  /// 设置 FastId 参数 <br/>
   ///
   /// #### English
   /// [fastId] - true: Open, false: Close
@@ -315,8 +316,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> setFastId(bool fastId);
 
-  /// Get FastId parameter. <br/>
-  /// 获取快速ID参数。 <br/>
+  /// Get FastId parameter <br/>
+  /// 获取快速ID参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if get successfully, `false` if get fails. <br/>
@@ -343,8 +344,8 @@ abstract class RfidInterface {
   //   1111111     11    111    111
   //    1111       11    111    111
 
-  /// Set Filter parameter. <br/>
-  /// 设置盘点过滤参数。 <br/>
+  /// Set Filter parameter <br/>
+  /// 设置盘点过滤参数 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if set successfully, `false` if set fails. <br/>
@@ -398,8 +399,8 @@ abstract class RfidInterface {
   /// ```
   Future<RfidResult<bool>> setFilter(RfidFilter filter);
 
-  /// Single Inventory. <br/>
-  /// 单步盘点。 <br/>
+  /// Single Inventory <br/>
+  /// 单步盘点 <br/>
   ///
   /// #### English
   /// Single step inventory, only inventory one tag <br/>
@@ -411,8 +412,8 @@ abstract class RfidInterface {
   /// 返回 [RfidResult]，成功时 `data` 为 [RfidTagInfo] 标签信息，失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<RfidTagInfo>> singleInventory({RfidFilter? filter});
 
-  /// Start Inventory. <br/>
-  /// 开始盘点。 <br/>
+  /// Start Inventory <br/>
+  /// 开始盘点 <br/>
   ///
   /// #### English
   /// [filter] Optional filter parameters, if empty, it means not to set the filter (note that it is not to cancel the filter) <br/>
@@ -478,8 +479,8 @@ abstract class RfidInterface {
     RfidInventoryParam? inventoryParam,
   });
 
-  /// Stop Inventory. <br/>
-  /// 停止盘点。 <br/>
+  /// Stop Inventory <br/>
+  /// 停止盘点 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if the inventory stops successfully, `false` if the inventory stops fails. <br/>
@@ -490,8 +491,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> stopInventory();
 
-  /// Is Inventorying. <br/>
-  /// 是否正在盘点。 <br/>
+  /// Is Inventorying <br/>
+  /// 是否正在盘点 <br/>
   ///
   /// #### English
   /// Returns a [RfidResult] where `data` is [bool], `true` if the inventory is running, `false` if the inventory is not running. <br/>
@@ -502,8 +503,8 @@ abstract class RfidInterface {
   /// 失败时 `error` 包含错误描述信息。 <br/>
   Future<RfidResult<bool>> isInventorying();
 
-  /// Read Data from Tag. <br/>
-  /// 读取标签数据。 <br/>
+  /// Read Data from Tag <br/>
+  /// 读取标签数据 <br/>
   ///
   /// #### English
   ///
@@ -533,8 +534,8 @@ abstract class RfidInterface {
     required String password,
   });
 
-  /// Write Data to Tag. <br/>
-  /// 写入标签数据。 <br/>
+  /// Write Data to Tag <br/>
+  /// 写入标签数据 <br/>
   ///
   /// #### English
   ///
@@ -568,8 +569,8 @@ abstract class RfidInterface {
     required String data,
   });
 
-  /// Lock Tag. <br/>
-  /// 锁定标签。 <br/>
+  /// Lock Tag <br/>
+  /// 锁定标签 <br/>
   ///
   /// #### English
   ///
@@ -597,8 +598,8 @@ abstract class RfidInterface {
     required RfidLockMode lockMode,
   });
 
-  /// Kill Tag. <br/>
-  /// 销毁标签。 <br/>
+  /// Kill Tag <br/>
+  /// 销毁标签 <br/>
   ///
   /// #### English
   ///

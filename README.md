@@ -13,33 +13,33 @@ This project consists of multiple packages working together to provide a complet
 ```
 rfid_flutter_plugin/
 ├── rfid_flutter_core/             # Core interfaces and shared code
-├── rfid_flutter_android/          # Android handheld/A4 plugin
+├── rfid_flutter_android/          # Android handheld/fixed devices plugin
 └── rfid_flutter_driver/           # RFID device Bluetooth/USB plugin (planned)
 ```
 
 ## 📚 Packages
 
-### 🔧 [rfid_flutter_core](./rfid_flutter_core)
+### 📱 [rfid_flutter_core](./rfid_flutter_core)
 [![pub package](https://img.shields.io/pub/v/rfid_flutter_core.svg)](https://pub.dev/packages/rfid_flutter_core)
 
 The foundational core package providing:
 - **RfidInterface**: Unified RFID operation interface
-- **Data Classes**: Tag information, results, configurations
-- **Enums**: Memory banks, frequencies, protocols
+- **Data Classes**: results, Tag information, configurations, etc.
+- **Enums**: Memory banks, frequencies, rfLink, etc.
 - **Utilities**: Tag processing and validation tools
 
 ### 📱 [rfid_flutter_android](./rfid_flutter_android)
 [![pub package](https://img.shields.io/pub/v/rfid_flutter_android.svg)](https://pub.dev/packages/rfid_flutter_android)
 
 Android platform implementation supporting:
-- **UART Devices**: Serial communication RFID readers
-- **URA4 Devices**: URA4 protocol RFID readers
-- **Device Information**: Access to device serial number, IMEI, and more
-- **Full Feature Set**: All RFID operations with native performance
+- **UART Devices**: Compatible with handheld devices
+- **URA4 Devices**: Compatible with fixed devices
+- **Device Information**: Access to device serial number, IMEI, etc.
+- **RFID**: All RFID operations with native performance
 
 ### 🔮 Planned Packages
 
-- **rfid_flutter_driver**: Bluetoothg/USB RFID device connectivity
+- **rfid_flutter_driver**: Bluetooth/USB RFID device connectivity
 
 ## 🚀 Getting Started
 
@@ -64,14 +64,10 @@ The core package is automatically included as a dependency.
 
 ### ⚙️ Device Configuration
 - **Frequency Control**: Multiple frequency band support
-- **Power Management**: Adjustable RF power (1-30)
+- **Power Management**: Adjustable RF power
 - **Protocol Settings**: Gen2 protocol configuration
-- **More Features**: FastInventory, TagFocus, FastId
+- **More Features**: FastInventory, TagFocus, FastId, etc
 
-### 🔄 Real-time Processing
-- **Live Streaming**: Real-time tag data streams
-- **Duplicate Filtering**: Automatic tag deduplication
-- **Event Handling**: Comprehensive event management
 
 ## 📖 Documentation
 

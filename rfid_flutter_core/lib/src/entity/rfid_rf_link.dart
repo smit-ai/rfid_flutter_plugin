@@ -1,5 +1,5 @@
-/// RFLink combinations for RFID. <br/>
-/// RF链路组合。<br/>
+/// RFLink combinations for RFID <br/>
+/// RF链路组合 <br/>
 ///
 /// #### Note:
 /// Gen2X links require UHF firmware version V7.1.8+ <br/>

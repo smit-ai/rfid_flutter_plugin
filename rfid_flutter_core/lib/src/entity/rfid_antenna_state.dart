@@ -1,15 +1,15 @@
-/// Antenna state for RFID. <br/>
-/// RFID天线状态。
+/// Antenna state for RFID <br/>
+/// RFID天线状态
 class RfidAntennaState {
   /// Antenna number. <br/>
   /// 天线号
   final int antenna;
 
-  /// Whether the antenna is enabled. <br/>
+  /// Whether the antenna is enabled <br/>
   /// 是否启用天线
   bool? enable;
 
-  /// Power level of the antenna. <br/>
+  /// Power level of the antenna <br/>
   /// 天线功率
   int? power;
 

@@ -1,9 +1,9 @@
 import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 
-/// RFID filter. <br/>
-/// RFID过滤
+/// RFID filter parameter <br/>
+/// RFID 过滤参数
 class RfidFilter {
-  /// Whether the filter is enabled. <br/>
+  /// Whether the filter is enabled <br/>
   /// 是否启用过滤
   bool enabled;
 
@@ -15,11 +15,12 @@ class RfidFilter {
   /// 过滤长度，单位 bit
   int length;
 
-  /// Bank of the filter. <br/>
+  /// Bank of the filter <br/>
   /// 过滤区域
   RfidBank bank;
 
-  /// Data of the filter. <br/>
+  /// Data of the filter <br/>
+  /// 过滤数据
   String data;
 
   RfidFilter({

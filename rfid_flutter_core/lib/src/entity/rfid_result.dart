@@ -1,5 +1,5 @@
-/// A generic class that represents the result of a command execution. <br/>
-/// 一个通用的类，表示命令执行的结果。 <br/>
+/// A generic class that represents the result of a command execution <br/>
+/// 一个通用的类，表示命令执行的结果 <br/>
 class RfidResult<T> {
   /// #### English
   /// Whether the command execution is successful. <br/>

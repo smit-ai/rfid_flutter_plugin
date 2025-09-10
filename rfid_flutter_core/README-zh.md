@@ -5,9 +5,12 @@
 > 中文 | [English](README.md)
 
 `rfid_flutter_core` 是 RFID Flutter 插件架构的核心基础包，提供了 RFID 操作所需的核心接口、数据类、枚举和工具类。  
-本包本身不实现具体的业务逻辑，而是为其他 RFID 实现包提供统一的接口和数据结构定义。
+本插件包本身不实现具体的业务逻辑，而是为其他 RFID 实现包提供统一的接口和数据结构定义。
 
-**本插件仅适用于已完成适配的特定设备环境，非通用 RFID 插件；未经验证的设备可能无法工作，请谨慎集成。**
+如不熟悉 RFID 技术背景及相关术语，建议参阅 [RFID 说明文档](https://github.com/RFID-Devs/rfid_flutter_plugin/wiki/RFID-zh)，以便更好地理解插件接口的功能设计与使用方式
+
+**重要提示：本插件仅适用于已完成适配的特定设备环境，非通用 RFID 插件。未经验证的设备可能无法工作，请在集成前谨慎评估**
+
 
 ## ✨ 功能特性
 
@@ -18,7 +21,7 @@
 
 ## 🚀 快速开始
 
-### 📥 安装
+### 安装
 
 将以下内容添加到你的 `pubspec.yaml` 文件中：
 
@@ -33,13 +36,12 @@ dependencies:
 flutter pub get
 ```
 
-### 📖 基本用法
-
-#### 导入包
+### 导入包
 
 ```dart
 import 'package:rfid_flutter_core/rfid_flutter_core.dart';
 ```
+
 
 ## 🔗 相关包
 

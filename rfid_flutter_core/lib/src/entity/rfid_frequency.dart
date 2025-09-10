@@ -1,4 +1,4 @@
-/// RFID module working frequency bands. <br/>
+/// RFID module working frequency bands <br/>
 /// RFID模块工作频段
 enum RfidFrequency {
   /// China frequency range (840~845MHz)

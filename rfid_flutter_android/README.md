@@ -6,27 +6,65 @@
 
 RFID implementation package for the Android platform, supporting UART and URA4 related devices.
 
-**This plugin is intended only for a specific, pre-integrated device environment and is not a general-purpose RFID plugin; unvalidated devices may not function. Integrate with caution.**
+Refer to the [RFID Documentation](https://github.com/RFID-Devs/rfid_flutter_plugin/wiki/RFID-en) for details on the plugin’s interface design and usage if you are unfamiliar with RFID technology and related terminology.
 
-## 📦 Features
+**Important Note: This plugin is designed exclusively for specific pre-adapted hardware environments and is not a universal RFID solution. Unverified devices may not be compatible. Please evaluate carefully before integration.**
 
-### 🔌 Device Support
-- **UART Devices**: Support for UART-based RFID readers
-- **URA4 Devices**: Support for URA4-based RFID readers  
-- **Device Information**: Access to device serial number, IMEI and other device information
 
-### 🏷️ RFID Operations
-- **Tag Inventory**: Single and continuous tag scanning with filtering support
-- **Tag Read/Write**: Read and write data to different tag memory banks
-- **Tag Lock/Kill**: Lock or permanently disable tags
-- **Real-time Streaming**: Live tag data stream with duplicate filtering options
+## 📋 API Reference
 
-### ⚙️ Configuration
-- **Frequency Settings**: Support for multiple frequency bands
-- **Power Control**: Adjustable transmission power (1-30)
-- **Antenna Management**: Multi-antenna support and configuration
-- **Gen2 Protocol**: Full Gen2 protocol parameter configuration
-- **More Features**: FastInventory, TagFocus, FastId modes
+### Main Classes
+
+| Class            | Description                                           |
+| ---------------- | ----------------------------------------------------- |
+| `RfidWithUart`   | UART device RFID functionality implementation         |
+| `RfidWithUra4`   | URA4 device RFID functionality implementation         |
+| `BarcodeDecoder` | Barcode parsing functionality implementation          |
+| `DeviceManager`  | Device info (SN, IMEI, etc.) and key event monitoring |
+
+### Core Features
+
+#### RFID
+
+| Feature                                 |        UART        |        URA4        | Description                |
+| --------------------------------------- | :----------------: | :----------------: | -------------------------- |
+| init                                    | :heavy_check_mark: | :heavy_check_mark: | Initialize RFID module     |
+| free                                    | :heavy_check_mark: | :heavy_check_mark: | Release RFID module        |
+| singleInventory                         | :heavy_check_mark: | :heavy_check_mark: | Single inventory           |
+| startInventory                          | :heavy_check_mark: | :heavy_check_mark: | Start continuous inventory |
+| stopInventory                           | :heavy_check_mark: | :heavy_check_mark: | Stop continuous inventory  |
+| readData                                | :heavy_check_mark: | :heavy_check_mark: | Read tag data              |
+| writeData                               | :heavy_check_mark: | :heavy_check_mark: | Write tag data             |
+| lockTag                                 | :heavy_check_mark: | :heavy_check_mark: | Lock tag                   |
+| killTag                                 | :heavy_check_mark: | :heavy_check_mark: | Kill tag                   |
+| setFrequency <br/> getFrequency         | :heavy_check_mark: | :heavy_check_mark: | Frequency band             |
+| setPower <br/> getPower                 | :heavy_check_mark: |        :x:         | Power                      |
+| setAntennaState <br/> getAntennaState   |        :x:         | :heavy_check_mark: | Multi-antenna management   |
+| setInventoryMode <br/> getInventoryMode | :heavy_check_mark: | :heavy_check_mark: | Inventory area             |
+| setRfLink <br/> getRfLink               | :heavy_check_mark: | :heavy_check_mark: | RF Link                    |
+| setGen2 <br/> getGen2                   | :heavy_check_mark: | :heavy_check_mark: | Gen2 parameters            |
+| setFastId <br/> getFastId               | :heavy_check_mark: | :heavy_check_mark: | FastID                     |
+| setTagFocus <br/> getTagFocus           | :heavy_check_mark: | :heavy_check_mark: | TagFocus                   |
+| resetUhf                                | :heavy_check_mark: | :heavy_check_mark: | Reset UHF module           |
+
+#### Barcode
+
+| Feature   | Description        |
+| --------- | ------------------ |
+| init      | Initialize scanner |
+| free      | Release scanner    |
+| startScan | Start scanning     |
+| stopScan  | Stop scanning      |
+
+#### Device Manager
+
+| Feature            | Description              |
+| ------------------ | ------------------------ |
+| getSerialNumber    | Get device serial number |
+| getImei            | Get device IMEI          |
+| keyDownEventStream | Key press event stream   |
+| keyUpEventStream   | Key release event stream |
+
 
 ## 🚀 Getting Started
 
@@ -60,11 +98,13 @@ final freeRes = await RfidWithUart.instance.free();
 print(freeRes.isEffective ? 'Release successful' : 'Release failed: ${freeRes.error}');
 
 // Listen to inventory data
-RfidWithUart.instance.rfidTagStream.listen((tags) {
+StreamSubscription<List<RfidTagInfo>> tagSubscription = RfidWithUart.instance.rfidTagStream.listen((tags) {
   for (final tag in tags) {
     print('Found tag: ${tag.epc}');
   }
 });
+// Stop listening to inventory data
+tagSubscription.cancel();
 
 // Start inventory
 final startRes = await RfidWithUart.instance.startInventory();
@@ -80,7 +120,7 @@ print(setFrequencyRes.isEffective ? 'Set successful' : 'Set failed: ${setFrequen
 final getFrequencyRes = await RfidWithUart.instance.getFrequency();
 print(getFrequencyRes.result ? 'Get successful' : 'Get failed: ${getFrequencyRes.data}');
 
-// Set power
+// Set power to 20
 final setPowerRes = await RfidWithUart.instance.setPower(20);
 print(setPowerRes.isEffective ? 'Set successful' : 'Set failed: ${setPowerRes.error}');
 // Get power
@@ -101,11 +141,13 @@ final freeRes = await RfidWithUra4.instance.free();
 print(freeRes.isEffective ? 'Release successful' : 'Release failed: ${freeRes.error}');
 
 // Listen to inventory data
-RfidWithUra4.instance.rfidTagStream.listen((tags) {
+StreamSubscription<List<RfidTagInfo>> tagSubscription = RfidWithUra4.instance.rfidTagStream.listen((tags) {
   for (final tag in tags) {
     print('Found tag: ${tag.epc}');
   }
 });
+// Stop listening to inventory data
+tagSubscription.cancel();
 
 // Start inventory
 final startRes = await RfidWithUra4.instance.startInventory();
@@ -121,7 +163,7 @@ print(setFrequencyRes.isEffective ? 'Set successful' : 'Set failed: ${setFrequen
 final getFrequencyRes = await RfidWithUra4.instance.getFrequency();
 print(getFrequencyRes.result ? 'Get successful' : 'Get failed: ${getFrequencyRes.data}');
 
-// Set power
+// Set power to 25
 final setPowerRes = await RfidWithUra4.instance.setPower(25);
 print(setPowerRes.isEffective ? 'Set successful' : 'Set failed: ${setPowerRes.error}');
 // Get power
@@ -129,33 +171,33 @@ final getPowerRes = await RfidWithUra4.instance.getPower();
 print(getPowerRes.result ? 'Get successful' : 'Get failed: ${getPowerRes.data}');
 ```
 
+#### Barcode Example
+
+```dart
+import 'package:rfid_flutter_android/rfid_flutter_android.dart';
+
+// Initialize barcode scanner
+final initRes = await BarcodeDecoder.instance.init();
+print(initRes.isEffective ? 'Initialization successful' : 'Initialization failed: ${initRes.error}');
+// Release barcode scanner
+final freeRes = await BarcodeDecoder.instance.free();
+print(freeRes.isEffective ? 'Release successful' : 'Release failed: ${freeRes.error}');
+
+// Listen to barcode data
+StreamSubscription<RfidBarcodeInfo> barcodeSubscription = BarcodeDecoder.instance.barcodeStream.listen((barcodeInfo) {
+  print(barcodeInfo.toString());
+});
+// Stop listening to barcode data
+barcodeSubscription.cancel();
+
+// Start barcode scanning
+final startRes = BarcodeDecoder.instance.startScan();
+// Stop barcode scanning
+final stopRes = BarcodeDecoder.instance.stopScan();
+```
+
 For more examples, please check the example application
 
-
-
-## 📋 API Reference
-
-### Main Classes
-
-| Class                | Description                |
-| -------------------- | -------------------------- |
-| `RfidWithUart`       | UART device implementation |
-| `RfidWithUra4`       | URA4 device implementation |
-| `RfidWithDeviceInfo` | Device information access  |
-
-### Key Features
-
-| Feature            | UART | URA4 | Description                            |
-| ------------------ | ---- | ---- | -------------------------------------- |
-| Basic Operations   | ✅    | ✅    | Init, free                             |
-| Tag Inventory      | ✅    | ✅    | Single and continuous scanning         |
-| Tag Read/Write     | ✅    | ✅    | Memory bank access                     |
-| Tag Lock/Kill      | ✅    | ✅    | Security operations                    |
-| Frequency Control  | ✅    | ✅    | Global frequency support               |
-| Power Control      | ✅    | ✅    | 1-30 power levels                      |
-| Antenna Control    | ❌    | ✅    | Multi-antenna support                  |
-| Gen2 Configuration | ✅    | ✅    | Protocol parameters                    |
-| Other Features     | ✅    | ✅    | FastInventory, TagFocus, FastId, reset |
 
 ## 🔗 Related Packages
 

@@ -1,4 +1,4 @@
-/// Gen2 parameters. <br/>
+/// Gen2 parameters <br/>
 /// Gen2参数 <br/>
 ///
 /// #### Note:

@@ -1,25 +1,22 @@
-/// Android implementation of the RFID Flutter plugin. <br/>
-/// Android 超高频模块的 Flutter 插件实现。 <br/>
+/// Flutter plug-in implementation of RFID, Barcode and other functions. <br/>
+/// Flutter 超高频、条码等功能的插件实现. <br/>
+///
 ///
 /// ### English
 ///
-/// This library provides the official Android implementation of the RFID Flutter plugin. <br/>
-/// Depending on the specific device type, the following interfaces are provided: <br/>
-///
-/// - [RfidWithUart] - Interfaces for handheld devices with UART-based UHF modules.
-/// - [RfidWithUra4] - Interfaces for URA4 series UHF modules.
-/// - [DeviceManager] - Interfaces for obtaining device information.
-/// - [BarcodeDecoder] - Interfaces for barcode decoding.
-///
+/// This library provides the implementation of the Flutter Android plug-in, the specific interface is as follows:
+/// - [RfidWithUart] - Handheld device RFID-related interface.
+/// - [RfidWithUra4] - Fixed device RFID-related interface.
+/// - [BarcodeDecoder] - Barcode decoding-related interface.
+/// - [DeviceManager] - Device information-related interface.
 ///
 /// ### 中文
 ///
-/// 本库提供了 Android 超高频模块的 Flutter 插件实现，根据具体设备类型，提供了不同的接口：<br/>
-///
-/// - [RfidWithUart] - 手持机设备相关接口
-/// - [RfidWithUra4] - URA4设备相关接口
+/// 本库提供了 Flutter Android 插件的实现，具体接口如下：<br/>
+/// - [RfidWithUart] - 手持设备 RFID 相关接口
+/// - [RfidWithUra4] - 固定式设备 RFID 相关接口
+/// - [BarcodeDecoder] - 条码解码相关接口
 /// - [DeviceManager] - 设备信息相关接口
-/// - [BarcodeDecoder] - 条码解码器接口
 ///
 library;
 

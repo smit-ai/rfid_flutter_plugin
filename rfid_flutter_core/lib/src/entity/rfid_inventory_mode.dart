@@ -1,4 +1,4 @@
-/// RFID inventory area, used to specify which tag memory regions are read during inventory. <br/>
+/// RFID inventory area, used to specify which tag memory regions are read during inventory <br/>
 /// RFID盘点区域，用于指定盘点时读取的标签数据区域
 enum RfidInventoryBank {
   /// Inventory reads EPC area <br/>
@@ -51,11 +51,11 @@ class RfidInventoryMode {
   /// 盘点区域，见 [RfidInventoryBank]
   RfidInventoryBank inventoryBank;
 
-  /// Offset parameter , unit: word <br/>
+  /// Offset parameter, unit: word <br/>
   /// offset参数，单位：字
   int offset;
 
-  /// Length parameter , unit: word <br/>
+  /// Length parameter, unit: word <br/>
   /// length参数，单位：字
   int length;
 
