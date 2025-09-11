@@ -28,7 +28,7 @@ import 'package:rfid_flutter_android/src/method_channel_helper.dart';
 class BarcodeDecoder {
   static BarcodeDecoder? _instance;
 
-  /// The instance of BarcodeDecoder
+  /// The instance of BarcodeDecoder <br/>
   /// 条码解码器实例
   static BarcodeDecoder get instance {
     _instance ??= BarcodeDecoder._();
@@ -58,37 +58,37 @@ class BarcodeDecoder {
     });
   }
 
-  /// The stream of barcode data
+  /// The stream of barcode data <br/>
   /// 条码数据流
   Stream<RfidBarcodeInfo> get barcodeStream => _barcodeStreamController.stream;
 
   /// Initialize the plugin and open the scanner <br/>
   /// 初始化插件并打开扫描头
-  Future<RfidResult> init() async {
+  Future<RfidResult<bool>> init() async {
     return _methodChannelHelper.invokeBoolMethod('init');
   }
 
   /// Release resources and close the scanner <br/>
   /// 释放资源并关闭扫描头
-  Future<RfidResult> free() async {
+  Future<RfidResult<bool>> free() async {
     return _methodChannelHelper.invokeBoolMethod('free');
   }
 
   /// Check if the plugin is initialized <br/>
   /// 检查插件是否已初始化
-  Future<RfidResult> isInitialized() async {
+  Future<RfidResult<bool>> isInitialized() async {
     return _methodChannelHelper.invokeBoolMethod('isInitialized');
   }
 
   /// Start scanning <br/>
   /// 开启扫描
-  Future<RfidResult> startScan() async {
+  Future<RfidResult<bool>> startScan() async {
     return _methodChannelHelper.invokeBoolMethod('startScan');
   }
 
   /// Stop scanning <br/>
   /// 停止扫描
-  Future<RfidResult> stopScan() async {
+  Future<RfidResult<bool>> stopScan() async {
     return _methodChannelHelper.invokeBoolMethod('stopScan');
   }
 
@@ -99,9 +99,9 @@ class BarcodeDecoder {
   /// [value] is the timeout for the scanner, in seconds
   ///
   /// #### 中文
-  /// [value] 是扫描超时时间，单位为秒
+  /// [value] 为扫描超时时间，单位为秒
   ///
-  Future<RfidResult> setTimeout(int value) async {
+  Future<RfidResult<bool>> setTimeout(int value) async {
     return _methodChannelHelper.invokeBoolMethod('setTimeout', {'value': value});
   }
 }
