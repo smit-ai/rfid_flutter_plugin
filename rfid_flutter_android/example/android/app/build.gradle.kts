@@ -31,13 +31,23 @@ android {
     }
 
     signingConfigs {
+        // Keep the debug signing config but point it to the user's default debug keystore if it exists.
+        // If the user's debug keystore isn't present, we intentionally leave the config unset so
+        // Gradle uses its internal default debug keystore.
         getByName("debug") {
-            val strFile = File("/release.jks")
-            storeFile = file(strFile)
-            storePassword = "123456"
-            keyPassword = "123456"
-            keyAlias = "uhf-serial-key"
+            val debugKeystore = File(System.getProperty("user.home"), ".android/debug.keystore")
+            if (debugKeystore.exists()) {
+                storeFile = debugKeystore
+                storePassword = "android"
+                keyPassword = "android"
+                keyAlias = "androiddebugkey"
+            } else {
+                // No storeFile set -> Gradle will fall back to its internal debug keystore
+            }
         }
+
+        // Release signing remains explicit. If you prefer a relative path inside the project,
+        // change the File("/release.jks") to File("zsguang/release.jks") or another relative path.
         create("release") {
             val strFile = File("/release.jks")
             storeFile = file(strFile)
@@ -56,6 +66,8 @@ android {
         }
 
         debug {
+            // Use the debug signing config defined above (which will point to the user's
+            // default debug keystore if present). This avoids requiring /release.jks for debug builds.
             signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             isShrinkResources = false
