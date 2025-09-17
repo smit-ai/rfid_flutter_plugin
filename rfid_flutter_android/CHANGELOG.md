@@ -1,3 +1,7 @@
+## 0.1.0
+
+* fix: Improve the BarcodeDecoder-related interface
+
 ## 0.1.0-dev.4
 
 * refactor!: Rename RfidWithDeviceInfo to DeviceManager
