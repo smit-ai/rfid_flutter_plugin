@@ -4,7 +4,8 @@
 
 > 中文 | [English](README.md)
 
-一个全面的 Flutter RFID 插件生态系统，为 RFID 操作提供统一接口和特定平台实现。
+一个全面的 Flutter RFID 插件方案，为 RFID 操作提供统一接口和特定平台实现。
+
 
 ## 📦 包架构
 
@@ -17,9 +18,10 @@ rfid_flutter_plugin/
 └── rfid_flutter_driver/           # 蓝牙、USB插件（计划中）
 ```
 
+
 ## 📚 软件包
 
-### 🔧 [rfid_flutter_core](./rfid_flutter_core)
+### 📱 [rfid_flutter_core](./rfid_flutter_core)
 [![pub package](https://img.shields.io/pub/v/rfid_flutter_core.svg)](https://pub.dev/packages/rfid_flutter_core)
 
 基础核心包，提供：
@@ -32,31 +34,14 @@ rfid_flutter_plugin/
 [![pub package](https://img.shields.io/pub/v/rfid_flutter_android.svg)](https://pub.dev/packages/rfid_flutter_android)
 
 Android 平台实现，支持：
-- **UART 设备**: 兼容手持机设备
-- **URA4 设备**: 兼容固定式设备
-- **设备信息**: 获取设备序列号、IMEId等
-- **RFID**: 支持所有 RFID 操作，具有原生性能
+- **设备兼容**: 兼容手持机、固定式设备
+- **设备管理**: 设备序列号、IMEI等获取，按键事件监听
+- **RFID**: 支持所有 RFID 操作
+- **Barcode**: 支持扫描条形码、二维码等
 
-### 🔮 计划中的包
+### 📱 计划中的包
 
 - **rfid_flutter_driver**: RFID 设备蓝牙、USB通讯插件
-
-## 🚀 快速开始
-
-### 📥 安装
-
-对于 Android RFID 操作，在 `pubspec.yaml` 中添加：
-
-```yaml
-dependencies:
-  rfid_flutter_android: ^0.0.1
-```
-
-
-## 📖 文档
-
-- [rfid_flutter_core](./rfid_flutter_core/README.md) - 接口和共享代码
-- [rfid_flutter_android](./rfid_flutter_android/README.md) - 手持机/A4等Android设备的插件
 
 
 ## 📄 许可证

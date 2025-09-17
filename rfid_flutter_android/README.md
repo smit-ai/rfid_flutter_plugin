@@ -13,39 +13,41 @@ Refer to the [RFID Documentation](https://github.com/RFID-Devs/rfid_flutter_plug
 
 ## 📋 API Reference
 
+For more detailed interface information, see [API reference](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/)
+
 ### Main Classes
 
-| Class            | Description                                           |
-| ---------------- | ----------------------------------------------------- |
-| `RfidWithUart`   | UART device RFID functionality implementation         |
-| `RfidWithUra4`   | URA4 device RFID functionality implementation         |
-| `BarcodeDecoder` | Barcode parsing functionality implementation          |
-| `DeviceManager`  | Device info (SN, IMEI, etc.) and key event monitoring |
+| Class                                                                                                                      | Description                                           |
+| -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| [RfidWithUart](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/RfidWithUart-class.html)     | UART device RFID functionality implementation         |
+| [RfidWithUra4](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/RfidWithUra4-class.html)     | URA4 device RFID functionality implementation         |
+| [BarcodeDecoder](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/BarcodeDecoder-class.html) | Barcode parsing functionality implementation          |
+| [DeviceManager](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/DeviceManager-class.html)   | Device info (SN, IMEI, etc.) and key event monitoring |
 
 ### Core Features
 
 #### RFID
 
-| Feature                                 |        UART        |        URA4        | Description                |
-| --------------------------------------- | :----------------: | :----------------: | -------------------------- |
-| init                                    | :heavy_check_mark: | :heavy_check_mark: | Initialize RFID module     |
-| free                                    | :heavy_check_mark: | :heavy_check_mark: | Release RFID module        |
-| singleInventory                         | :heavy_check_mark: | :heavy_check_mark: | Single inventory           |
-| startInventory                          | :heavy_check_mark: | :heavy_check_mark: | Start continuous inventory |
-| stopInventory                           | :heavy_check_mark: | :heavy_check_mark: | Stop continuous inventory  |
-| readData                                | :heavy_check_mark: | :heavy_check_mark: | Read tag data              |
-| writeData                               | :heavy_check_mark: | :heavy_check_mark: | Write tag data             |
-| lockTag                                 | :heavy_check_mark: | :heavy_check_mark: | Lock tag                   |
-| killTag                                 | :heavy_check_mark: | :heavy_check_mark: | Kill tag                   |
-| setFrequency <br/> getFrequency         | :heavy_check_mark: | :heavy_check_mark: | Frequency band             |
-| setPower <br/> getPower                 | :heavy_check_mark: |        :x:         | Power                      |
-| setAntennaState <br/> getAntennaState   |        :x:         | :heavy_check_mark: | Multi-antenna management   |
-| setInventoryMode <br/> getInventoryMode | :heavy_check_mark: | :heavy_check_mark: | Inventory area             |
-| setRfLink <br/> getRfLink               | :heavy_check_mark: | :heavy_check_mark: | RF Link                    |
-| setGen2 <br/> getGen2                   | :heavy_check_mark: | :heavy_check_mark: | Gen2 parameters            |
-| setFastId <br/> getFastId               | :heavy_check_mark: | :heavy_check_mark: | FastID                     |
-| setTagFocus <br/> getTagFocus           | :heavy_check_mark: | :heavy_check_mark: | TagFocus                   |
-| resetUhf                                | :heavy_check_mark: | :heavy_check_mark: | Reset UHF module           |
+| Feature                                 | UART  | URA4  | Description                |
+| --------------------------------------- | :---: | :---: | -------------------------- |
+| init                                    |   ✔️   |   ✔️   | Initialize RFID module     |
+| free                                    |   ✔️   |   ✔️   | Release RFID module        |
+| singleInventory                         |   ✔️   |   ✔️   | Single inventory           |
+| startInventory                          |   ✔️   |   ✔️   | Start continuous inventory |
+| stopInventory                           |   ✔️   |   ✔️   | Stop continuous inventory  |
+| readData                                |   ✔️   |   ✔️   | Read tag data              |
+| writeData                               |   ✔️   |   ✔️   | Write tag data             |
+| lockTag                                 |   ✔️   |   ✔️   | Lock tag                   |
+| killTag                                 |   ✔️   |   ✔️   | Kill tag                   |
+| setFrequency <br/> getFrequency         |   ✔️   |   ✔️   | Frequency band             |
+| setPower <br/> getPower                 |   ✔️   |   ❌   | Power                      |
+| setAntennaState <br/> getAntennaState   |   ❌   |   ✔️   | Multi-antenna management   |
+| setInventoryMode <br/> getInventoryMode |   ✔️   |   ✔️   | Inventory area             |
+| setRfLink <br/> getRfLink               |   ✔️   |   ✔️   | RF Link                    |
+| setGen2 <br/> getGen2                   |   ✔️   |   ✔️   | Gen2 parameters            |
+| setFastId <br/> getFastId               |   ✔️   |   ✔️   | FastID                     |
+| setTagFocus <br/> getTagFocus           |   ✔️   |   ✔️   | TagFocus                   |
+| resetUhf                                |   ✔️   |   ✔️   | Reset UHF module           |
 
 #### Barcode
 
@@ -125,49 +127,6 @@ final setPowerRes = await RfidWithUart.instance.setPower(20);
 print(setPowerRes.isEffective ? 'Set successful' : 'Set failed: ${setPowerRes.error}');
 // Get power
 final getPowerRes = await RfidWithUart.instance.getPower();
-print(getPowerRes.result ? 'Get successful' : 'Get failed: ${getPowerRes.data}');
-```
-
-#### URA4 Device Example
-
-```dart
-import 'package:rfid_flutter_android/rfid_flutter_android.dart';
-
-// Initialize RFID module
-final initRes = await RfidWithUra4.instance.init();
-print(initRes.isEffective ? 'Initialization successful' : 'Initialization failed: ${initRes.error}');
-// Release RFID module
-final freeRes = await RfidWithUra4.instance.free();
-print(freeRes.isEffective ? 'Release successful' : 'Release failed: ${freeRes.error}');
-
-// Listen to inventory data
-StreamSubscription<List<RfidTagInfo>> tagSubscription = RfidWithUra4.instance.rfidTagStream.listen((tags) {
-  for (final tag in tags) {
-    print('Found tag: ${tag.epc}');
-  }
-});
-// Stop listening to inventory data
-tagSubscription.cancel();
-
-// Start inventory
-final startRes = await RfidWithUra4.instance.startInventory();
-print(startRes.isEffective ? 'Start inventory successful' : 'Start inventory failed: ${startRes.error}');
-// Stop inventory
-final stopRes = await RfidWithUra4.instance.stopInventory();
-print(stopRes.isEffective ? 'Stop inventory successful' : 'Stop inventory failed: ${stopRes.error}');
-
-// Set frequency
-final setFrequencyRes = await RfidWithUra4.instance.setFrequency(RfidFrequency.usa);
-print(setFrequencyRes.isEffective ? 'Set successful' : 'Set failed: ${setFrequencyRes.error}');
-// Get frequency
-final getFrequencyRes = await RfidWithUra4.instance.getFrequency();
-print(getFrequencyRes.result ? 'Get successful' : 'Get failed: ${getFrequencyRes.data}');
-
-// Set power to 25
-final setPowerRes = await RfidWithUra4.instance.setPower(25);
-print(setPowerRes.isEffective ? 'Set successful' : 'Set failed: ${setPowerRes.error}');
-// Get power
-final getPowerRes = await RfidWithUra4.instance.getPower();
 print(getPowerRes.result ? 'Get successful' : 'Get failed: ${getPowerRes.data}');
 ```
 

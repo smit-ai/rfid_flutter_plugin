@@ -8,44 +8,46 @@ Android 平台 RFID 设备集成插件，支持 UART 和 URA4 设备
 
 如不熟悉 RFID 技术背景及相关术语，建议参阅 [RFID 说明文档](https://github.com/RFID-Devs/rfid_flutter_plugin/wiki/RFID-zh)，以便更好地理解插件接口的功能设计与使用方式
 
-**重要提示：本插件仅适用于已完成适配的特定设备环境，非通用 RFID 插件。未经验证的设备可能无法工作，请在集成前谨慎评估**
+**重要提示：本插件仅适用于已完成适配的特定设备环境，非通用 RFID 插件。未经验证的设备可能无法工作，使用前请认真评估**
 
 
 ## 📋 API 参考
 
+更详细的接口信息请查看 [API reference](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/)
+
 ### 主要的类
 
-| 类               | 描述                               |
-| ---------------- | ---------------------------------- |
-| `RfidWithUart`   | UART 设备 RFID 相关功能实现        |
-| `RfidWithUra4`   | URA4 设备 RFID 相关功能实现        |
-| `BarcodeDecoder` | 条码解析相关功能实现               |
-| `DeviceManager`  | 获取sn、imei等信息设备，按键值监听 |
+| 类                                                                                                                         | 描述                               |
+| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| [RfidWithUart](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/RfidWithUart-class.html)     | UART 设备 RFID 相关功能实现        |
+| [RfidWithUra4](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/RfidWithUra4-class.html)     | URA4 设备 RFID 相关功能实现        |
+| [BarcodeDecoder](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/BarcodeDecoder-class.html) | 条码解析相关功能实现               |
+| [DeviceManager](https://pub.dev/documentation/rfid_flutter_android/latest/rfid_flutter_android/DeviceManager-class.html)   | 获取sn、imei等设备信息，按键值监听 |
 
 ### 核心功能
 
 #### RFID
 
-| 功能                                    |        UART        |        URA4        | 描述           |
-| --------------------------------------- | :----------------: | :----------------: | -------------- |
-| init                                    | :heavy_check_mark: | :heavy_check_mark: | 初始化RFID模块 |
-| free                                    | :heavy_check_mark: | :heavy_check_mark: | 释放RFID模块   |
-| singleInventory                         | :heavy_check_mark: | :heavy_check_mark: | 单次盘点       |
-| startInventory                          | :heavy_check_mark: | :heavy_check_mark: | 开启连续盘点   |
-| stopInventory                           | :heavy_check_mark: | :heavy_check_mark: | 停止连续盘点   |
-| readData                                | :heavy_check_mark: | :heavy_check_mark: | 读取标签数据   |
-| writeData                               | :heavy_check_mark: | :heavy_check_mark: | 写入标签数据   |
-| lockTag                                 | :heavy_check_mark: | :heavy_check_mark: | 锁定标签       |
-| killTag                                 | :heavy_check_mark: | :heavy_check_mark: | 销毁标签       |
-| setFrequency <br/> getFrequency         | :heavy_check_mark: | :heavy_check_mark: | 频段           |
-| setPower <br/> getPower                 | :heavy_check_mark: |        :x:         | 功率           |
-| setAntennaState <br/> getAntennaState   |        :x:         | :heavy_check_mark: | 多天线管理     |
-| setInventoryMode <br/> getInventoryMode | :heavy_check_mark: | :heavy_check_mark: | 盘点区域       |
-| setRfLink <br/> getRfLink               | :heavy_check_mark: | :heavy_check_mark: | RF链路         |
-| setGen2 <br/> getGen2                   | :heavy_check_mark: | :heavy_check_mark: | Gen2参数       |
-| setFastId <br/> getFastId               | :heavy_check_mark: | :heavy_check_mark: | FastID         |
-| setTagFocus <br/> getTagFocus           | :heavy_check_mark: | :heavy_check_mark: | TagFocus       |
-| resetUhf                                | :heavy_check_mark: | :heavy_check_mark: | 重置UHF模块    |
+| 功能                                    | UART  | URA4  | 描述           |
+| --------------------------------------- | :---: | :---: | -------------- |
+| init                                    |   ✔️   |   ✔️   | 初始化RFID模块 |
+| free                                    |   ✔️   |   ✔️   | 释放RFID模块   |
+| singleInventory                         |   ✔️   |   ✔️   | 单次盘点       |
+| startInventory                          |   ✔️   |   ✔️   | 开启连续盘点   |
+| stopInventory                           |   ✔️   |   ✔️   | 停止连续盘点   |
+| readData                                |   ✔️   |   ✔️   | 读取标签数据   |
+| writeData                               |   ✔️   |   ✔️   | 写入标签数据   |
+| lockTag                                 |   ✔️   |   ✔️   | 锁定标签       |
+| killTag                                 |   ✔️   |   ✔️   | 销毁标签       |
+| setFrequency <br/> getFrequency         |   ✔️   |   ✔️   | 频段           |
+| setPower <br/> getPower                 |   ✔️   |   ❌   | 功率           |
+| setAntennaState <br/> getAntennaState   |   ❌   |   ✔️   | 多天线管理     |
+| setInventoryMode <br/> getInventoryMode |   ✔️   |   ✔️   | 盘点区域       |
+| setRfLink <br/> getRfLink               |   ✔️   |   ✔️   | RF链路         |
+| setGen2 <br/> getGen2                   |   ✔️   |   ✔️   | Gen2参数       |
+| setFastId <br/> getFastId               |   ✔️   |   ✔️   | FastID         |
+| setTagFocus <br/> getTagFocus           |   ✔️   |   ✔️   | TagFocus       |
+| resetUhf                                |   ✔️   |   ✔️   | 重置UHF模块    |
 
 #### Barcode
 
@@ -160,4 +162,4 @@ final stopRes = BarcodeDecoder.instance.stopScan();
 
 ## 📄 许可证
 
-本项目基于 BSD 许可证开源，详细信息请查看 [LICENSE](LICENSE) 文件。
+本项目基于 BSD 许可证开源，详细信息请查看 [LICENSE](LICENSE) 文件
