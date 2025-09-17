@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:rfid_flutter_android_example/utils/device_util.dart';
 import 'package:rfid_flutter_android_example/view_model/rfid_main_view_model.dart';
 import 'package:signals/signals.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -52,7 +53,7 @@ class InventoryViewModel {
     );
 
     _keyDownSubscription = DeviceManager.instance.keyDownEventStream.listen((event) {
-      if (event.keyCode == 293 && RfidMainViewModel.instance.currentPageIndex.value == 0) {
+      if (DeviceUtil.isScanKey(event) && RfidMainViewModel.instance.currentPageIndex.value == 0) {
         inventoryToggle();
       }
     });
