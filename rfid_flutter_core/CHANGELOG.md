@@ -1,3 +1,7 @@
+## 0.1.0
+
+* First stable release
+
 ## 0.1.0-dev.6
 
 * feat!: refactor fastInventory interface  
