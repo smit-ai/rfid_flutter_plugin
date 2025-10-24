@@ -20,9 +20,11 @@ public class URA4EventHandler implements EventChannel.StreamHandler {
         this.eventSink = eventSink;
         try {
             RFIDWithUHFA4.getInstance().setInventoryCallback((UHFTAGInfo uhftagInfo) -> {
-                if (uhftagInfo != null) {
+                if (uhftagInfo != null && this.eventSink != null) {
                     //LogUtility_qcom.myLogV("URA4", "TAG EPC " + uhftagInfo.getEPC());
-                    handler.post(() -> this.eventSink.success(TagUtil.getTagMap(uhftagInfo)));
+                    handler.post(() -> {
+                        this.eventSink.success(TagUtil.getTagMap(uhftagInfo));
+                    });
                 }
             });
 

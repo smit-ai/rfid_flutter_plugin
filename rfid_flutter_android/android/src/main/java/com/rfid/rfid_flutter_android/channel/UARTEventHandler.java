@@ -20,7 +20,7 @@ public class UARTEventHandler implements EventChannel.StreamHandler {
         this.eventSink = eventSink;
         try {
             RFIDWithUHFUART.getInstance().setInventoryCallback((UHFTAGInfo uhftagInfo) -> {
-                if (uhftagInfo != null) {
+                if (uhftagInfo != null && this.eventSink != null) {
                     //LogUtility_qcom.myLogV("UART", "TAG EPC " + uhftagInfo.getEPC());
                     handler.post(() -> this.eventSink.success(TagUtil.getTagMap(uhftagInfo)));
                 }

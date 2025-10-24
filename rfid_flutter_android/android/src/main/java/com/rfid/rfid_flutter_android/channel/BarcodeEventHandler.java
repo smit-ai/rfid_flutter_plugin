@@ -17,7 +17,9 @@ public class BarcodeEventHandler implements EventChannel.StreamHandler {
     public void onListen(Object o, EventChannel.EventSink eventSink) {
         this.eventSink = eventSink;
         BarcodeFactory.getInstance().getBarcodeDecoder().setDecodeCallback((BarcodeEntity barcodeEntity) -> {
-            handler.post(() -> this.eventSink.success(TagUtil.getBarcodeMap(barcodeEntity)));
+            if (barcodeEntity != null && this.eventSink != null) {
+                handler.post(() -> this.eventSink.success(TagUtil.getBarcodeMap(barcodeEntity)));
+            }
         });
     }
 

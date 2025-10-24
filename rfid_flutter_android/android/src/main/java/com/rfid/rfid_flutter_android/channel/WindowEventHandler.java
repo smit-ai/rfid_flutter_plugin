@@ -39,7 +39,11 @@ public class WindowEventHandler extends WindowCallback implements EventChannel.S
             map.put("keyCode", event.getKeyCode());
             map.put("keyCodeName", KeyEvent.keyCodeToString(event.getKeyCode()));
             map.put("action", event.getAction());
-            handler.post(() -> eventSink.success(map));
+            handler.post(() -> {
+                if (eventSink != null) {
+                    eventSink.success(map);
+                }
+            });
         }
         return super.dispatchKeyEvent(event);
     }
