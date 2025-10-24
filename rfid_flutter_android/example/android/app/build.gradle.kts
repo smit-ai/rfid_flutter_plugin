@@ -67,7 +67,7 @@ android {
     applicationVariants.all {
         outputs.all {
             val output = this as? com.android.build.gradle.internal.api.BaseVariantOutputImpl
-            output?.outputFileName = "Flutter_RFID_v${defaultConfig.versionName}_${buildType.name}.apk"
+            output?.outputFileName = "Flutter_RFID_Demo_v${defaultConfig.versionName}_${buildType.name}.apk"
         }
     }
 }
