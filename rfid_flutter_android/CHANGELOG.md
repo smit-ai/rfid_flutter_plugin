@@ -1,3 +1,7 @@
+## 0.1.1
+
+* fix: Fix EventSink null pointer problem
+
 ## 0.1.0
 
 * fix: Improve the BarcodeDecoder-related interface

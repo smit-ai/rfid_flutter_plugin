@@ -76,16 +76,10 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  rfid_flutter_android: ^0.1.0
+  rfid_flutter_android: ^0.1.1
 ```
 
 ### 📖 Basic Usage
-
-#### Import the Package
-
-```dart
-import 'package:rfid_flutter_android/rfid_flutter_android.dart';
-```
 
 #### UART Device Example
 
