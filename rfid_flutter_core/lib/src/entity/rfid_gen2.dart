@@ -124,7 +124,7 @@ class RfidGen2 {
   /// Link Frequency 设置（预留），可取范围：0 ~ 7
   int? linkFrequency;
 
-  /// Constructor to initialize RFIDGen2 parameters
+  /// Constructor to initialize RFIDGen2 parameters <br/>
   /// 构造函数，初始化 RFIDGen2 参数
   RfidGen2({
     this.selectTarget,

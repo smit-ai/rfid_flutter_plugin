@@ -474,6 +474,19 @@ abstract class RfidInterface {
   /// );
   /// final result = await RfidWithUart.instance.startInventory(filter: filter);
   /// ```
+  ///
+  /// ----
+  ///
+  /// Filters out duplicate tags, ensuring that the tags returned by the current inventory session are unique. <br/>
+  /// 过滤重复标签，确保本次盘点返回的标签唯一。 <br/>
+  ///
+  /// ```dart
+  /// final result = await RfidWithUart.instance.startInventory(
+  ///     inventoryParam: RfidInventoryParam(unique: true)
+  /// );
+  ///
+  /// ```
+  ///
   Future<RfidResult<bool>> startInventory({
     RfidFilter? filter,
     RfidInventoryParam? inventoryParam,

@@ -13,6 +13,8 @@ enum RfidInventoryBank {
   /// 盘点读取EPC + TID + USER区域
   epcTidUser(2);
 
+  /// Constructor to initialize RfidInventoryBank parameters <br/>
+  /// 构造函数，初始化 RfidInventoryBank 参数
   const RfidInventoryBank(this.value);
 
   /// The numeric value of the inventory bank <br/>
@@ -59,12 +61,22 @@ class RfidInventoryMode {
   /// length参数，单位：字
   int length;
 
-  /// Initialize RfidInventoryMode class <br/>
-  /// 初始化RfidInventoryMode类
+  /// #### English
+  ///
+  /// Constructor to initialize RfidInventoryMode parameters <br/>
   ///
   /// [inventoryBank] - Inventory bank, reference RfidInventoryBank <br/>
   /// [offset] - Offset parameter, unit: word <br/>
   /// [length] - Length parameter, unit: word
+  ///
+  /// #### 中文
+  ///
+  /// 构造函数，初始化 RfidInventoryMode 参数
+  ///
+  /// [inventoryBank] - 盘点区域，参考 RfidInventoryBank <br/>
+  /// [offset] - offset参数，单位：字 <br/>
+  /// [length] - length参数，单位：字
+  ///
   RfidInventoryMode({
     this.inventoryBank = RfidInventoryBank.epc,
     this.offset = 0,

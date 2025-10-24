@@ -58,6 +58,8 @@ enum RfidFrequency {
   /// New Zealand frequency (920~928MHz)
   newZealand(0x42);
 
+  /// Constructor to initialize RfidFrequency parameters <br/>
+  /// 构造函数，初始化 RfidFrequency 参数
   const RfidFrequency(this.value);
 
   /// The numeric value of the frequency band

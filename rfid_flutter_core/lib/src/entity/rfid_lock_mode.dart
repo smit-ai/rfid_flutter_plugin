@@ -17,10 +17,14 @@ enum RfidLockMode {
   /// 永久解锁标签
   permanentUnlock(0x40);
 
+  /// Constructor to initialize RfidLockMode parameters <br/>
+  /// 构造函数，初始化 RfidLockMode 参数
   const RfidLockMode(this.value);
 
   final int value;
 
+  /// Find lock mode by value <br/>
+  /// 根据值查找锁定模式
   static RfidLockMode? fromValue(int value) {
     for (RfidLockMode mode in RfidLockMode.values) {
       if (mode.value == value) {

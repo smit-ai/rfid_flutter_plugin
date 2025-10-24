@@ -1,10 +1,24 @@
 /// Barcode information data class <br/>
 /// 条码信息数据类
 class RfidBarcodeInfo {
+  /// Decode success <br/>
+  /// 解码成功
   static const int DECODE_SUCCESS = 1;
+
+  /// Decode timeout <br/>
+  /// 解码超时
   static const int DECODE_TIMEOUT = 0;
+
+  /// Decode cancel <br/>
+  /// 解码取消
   static const int DECODE_CANCEL = -1;
+
+  /// Decode failure <br/>
+  /// 解码失败
   static const int DECODE_FAILURE = -2;
+
+  /// Decode engine error <br/>
+  /// 解码引擎错误
   static const int DECODE_ENGINE_ERROR = -3;
 
   /// Result code <br/>
@@ -62,6 +76,8 @@ class RfidBarcodeInfo {
   /// 读取到条码时的时间戳
   int timestamp;
 
+  /// Constructor to initialize RfidBarcodeInfo parameters <br/>
+  /// 构造函数，初始化 RfidBarcodeInfo 参数
   RfidBarcodeInfo({
     required this.resultCode,
     required this.barcode,
@@ -73,6 +89,8 @@ class RfidBarcodeInfo {
   })  : extensions = extensions ?? {},
         timestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch;
 
+  /// Convert to Map for serialization <br/>
+  /// 转换为 Map，便于序列化
   Map<String, dynamic> toMap() {
     return {
       'resultCode': resultCode,

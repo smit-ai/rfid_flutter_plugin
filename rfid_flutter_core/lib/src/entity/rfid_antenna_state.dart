@@ -13,12 +13,16 @@ class RfidAntennaState {
   /// 天线功率
   int? power;
 
+  /// Constructor to initialize RfidAntennaState parameters <br/>
+  /// 构造函数，初始化 RfidAntennaState 参数
   RfidAntennaState({
     required this.antenna,
     this.enable,
     this.power,
   });
 
+  /// Convert to Map for serialization <br/>
+  /// 转换为 Map，便于序列化
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> result = {};
     result['antenna'] = antenna;
@@ -27,6 +31,11 @@ class RfidAntennaState {
     return result;
   }
 
+  /// Create RfidAntennaState instance from Map <br/>
+  /// 从 Map 创建 RfidAntennaState 实例
+  ///
+  /// Returns null if [data] is null or invalid <br/>
+  /// 如果 [data] 为 null 或无效则返回 null
   static RfidAntennaState? fromMap(dynamic data) {
     if (data == null) return null;
 
